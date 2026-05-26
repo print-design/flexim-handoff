@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flexim mock — НАЗВАНИЕ_ЭКРАНА</title>
+
+  <!--
+    Подключение совпадает по версиям с продом print-design/pr-diz.ru:
+      Bootstrap 4.0.0, jQuery 3.5.1.
+    Tokens.css и overrides — то, что программист добавит в прод одной строкой.
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="./flexim-overrides.css">
+</head>
+<body>
+
+  <!--
+    Сюда — вёрстка макета.
+    Конвенции:
+      1. Только Bootstrap 4 классы (.btn, .form-control, .table, .card, ...).
+      2. Никаких inline-style, никаких произвольных hex-цветов — всё через
+         наши overrides (которые подтянут tokens.css).
+      3. PHP-вставки рисуем как комментарии для программиста:
+           <!-- ?= $order->id ?> -->
+         или как плейсхолдеры в фигурных скобках:
+           {{ order.id }}
+         (программист сам решит, в каком виде вставить в свой PHP).
+      4. Циклы тоже комментариями:
+           <!-- foreach ($orders as $order): -->
+             ...
+           <!-- endforeach -->
+  -->
+
+  <div class="container py-4">
+    <h1>Шаблон мока</h1>
+    <p class="text-muted">Скопируй этот файл, переименуй в <code>NN-screen-name.html</code> и начинай верстать.</p>
+  </div>
+
+  <!-- Скрипты — теми же версиями, что в проде -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

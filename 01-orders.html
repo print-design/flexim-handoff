@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Принт-Дизайн — Заказы</title>
+
+  <!-- Те же версии, что в проде print-design/pr-diz.ru -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="./flexim-overrides.css">
+
+  <style>
+    /* Каркас страницы — структурная раскладка (цвета/отступы через токены). */
+    body { margin: 0; background: var(--background-bg); }
+    .app-shell { display: flex; min-height: 100vh; align-items: stretch; }
+    .app-main { flex: 1 1 auto; min-width: 0; min-height: 100vh; display: flex; flex-direction: column; }
+    /* Шапка вплотную к краям: без отступов вокруг и без скругления. */
+    .app-topbar { flex-shrink: 0; padding: 0; }
+    .app-topbar .flexim-header-menu { border-radius: 0; }
+    .app-topbar__right { display: flex; align-items: center; gap: var(--size-m); }
+    .app-content {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      padding: var(--size-xl);
+    }
+    /* Отступ от строки заголовка/фильтров до таблицы. */
+    .app-content > .flexim-header { flex-shrink: 0; margin-bottom: var(--size-l); }
+    /* Высоту/скролл таблицы держит .flexim-table-wrap--page-fill (см. overrides):
+       тянется на всю высоту, тело прокручивается, полоса — в правом жёлобе вне таблицы. */
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ЛЕВАЯ РЕЙКА — реальные разделы pr-diz-test.ru -->
+  <aside class="flexim-nav-rail" aria-label="Левое меню">
+    <span class="flexim-logo__mark" aria-hidden="true"></span>
+    <nav class="flexim-nav-rail__tabs">
+      <button type="button" class="flexim-nav-rail__tab flexim-nav-rail__tab--active" aria-label="Заказы"><span data-flexim-icon="time" data-size="24" aria-hidden="true"></span></button>
+      <button type="button" class="flexim-nav-rail__tab" aria-label="Склад"><span data-flexim-icon="box" data-size="24" aria-hidden="true"></span></button>
+      <button type="button" class="flexim-nav-rail__tab" aria-label="План"><span data-flexim-icon="calendar" data-size="24" aria-hidden="true"></span></button>
+      <button type="button" class="flexim-nav-rail__tab" aria-label="Резка"><span data-flexim-icon="factory" data-size="24" aria-hidden="true"></span></button>
+      <button type="button" class="flexim-nav-rail__tab" aria-label="Упаковка"><span data-flexim-icon="loader-machine" data-size="24" aria-hidden="true"></span></button>
+      <button type="button" class="flexim-nav-rail__tab" aria-label="Админка"><span data-flexim-icon="settings" data-size="24" aria-hidden="true"></span></button>
+      <button type="button" class="flexim-nav-rail__tab" aria-label="Предложения по улучшению"><span data-flexim-icon="like" data-size="24" aria-hidden="true"></span></button>
+    </nav>
+  </aside>
+
+  <div class="app-main">
+
+    <!-- ВЕРХНЯЯ ШАПКА — табы-воронка статусов + поиск + user-чип -->
+    <div class="app-topbar">
+      <div class="flexim-header-menu">
+        <nav class="flexim-header-menu__nav">
+          <button type="button" class="flexim-header-menu__item flexim-header-menu__item--active">Отгружено</button>
+          <button type="button" class="flexim-header-menu__item">Ждёт отгрузки</button>
+          <button type="button" class="flexim-header-menu__item">Производят</button>
+          <button type="button" class="flexim-header-menu__item">В работе</button>
+          <button type="button" class="flexim-header-menu__item">Расчёты</button>
+          <button type="button" class="flexim-header-menu__item">Черновики</button>
+          <button type="button" class="flexim-header-menu__item">Корзина</button>
+        </nav>
+        <div class="app-topbar__right">
+          <button type="button" class="flexim-icon-btn" aria-label="Поиск"><span data-flexim-icon="search" data-size="24" aria-hidden="true"></span></button>
+          <div class="flexim-user-chip">
+            <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials" title="Пономарёв Сергей">ПС</span>
+            <span class="flexim-user-chip__name">
+              <a href="#" class="flexim-user-chip__title">Пономарёв Сергей</a>
+              <span class="flexim-user-chip__role">Технолог</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- КОНТЕНТ -->
+    <main class="app-content">
+
+      <!-- Заголовок: название таба + счётчик; справа фильтры + Новый расчёт -->
+      <header class="flexim-header">
+        <div class="flexim-header__heading">
+          <h1 class="flexim-header__title">Отгружено</h1>
+          <span class="flexim-header__counter">5995</span>
+        </div>
+        <div class="flexim-header__actions">
+
+          <!-- Фильтр: кнопка-пилюля → дропдаун со списком (Шт/кг — без поиска) -->
+          <div class="flexim-filter-dd">
+            <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Шт / кг <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+              <div class="flexim-dropdown__items">
+                <button type="button" class="flexim-dropdown__item" role="menuitem">Килограммы</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">Штуки</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Фильтр с полем поиска внутри -->
+          <div class="flexim-filter-dd">
+            <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Тип работы <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+              <div class="flexim-filter-dd__search">
+                <div class="flexim-search__field">
+                  <span class="flexim-search__icon" data-flexim-icon="search" data-size="24" aria-hidden="true"></span>
+                  <input class="flexim-search__input" type="text" placeholder="Поиск…">
+                </div>
+              </div>
+              <div class="flexim-dropdown__items">
+                <button type="button" class="flexim-dropdown__item" role="menuitem">Пленка с печатью</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">Пленка без печати</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">Ламинация</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="flexim-filter-dd">
+            <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Менеджер <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+              <div class="flexim-filter-dd__search">
+                <div class="flexim-search__field">
+                  <span class="flexim-search__icon" data-flexim-icon="search" data-size="24" aria-hidden="true"></span>
+                  <input class="flexim-search__input" type="text" placeholder="Поиск менеджера…">
+                </div>
+              </div>
+              <div class="flexim-dropdown__items">
+                <button type="button" class="flexim-dropdown__item" role="menuitem">О. Корзинкина</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">О. Снесарева</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">Н. Миловидова</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">Ю. Корнилова</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="flexim-filter-dd">
+            <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Заказчик <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+              <div class="flexim-filter-dd__search">
+                <div class="flexim-search__field">
+                  <span class="flexim-search__icon" data-flexim-icon="search" data-size="24" aria-hidden="true"></span>
+                  <input class="flexim-search__input" type="text" placeholder="Поиск заказчика…">
+                </div>
+              </div>
+              <div class="flexim-dropdown__items">
+                <button type="button" class="flexim-dropdown__item" role="menuitem">Сласти</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">ООО «ИССО»</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">ООО Бест Папир</button>
+                <button type="button" class="flexim-dropdown__item" role="menuitem">ООО Славконд</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Фильтр со свободным вводом (Наименование) -->
+          <div class="flexim-filter-dd">
+            <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Наименование <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+              <div class="flexim-filter-dd__search">
+                <div class="flexim-search__field">
+                  <span class="flexim-search__icon" data-flexim-icon="search" data-size="24" aria-hidden="true"></span>
+                  <input class="flexim-search__input" type="text" placeholder="Поиск по наименованию…">
+                </div>
+              </div>
+              <div class="flexim-filter-dd__footer">
+                <button type="button" class="btn btn-primary btn-sm">Применить</button>
+                <button type="button" class="btn btn-flexim-ghost btn-sm">Сбросить</button>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary">
+            <span data-flexim-icon="plus" data-size="24" aria-hidden="true"></span>
+            Новый расчёт
+          </button>
+        </div>
+      </header>
+
+      <!-- Таблица заказов -->
+      <div class="flexim-table-wrap flexim-table-wrap--page-fill">
+        <div class="flexim-table__viewport">
+        <table class="flexim-table flexim-table--rich flexim-table--sticky-head flexim-table--id-first flexim-table--name-clamp">
+          <thead>
+            <tr>
+              <th class="flexim-table__head-cell" scope="col"><button type="button" class="flexim-table__sort-btn">ID <span data-flexim-icon="arrow-down-small" data-size="16" aria-hidden="true"></span></button></th>
+              <th class="flexim-table__head-cell" scope="col"><button type="button" class="flexim-table__sort-btn">Дата расчёта <span data-flexim-icon="arrow-down-small" data-size="16" aria-hidden="true"></span></button></th>
+              <th class="flexim-table__head-cell" scope="col"><button type="button" class="flexim-table__sort-btn">Заказчик <span data-flexim-icon="arrow-down-small" data-size="16" aria-hidden="true"></span></button></th>
+              <th class="flexim-table__head-cell" scope="col"><button type="button" class="flexim-table__sort-btn">Имя заказа <span data-flexim-icon="arrow-down-small" data-size="16" aria-hidden="true"></span></button></th>
+              <th class="flexim-table__head-cell" scope="col"><button type="button" class="flexim-table__sort-btn">Объём <span data-flexim-icon="arrow-down-small" data-size="16" aria-hidden="true"></span></button></th>
+              <th class="flexim-table__head-cell" scope="col"><button type="button" class="flexim-table__sort-btn">Тип работы <span data-flexim-icon="arrow-down-small" data-size="16" aria-hidden="true"></span></button></th>
+              <th class="flexim-table__head-cell" scope="col"><button type="button" class="flexim-table__sort-btn">Менеджер <span data-flexim-icon="arrow-down-small" data-size="16" aria-hidden="true"></span></button></th>
+              <th class="flexim-table__head-cell" scope="col"><button type="button" class="flexim-table__sort-btn">Статус <span data-flexim-icon="arrow-down-small" data-size="16" aria-hidden="true"></span></button></th>
+              <th class="flexim-table__head-cell flexim-acc-w-act" scope="col" aria-label="Меню"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- foreach ($calculations as $calc): -->
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">216-545</td>
+              <td class="flexim-table__cell">05.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Сласти</a></td>
+              <td class="flexim-table__cell">Пленка без печати ширина 390 мм</td>
+              <td class="flexim-table__cell">90 кг</td>
+              <td class="flexim-table__cell">Пленка без печати</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">100,85 из 90 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">134-182</td>
+              <td class="flexim-table__cell">28.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «ИССО»</a></td>
+              <td class="flexim-table__cell">Трубочка с вареной сгущенкой 50 гр ГОСТ</td>
+              <td class="flexim-table__cell">500 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">534,61 из 500 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">37-308</td>
+              <td class="flexim-table__cell">13.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Бест Папир</a></td>
+              <td class="flexim-table__cell">LIBERHAUS губка металлическая 2шт</td>
+              <td class="flexim-table__cell">600 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">650,96 из 600 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">27-1117</td>
+              <td class="flexim-table__cell">30.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Славконд</a></td>
+              <td class="flexim-table__cell">Пастила с клюквой 247 гр СПАР + Пастила с ароматом ванили СПАР 247 г</td>
+              <td class="flexim-table__cell">200 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">220,28 из 200 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">12-862</td>
+              <td class="flexim-table__cell">14.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Морозофф»</a></td>
+              <td class="flexim-table__cell">Пленка на шербеты с ароматом черная смородина</td>
+              <td class="flexim-table__cell">600 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">614,05 из 600 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">73-667</td>
+              <td class="flexim-table__cell">07.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Столичная бумага»</a></td>
+              <td class="flexim-table__cell">салфетки 200 шт LA FRESH</td>
+              <td class="flexim-table__cell">500 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">494,01 из 500 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">27-1123</td>
+              <td class="flexim-table__cell">07.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Славконд</a></td>
+              <td class="flexim-table__cell">Пленка на мармеладные дольки Цитрус 254 г SMART</td>
+              <td class="flexim-table__cell">100 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">129,3 из 100 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">73-668</td>
+              <td class="flexim-table__cell">15.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Столичная бумага»</a></td>
+              <td class="flexim-table__cell">СФ Пушинка 200 шт 1сл</td>
+              <td class="flexim-table__cell">500 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">531,2 из 500 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">224-47</td>
+              <td class="flexim-table__cell">06.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Здоровая семья Сибирь</a></td>
+              <td class="flexim-table__cell">Клебаксан 10 мл + Собиогенол 10 мл</td>
+              <td class="flexim-table__cell">100 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Н. Миловидова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">122,34 из 100 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">224-45</td>
+              <td class="flexim-table__cell">24.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Здоровая семья Сибирь</a></td>
+              <td class="flexim-table__cell">#Явсчастье</td>
+              <td class="flexim-table__cell">50 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Н. Миловидова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">63,1 из 50 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">14-1661</td>
+              <td class="flexim-table__cell">21.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Русал-Саянская фольга»</a></td>
+              <td class="flexim-table__cell">Фольга классич. 40 × 29 м</td>
+              <td class="flexim-table__cell">150 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Ю. Корнилова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">160,53 из 150 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">564-9</td>
+              <td class="flexim-table__cell">15.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Фирн М»</a></td>
+              <td class="flexim-table__cell">Аргинин 1000</td>
+              <td class="flexim-table__cell">20 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Ю. Корнилова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">25,5 из 20 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">14-1662</td>
+              <td class="flexim-table__cell">21.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Русал-Саянская фольга»</a></td>
+              <td class="flexim-table__cell">саянская Гриль 7 м х 44 см</td>
+              <td class="flexim-table__cell">60 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Ю. Корнилова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">70,4 из 60 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">14-1684</td>
+              <td class="flexim-table__cell">13.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Русал-Саянская фольга»</a></td>
+              <td class="flexim-table__cell">Фольга Ломберта 10 м х 29 экстра прочная 14 мкм</td>
+              <td class="flexim-table__cell">160 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Ю. Корнилова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">171,12 из 160 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">24-777</td>
+              <td class="flexim-table__cell">27.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Тетра</a></td>
+              <td class="flexim-table__cell">ПРОСТО 100 шт</td>
+              <td class="flexim-table__cell">300 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">318,76 из 300 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">9-2544</td>
+              <td class="flexim-table__cell">12.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ЧПА</a></td>
+              <td class="flexim-table__cell">Ашан светлое 1,45 л</td>
+              <td class="flexim-table__cell">50 000 шт</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">А. Григорьева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">57 029 из 50 000 шт</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">9-2545</td>
+              <td class="flexim-table__cell">12.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ЧПА</a></td>
+              <td class="flexim-table__cell">Ашан темное 1,5 л</td>
+              <td class="flexim-table__cell">30 000 шт</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">А. Григорьева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">40 185 из 30 000 шт</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">53-852</td>
+              <td class="flexim-table__cell">23.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО НБН Пломбир</a></td>
+              <td class="flexim-table__cell">Мороженое в вафельном стаканчике шоколадное Памятники</td>
+              <td class="flexim-table__cell">500 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">536,31 из 500 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">292-357</td>
+              <td class="flexim-table__cell">28.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">СОДЖ</a></td>
+              <td class="flexim-table__cell">Батончик COCOnitto 40 гр. клубничный вкус</td>
+              <td class="flexim-table__cell">400 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">416,99 из 400 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">78-184</td>
+              <td class="flexim-table__cell">08.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «УФА ПАК»</a></td>
+              <td class="flexim-table__cell">Пленка без печати 400 мм</td>
+              <td class="flexim-table__cell">300 кг</td>
+              <td class="flexim-table__cell">Пленка без печати</td>
+              <td class="flexim-table__cell">Ю. Корнилова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">319,48 из 300 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">95-176</td>
+              <td class="flexim-table__cell">17.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Атрус</a></td>
+              <td class="flexim-table__cell">Крекер «Ржаной» 220 гр.</td>
+              <td class="flexim-table__cell">50 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">А. Григорьева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">48,38 из 50 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">1-895</td>
+              <td class="flexim-table__cell">24.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Сыркофф</a></td>
+              <td class="flexim-table__cell">Сырок Красная цена черника, ферма братьев петровых, ВЫБОР СЕМЬИ ваниль</td>
+              <td class="flexim-table__cell">900 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">984,94 из 900 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">1-912</td>
+              <td class="flexim-table__cell">08.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Сыркофф</a></td>
+              <td class="flexim-table__cell">Ашан ГОСТ сырки: картошка; МясновЪ малина, картошка; Милянино сгущенка</td>
+              <td class="flexim-table__cell">600 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">672,53 из 600 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">89-191</td>
+              <td class="flexim-table__cell">13.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">УЗМВ</a></td>
+              <td class="flexim-table__cell">Вкусвилл Улеймская магниевая газ + Угличская газ</td>
+              <td class="flexim-table__cell">100 000 шт</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Н. Миловидова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">84 287 из 100 000 шт</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">1-900</td>
+              <td class="flexim-table__cell">29.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Сыркофф</a></td>
+              <td class="flexim-table__cell">Сырок Красная цена черника, Вкусвилл Сгущенка 5%</td>
+              <td class="flexim-table__cell">500 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">545,94 из 500 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">398-134</td>
+              <td class="flexim-table__cell">05.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Селекшн Фуд</a></td>
+              <td class="flexim-table__cell">Печенье без сахара: апельсин</td>
+              <td class="flexim-table__cell">400 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">418,37 из 400 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">398-136</td>
+              <td class="flexim-table__cell">05.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Селекшн Фуд</a></td>
+              <td class="flexim-table__cell">Трюфель с фундуком фантик</td>
+              <td class="flexim-table__cell">50 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">60,49 из 50 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">398-135</td>
+              <td class="flexim-table__cell">05.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Селекшн Фуд</a></td>
+              <td class="flexim-table__cell">«Грецкий орех» фантик</td>
+              <td class="flexim-table__cell">50 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">52,86 из 50 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">676-56</td>
+              <td class="flexim-table__cell">07.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Мирфудс»</a></td>
+              <td class="flexim-table__cell">Проба фотометка</td>
+              <td class="flexim-table__cell">10 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">В. Макарова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">12,26 из 10 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">23-1729</td>
+              <td class="flexim-table__cell">15.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Тореро</a></td>
+              <td class="flexim-table__cell">ТМ JOGA Хлебцы с творогом и кавказскими травами 70 г</td>
+              <td class="flexim-table__cell">250 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">281,72 из 250 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">47-356</td>
+              <td class="flexim-table__cell">21.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Русский свиток</a></td>
+              <td class="flexim-table__cell">Трубочка Беларусь: вареная сгущенка</td>
+              <td class="flexim-table__cell">300 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">307,48 из 300 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">89-184</td>
+              <td class="flexim-table__cell">13.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">УЗМВ</a></td>
+              <td class="flexim-table__cell">Угличская 1,5 Новый дизайн</td>
+              <td class="flexim-table__cell">1 500 000 шт</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Н. Миловидова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">1 514 807 из 1 500 000 шт</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">311-33</td>
+              <td class="flexim-table__cell">05.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Рыбинский молочный завод</a></td>
+              <td class="flexim-table__cell">Пленка фотометка-окно</td>
+              <td class="flexim-table__cell">500 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">515,58 из 500 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">721-424</td>
+              <td class="flexim-table__cell">27.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">АО «Нэфис Косметикс»</a></td>
+              <td class="flexim-table__cell">Порошок 10 кг (проба 1) ролик</td>
+              <td class="flexim-table__cell">10 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Макарова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">19,25 из 10 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">721-418</td>
+              <td class="flexim-table__cell">27.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">АО «Нэфис Косметикс»</a></td>
+              <td class="flexim-table__cell">Порошок 10 кг (проба 3) ролик</td>
+              <td class="flexim-table__cell">10 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Макарова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">10,34 из 10 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">721-425</td>
+              <td class="flexim-table__cell">27.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">АО «Нэфис Косметикс»</a></td>
+              <td class="flexim-table__cell">Порошок 10 кг (проба 2) ролик</td>
+              <td class="flexim-table__cell">10 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Макарова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">6,31 из 10 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">721-435</td>
+              <td class="flexim-table__cell">06.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">АО «Нэфис Косметикс»</a></td>
+              <td class="flexim-table__cell">Порошок 10 кг (проба 4) ролик</td>
+              <td class="flexim-table__cell">10 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Макарова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">19,71 из 10 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">30-458</td>
+              <td class="flexim-table__cell">14.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Аэрс-Мед</a></td>
+              <td class="flexim-table__cell">Беларусь второй слой матовая пленка (старый адрес Пролетарка)</td>
+              <td class="flexim-table__cell">200 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Н. Миловидова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">210,5 из 200 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">23-1728</td>
+              <td class="flexim-table__cell">13.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Тореро</a></td>
+              <td class="flexim-table__cell">Пленка ТМ Торешек Вафли глазированные «Со вкусом макадамии и темным шоколадом» 50 г</td>
+              <td class="flexim-table__cell">300 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">337,62 из 300 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">85-386</td>
+              <td class="flexim-table__cell">13.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Дмитрогорский молочный завод</a></td>
+              <td class="flexim-table__cell">Творог ИВ 9%</td>
+              <td class="flexim-table__cell">200 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">205,18 из 200 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">23-1724</td>
+              <td class="flexim-table__cell">30.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Тореро</a></td>
+              <td class="flexim-table__cell">Пленка РЕМИ РАДУЕТ шоколадные сливки 125 г</td>
+              <td class="flexim-table__cell">250 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">261,92 из 250 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">23-1722</td>
+              <td class="flexim-table__cell">30.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО Тореро</a></td>
+              <td class="flexim-table__cell">Пленка РЕМИ РАДУЕТ со вкусом лимон-лайм 125 г + сливочные 125 г</td>
+              <td class="flexim-table__cell">300 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Снесарева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">327,18 из 300 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">123-218</td>
+              <td class="flexim-table__cell">06.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «БИОФУДЛАБ»</a></td>
+              <td class="flexim-table__cell">Чувис Черная смородина + Малина + Клубника</td>
+              <td class="flexim-table__cell">30 000 шт</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">Ю. Корнилова</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">48 507 из 30 000 шт</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">572-161</td>
+              <td class="flexim-table__cell">17.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">АО «Си-Проджект»</a></td>
+              <td class="flexim-table__cell">Молоко сухое 200 гр ГОСТ</td>
+              <td class="flexim-table__cell">600 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">649,84 из 600 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">572-168</td>
+              <td class="flexim-table__cell">04.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">АО «Си-Проджект»</a></td>
+              <td class="flexim-table__cell">Пробный роль ПЭТ12 + ПЭ 50 белый ширина 350 мм</td>
+              <td class="flexim-table__cell">5 кг</td>
+              <td class="flexim-table__cell">Пленка без печати</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">13,39 из 5 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">572-167</td>
+              <td class="flexim-table__cell">04.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">АО «Си-Проджект»</a></td>
+              <td class="flexim-table__cell">Пробный роль</td>
+              <td class="flexim-table__cell">5 кг</td>
+              <td class="flexim-table__cell">Пленка без печати</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">7,87 из 5 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">246-236</td>
+              <td class="flexim-table__cell">08.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Люси</a></td>
+              <td class="flexim-table__cell">Пробный роль с нанесение ЧЗ</td>
+              <td class="flexim-table__cell">5 кг</td>
+              <td class="flexim-table__cell">Пленка без печати</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">3,04 из 5 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">24-782</td>
+              <td class="flexim-table__cell">12.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Тетра</a></td>
+              <td class="flexim-table__cell">Салфетки KIX 2 сл, 250 шт.</td>
+              <td class="flexim-table__cell">300 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">303,32 из 300 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">24-779</td>
+              <td class="flexim-table__cell">30.04.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Тетра</a></td>
+              <td class="flexim-table__cell">Гратиас Хоум 33×33 2</td>
+              <td class="flexim-table__cell">300 кг</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">О. Корзинкина</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">310,98 из 300 кг</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <tr class="flexim-table__row">
+              <td class="flexim-table__cell">9-2546</td>
+              <td class="flexim-table__cell">12.05.2026</td>
+              <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ЧПА</a></td>
+              <td class="flexim-table__cell">Квас Ашан 1 л</td>
+              <td class="flexim-table__cell">100 000 шт</td>
+              <td class="flexim-table__cell">Пленка с печатью</td>
+              <td class="flexim-table__cell">А. Григорьева</td>
+              <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--orange"></span><span class="flexim-table__stack"><span class="flexim-table__stack-main">Отгружено</span><span class="flexim-table__stack-sub">110 611 из 100 000 шт</span></span></span></td>
+              <td class="flexim-table__cell"><a href="02-order-card.html" class="flexim-table__cell-action" aria-label="Открыть заказ"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></a></td>
+            </tr>
+            <!-- endforeach -->
+          </tbody>
+          <tfoot class="flexim-table__footer">
+            <tr>
+              <td colspan="9">
+                <div class="flexim-table__footer-inner">
+                  <ul class="flexim-pagination">
+                    <li><button type="button" class="flexim-pagination__btn flexim-pagination__btn--active" aria-current="page">1</button></li>
+                    <li><button type="button" class="flexim-pagination__btn">2</button></li>
+                    <li><button type="button" class="flexim-pagination__btn">3</button></li>
+                    <li><button type="button" class="flexim-pagination__btn">4</button></li>
+                    <li><button type="button" class="flexim-pagination__btn">5</button></li>
+                    <li><button type="button" class="flexim-pagination__btn">6</button></li>
+                    <li><button type="button" class="flexim-pagination__btn">7</button></li>
+                    <li><span class="flexim-pagination__btn flexim-pagination__btn--ellipsis">…</span></li>
+                    <li><button type="button" class="flexim-pagination__btn">120</button></li>
+                    <li><button type="button" class="flexim-pagination__btn" aria-label="Следующая"><span data-flexim-icon="arrow-right" data-size="20" aria-hidden="true"></span></button></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Скрипты — теми же версиями, что в проде -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="./icons/icons.js"></script>
+<script>
+  if (window.fleximIcons) window.fleximIcons.renderAll();
+
+  // Фильтр-дропдаун: кнопка-пилюля открывает поповер с поиском и списком.
+  $(document).on('click', '.flexim-filter-dd > .flexim-filter', function (e) {
+    e.stopPropagation();
+    var $dd = $(this).closest('.flexim-filter-dd');
+    var open = $dd.hasClass('is-open');
+    $('.flexim-filter-dd').removeClass('is-open').children('.flexim-filter').attr('aria-expanded', 'false');
+    if (!open) { $dd.addClass('is-open'); $(this).attr('aria-expanded', 'true'); }
+  });
+  // Клики внутри меню (поле поиска) не закрывают дропдаун.
+  $(document).on('click', '.flexim-filter-dd__menu', function (e) { e.stopPropagation(); });
+  // Выбор пункта закрывает дропдаун.
+  $(document).on('click', '.flexim-filter-dd__menu .flexim-dropdown__item', function () {
+    $(this).closest('.flexim-filter-dd').removeClass('is-open').children('.flexim-filter').attr('aria-expanded', 'false');
+  });
+  // Клик вне — закрыть все.
+  $(document).on('click', function () {
+    $('.flexim-filter-dd').removeClass('is-open').children('.flexim-filter').attr('aria-expanded', 'false');
+  });
+</script>
+</body>
+</html>
