@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flexim — handoff</title>
+  <link rel="stylesheet" href="./tokens.css">
+  <style>
+    :root { font-family: var(--font-family); color: var(--text-primary); }
+    body { margin: 0; padding: 48px 32px; background: var(--background-bg); }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 { font: 700 30px/36px var(--font-family); margin: 0 0 8px; }
+    .lead { font: 400 18px/24px var(--font-family); color: var(--text-secondary); margin: 0 0 32px; }
+    h2 { font: 700 18px/24px var(--font-family); margin: 32px 0 12px; }
+    ul.entries { list-style: none; padding: 0; margin: 0; }
+    ul.entries li { padding: 12px 0; border-top: 1px solid var(--other-lines); }
+    ul.entries li:last-child { border-bottom: 1px solid var(--other-lines); }
+    ul.entries a { font: 600 14px/20px var(--font-family); color: var(--primary-main); text-decoration: none; }
+    ul.entries a:hover { color: var(--primary-light); }
+    ul.entries .desc { display: block; font: 400 14px/20px var(--font-family); color: var(--text-secondary); margin-top: 2px; }
+    footer { margin-top: 48px; font: 400 12px/16px var(--font-family); color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Flexim — handoff</h1>
+    <p class="lead">Дизайн-система для интеграции в прод <code>print-design/pr-diz.ru</code>.</p>
+
+    <p>Перед началом — <a href="./README.md" style="color: var(--primary-main);"><strong>README.md</strong></a>: что и в каком порядке подключать (две строки <code>&lt;link&gt;</code> + один <code>&lt;script&gt;</code> + папка <code>icons/</code>).</p>
+
+    <h2>Точки входа в пакет</h2>
+    <ul class="entries">
+      <li>
+        <a href="./components.html">components.html</a>
+        <span class="desc">Каталог компонентов — <strong>источник истины</strong>. Бери разметку 1:1.</span>
+      </li>
+      <li>
+        <a href="./01-orders.html">01-orders.html</a>
+        <span class="desc">Эталон экрана-списка: рейка + шапка + page-header + полная таблица + пагинация.</span>
+      </li>
+      <li>
+        <a href="./02-order-card.html">02-order-card.html</a>
+        <span class="desc">Эталон карточки заказа: вкладки + левая сводка + правый расчёт.</span>
+      </li>
+      <li>
+        <a href="./icons.html">icons.html</a>
+        <span class="desc">Все иконки реестра в одном месте — поиск нужной по имени.</span>
+      </li>
+      <li>
+        <a href="./_template.html">_template.html</a>
+        <span class="desc">Пустая болванка для новых страниц с уже подключёнными стилями.</span>
+      </li>
+    </ul>
+
+    <h2>Документация</h2>
+    <ul class="entries">
+      <li>
+        <a href="./RULES.md">RULES.md</a>
+        <span class="desc">Свод правил и частых ошибок (hover-конвенция, пагинация, full-height таблицы и т.д.).</span>
+      </li>
+      <li>
+        <a href="./COMPONENTS.md">COMPONENTS.md</a>
+        <span class="desc">Список компонентов с описаниями и пропсами.</span>
+      </li>
+    </ul>
+
+    <footer>Flexim · Принт-Дизайн · Дизайн-система · стек Bootstrap 4.0.0 + jQuery 3.5.1</footer>
+  </div>
+</body>
+</html>
