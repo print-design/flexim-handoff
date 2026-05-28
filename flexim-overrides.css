@@ -2201,6 +2201,55 @@ label, .col-form-label {
 }
 
 /* ============================================================
+   TOOLTIP-LABEL (Figma 7839:132372) — статичная закрываемая плашка-метка.
+   В отличие от .flexim-tooltip — БЕЗ хвостика и позиций, не popup.
+   Используется inline как лейбл/уведомление; опциональный крестик ✕ закрывает.
+   ============================================================ */
+.flexim-tooltip-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-xxs);
+  min-height: 32px;
+  padding: var(--size-xxs) var(--size-s);
+  border-radius: var(--size-xs);
+  box-shadow: var(--shadow-m);
+  font: 400 14px/20px var(--font-family);
+  white-space: nowrap;
+}
+.flexim-tooltip-label--light {
+  background: var(--surface-white);
+  color: var(--text-primary);
+}
+.flexim-tooltip-label--dark {
+  background: var(--background-dark);
+  color: var(--text-contrast);
+}
+.flexim-tooltip-label__close {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  /* Цвет крестика (Figma 4317:84823): бренд-розовый на светлом фоне, белый на тёмном. */
+  color: var(--primary-main);
+}
+.flexim-tooltip-label--dark .flexim-tooltip-label__close {
+  color: var(--text-contrast);
+}
+.flexim-tooltip-label__close:hover { opacity: 0.7; }
+.flexim-tooltip-label__close [data-flexim-icon] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.flexim-tooltip-label__close [data-flexim-icon] > svg { display: block; }
+
+/* ============================================================
    LOGO, MENU ITEM, SIDEBAR, HEADER (batch 7)
    ============================================================ */
 
@@ -2835,6 +2884,7 @@ a.flexim-user-chip__title:hover {
 .flexim-input-field { display: flex; flex-direction: column; gap: 4px; width: 316px; max-width: 100%; }
 .flexim-input-field__label {
   display: flex; gap: 4px; align-items: center;
+  margin: 0; /* сбрасываем Bootstrap label { margin-bottom: .5rem }, иначе разрыв до инпута 12px вместо 4px */
   font: 400 11px/12px var(--font-family); color: var(--text-primary);
 }
 .flexim-input-field__label .req { color: var(--primary-main); flex-shrink: 0; }
@@ -2865,13 +2915,23 @@ a.flexim-user-chip__title:hover {
 }
 .flexim-input__text--placeholder { color: var(--text-secondary); }
 .flexim-input__text--status { color: var(--success-main); font-weight: 700; text-transform: uppercase; }
-.flexim-input__clear {
+.flexim-input__clear,
+.flexim-input__action {
   flex: 0 0 24px; width: 24px; height: 24px;
   display: inline-flex; align-items: center; justify-content: center;
   border: 0; background: none; padding: 0; cursor: pointer;
   color: var(--primary-main);
 }
-.flexim-input__clear:hover { color: var(--primary-light); }
+.flexim-input__clear:hover,
+.flexim-input__action:hover { color: var(--primary-light); }
+/* Иконки внутри __clear / __action — flex-центрирование (как у .btn) — чтобы svg
+   не сидел на baseline и не давал зазор снизу. */
+.flexim-input__clear [data-flexim-icon],
+.flexim-input__action [data-flexim-icon] {
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.flexim-input__clear [data-flexim-icon] > svg,
+.flexim-input__action [data-flexim-icon] > svg { display: block; }
 .flexim-input__unit { flex: 0 0 auto; font: 400 14px/20px var(--font-family); color: var(--text-secondary); text-align: right; }
 .flexim-input__cal {
   flex: 0 0 24px; width: 24px; height: 24px;
@@ -2885,6 +2945,7 @@ a.flexim-user-chip__title:hover {
 .flexim-input--disabled { background: var(--surface-disabled); }
 .flexim-input--disabled .flexim-input__icon,
 .flexim-input--disabled .flexim-input__clear,
+.flexim-input--disabled .flexim-input__action,
 .flexim-input--disabled .flexim-input__cal { color: var(--text-disabled); }
 .flexim-input--disabled .flexim-input__text { color: var(--text-disabled); }
 .flexim-input--disabled .flexim-input__text--status { color: var(--text-disabled); }
@@ -2894,6 +2955,28 @@ a.flexim-user-chip__title:hover {
   font: 400 11px/12px var(--font-family); color: var(--error-main);
 }
 .flexim-input-field__hint > [data-flexim-icon] { width: 16px; height: 16px; color: var(--error-main); }
+
+/* Реальное поле ввода внутри .flexim-input__content — для рабочих форм
+   (логин, регистрация и т.д.). Витринный .flexim-input__text для матрицы остаётся.
+   Само .flexim-input при фокусе в поле получает focus-рамку через :focus-within. */
+.flexim-input__field {
+  flex: 1 1 auto;
+  min-width: 0;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font: 400 14px/20px var(--font-family);
+  color: var(--text-primary);
+}
+.flexim-input__field::placeholder { color: var(--text-secondary); }
+.flexim-input__field:disabled { color: var(--text-disabled); cursor: not-allowed; }
+.flexim-input:focus-within:not(.flexim-input--readonly):not(.flexim-input--disabled):not(.flexim-input--error) {
+  border: 2px solid var(--primary-light);
+  padding: 3px 11px;
+}
 
 /* ============================================================
    TEXTAREA — та же оболочка поля, многострочная (radius 8, border 1px)

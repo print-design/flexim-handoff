@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flexim — дизайн-система (Bootstrap 4)</title>
 
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+
   <!-- Те же версии, что в проде print-design/pr-diz.ru -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="./tokens.css">
@@ -1270,6 +1272,8 @@
         <button type="button" class="btn btn-primary">Применить</button>
         <button type="button" class="btn btn-outline-primary">Сбросить</button>
       </div>
+      <input type="hidden" class="flexim-datepicker__value-input" name="date_from" value="2023-12-03">
+      <input type="hidden" class="flexim-datepicker__value-input" name="date_to" value="2023-12-03">
     </div>
 
     <div class="group-label">С пресетами</div>
@@ -1365,6 +1369,8 @@
         <button type="button" class="btn btn-primary">Применить</button>
         <button type="button" class="btn btn-outline-primary">Сбросить</button>
       </div>
+      <input type="hidden" class="flexim-datepicker__value-input" name="period_from" value="2024-09-09">
+      <input type="hidden" class="flexim-datepicker__value-input" name="period_to" value="2024-09-14">
     </div>
   </div>
 </section>
@@ -1430,6 +1436,7 @@
           <!-- Фильтр: кнопка-пилюля → дропдаун со списком (Шт/кг — без поиска) -->
           <div class="flexim-filter-dd">
             <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Шт / кг <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <input type="hidden" class="flexim-filter-dd__value-input" name="unit">
             <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
               <div class="flexim-dropdown__items">
                 <button type="button" class="flexim-dropdown__item" role="menuitem">Килограммы</button>
@@ -1441,6 +1448,7 @@
           <!-- Фильтр с полем поиска внутри -->
           <div class="flexim-filter-dd">
             <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Тип работы <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <input type="hidden" class="flexim-filter-dd__value-input" name="work_type">
             <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
               <div class="flexim-filter-dd__search">
                 <div class="flexim-search__field">
@@ -1458,6 +1466,7 @@
 
           <div class="flexim-filter-dd">
             <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Менеджер <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <input type="hidden" class="flexim-filter-dd__value-input" name="manager_filter">
             <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
               <div class="flexim-filter-dd__search">
                 <div class="flexim-search__field">
@@ -1476,6 +1485,7 @@
 
           <div class="flexim-filter-dd">
             <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Заказчик <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <input type="hidden" class="flexim-filter-dd__value-input" name="customer_filter">
             <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
               <div class="flexim-filter-dd__search">
                 <div class="flexim-search__field">
@@ -1495,6 +1505,7 @@
           <!-- Фильтр со свободным вводом (Наименование) -->
           <div class="flexim-filter-dd">
             <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">Наименование <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span></button>
+            <input type="hidden" class="flexim-filter-dd__value-input" name="name_filter">
             <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
               <div class="flexim-filter-dd__search">
                 <div class="flexim-search__field">
@@ -2093,6 +2104,79 @@
         </div>
       </div>
     </div>
+
+    <div class="group-label mt-4">Рабочий пример — настоящие &lt;input&gt; для форм</div>
+    <p class="ds-desc ds-desc-small">Для рабочих форм (логин, фильтры с ручным вводом, любые поля) внутрь <code>.flexim-input__content</code> кладём <code>&lt;input class="flexim-input__field"&gt;</code>. Фокус-рамка появляется автоматически через <code>:focus-within</code>. Матрица сверху — это витрина состояний для дизайн-сверки, в проде её разметку не использовать.</p>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <div class="flexim-input-field">
+          <div class="flexim-input-field__label">Email</div>
+          <div class="flexim-input">
+            <div class="flexim-input__content">
+              <input class="flexim-input__field" type="email" placeholder="you@example.com">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="flexim-input-field">
+          <div class="flexim-input-field__label">Пароль</div>
+          <div class="flexim-input">
+            <div class="flexim-input__content">
+              <input class="flexim-input__field" type="password" placeholder="••••••">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="flexim-input-field">
+          <div class="flexim-input-field__label">Количество</div>
+          <div class="flexim-input">
+            <div class="flexim-input__content">
+              <input class="flexim-input__field" type="number" value="22">
+            </div>
+            <span class="flexim-input__unit">кг</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="flexim-input-field">
+          <div class="flexim-input-field__label">Отключённое</div>
+          <div class="flexim-input flexim-input--disabled">
+            <div class="flexim-input__content">
+              <input class="flexim-input__field" type="text" value="Нельзя редактировать" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="flexim-input-field">
+          <div class="flexim-input-field__label">С ошибкой</div>
+          <div class="flexim-input flexim-input--error">
+            <div class="flexim-input__content">
+              <input class="flexim-input__field" type="email" value="bad email">
+            </div>
+          </div>
+          <div class="flexim-input-field__hint"><span data-flexim-icon="error-circle" data-size="16" aria-hidden="true"></span> Неверный email</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-label mt-4">Action-slot — кнопка-действие в поле</div>
+    <p class="ds-desc ds-desc-small">Универсальный слот <code>.flexim-input__action</code> для кнопок-иконок справа от поля: eye toggle для пароля, copy, paste и т.п. Геометрия и стилизация совпадают с <code>.flexim-input__clear</code>, но семантика разная: <code>__clear</code> — «крестик очистки значения», <code>__action</code> — любое другое действие. Цвет иконки: бренд-розовый по умолчанию, серый в disabled, hover на бренд-light.</p>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <div class="flexim-input-field">
+          <label class="flexim-input-field__label" for="demo-password">Пароль</label>
+          <div class="flexim-input">
+            <div class="flexim-input__content">
+              <input id="demo-password" class="flexim-input__field" type="password" placeholder="••••••">
+            </div>
+            <button type="button" class="flexim-input__action" data-flexim-icon="eye-closed" data-size="24" data-toggle-password aria-pressed="false" aria-label="Показать пароль"></button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2453,12 +2537,14 @@
       <button type="button" class="flexim-segment__item flexim-segment__item--active" role="tab" aria-selected="true">Печать</button>
       <button type="button" class="flexim-segment__item" role="tab" aria-selected="false">Ламинация</button>
       <button type="button" class="flexim-segment__item" role="tab" aria-selected="false">Резка</button>
+      <input type="hidden" class="flexim-segment__value-input" name="operation_type" value="Печать">
     </div>
 
     <div class="group-label">Outline</div>
     <div class="flexim-segment flexim-segment--outline flexim-segment--w-2 mb-4" role="tablist">
       <button type="button" class="flexim-segment__item flexim-segment__item--active" role="tab">Таблица</button>
       <button type="button" class="flexim-segment__item" role="tab">Карточки</button>
+      <input type="hidden" class="flexim-segment__value-input" name="view_mode" value="Таблица">
     </div>
 
     <div class="group-label">4 опции, disabled</div>
@@ -2467,6 +2553,7 @@
       <button type="button" class="flexim-segment__item flexim-segment__item--active" role="tab">Неделя</button>
       <button type="button" class="flexim-segment__item" role="tab">Месяц</button>
       <button type="button" class="flexim-segment__item" role="tab" disabled>Всё</button>
+      <input type="hidden" class="flexim-segment__value-input" name="period" value="Неделя">
     </div>
   </div>
 </section>
@@ -2750,6 +2837,7 @@
                 <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">О. Корзинкина</span></button>
               </div>
             </div>
+            <input type="hidden" class="flexim-select__value-input" name="manager" value="Ю. Корнилова">
           </div>
         </div>
       </div>
@@ -2771,6 +2859,7 @@
                 <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">Atlas</span></button>
               </div>
             </div>
+            <input type="hidden" class="flexim-select__value-input" name="machine" value="Comiflex">
           </div>
         </div>
       </div>
@@ -2795,6 +2884,7 @@
                 <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">Приладка</span></button>
               </div>
             </div>
+            <input type="hidden" class="flexim-select__value-input" name="operations" value="Печать,Ламинация">
           </div>
         </div>
       </div>
@@ -2909,7 +2999,7 @@
 <section id="flexim-slider" class="ds-section">
   <div class="container">
     <h2>Slider (Flexim)</h2>
-    <p class="ds-desc">Дискретный слайдер: тики, заполненный range primary-light, thumb 24px (статичное превью).</p>
+    <p class="ds-desc">Дискретный слайдер: тики, заполненный range primary-light, thumb 24px (статичное превью). Для формы — hidden input <code>.flexim-slider__value-input</code>; интерактив (драг thumb) — задача программиста или будущей JS-обёртки.</p>
     <div class="flexim-slider flexim-slider--m flexim-slider--static">
       <div class="flexim-slider__ticks">
         <span>10</span><span>15</span><span class="flexim-slider__tick--active">25</span><span>30</span><span>35</span><span>40</span><span>45</span><span>50</span>
@@ -2918,6 +3008,7 @@
         <div class="flexim-slider__range flexim-slider__range--w42"></div>
         <span class="flexim-slider__thumb flexim-slider__thumb--pos42" aria-hidden="true"></span>
       </div>
+      <input type="hidden" class="flexim-slider__value-input" name="quantity" value="25">
     </div>
   </div>
 </section>
@@ -3297,6 +3388,25 @@
         <span class="flexim-tooltip__bubble" role="tooltip">Тёмный доп. вариант<span class="flexim-tooltip__arrow" aria-hidden="true"></span></span>
       </span>
     </div>
+
+    <div class="group-label mt-4">Tooltip-label (Figma 7839:132372) — статичная закрываемая плашка</div>
+    <p class="ds-desc ds-desc-small">Без хвостика и позиций. Используется inline как метка/уведомление. Светлая / тёмная (`background/dark`) + опциональный крестик ✕.</p>
+    <div class="d-flex flex-wrap align-items-center" style="gap: 16px;">
+      <span class="flexim-tooltip-label flexim-tooltip-label--light">Tooltip</span>
+      <span class="flexim-tooltip-label flexim-tooltip-label--light">
+        Tooltip
+        <button type="button" class="flexim-tooltip-label__close" aria-label="Закрыть">
+          <span data-flexim-icon="x" data-size="16" aria-hidden="true"></span>
+        </button>
+      </span>
+      <span class="flexim-tooltip-label flexim-tooltip-label--dark">Tooltip</span>
+      <span class="flexim-tooltip-label flexim-tooltip-label--dark">
+        Tooltip
+        <button type="button" class="flexim-tooltip-label__close" aria-label="Закрыть">
+          <span data-flexim-icon="x" data-size="16" aria-hidden="true"></span>
+        </button>
+      </span>
+    </div>
   </div>
 </section>
 
@@ -3600,6 +3710,18 @@
     $('.flexim-select').removeClass('is-open').children('.flexim-select__trigger').attr('aria-expanded', 'false');
     if (!isOpen) { $sel.addClass('is-open'); $(this).attr('aria-expanded', 'true'); }
   });
+  // Записать выбранное значение в скрытый input для отправки формы.
+  function fleximUpdateSelectHidden($sel) {
+    var $hidden = $sel.find('.flexim-select__value-input');
+    if (!$hidden.length) return;
+    var values = $sel.find('.flexim-select__option.flexim-dropdown__item--active')
+      .map(function () { return $(this).find('.flexim-select__opt-label').text().trim(); }).get();
+    if ($sel.hasClass('flexim-select--multi')) {
+      $hidden.val(values.join(','));
+    } else {
+      $hidden.val(values[0] || '');
+    }
+  }
   function fleximRebuildMultiChips($sel) {
     var $content = $sel.find('.flexim-select__trigger > .flexim-input__content');
     $content.empty();
@@ -3608,6 +3730,7 @@
       $content.append('<span class="flexim-chip-tag flexim-chip-tag--s">' + label + ' <button type="button" class="flexim-chip-dismiss" aria-label="Убрать"><span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span></button></span>');
     });
     if (window.fleximIcons) window.fleximIcons.renderAll();
+    fleximUpdateSelectHidden($sel);
   }
   $(document).on('click', '.flexim-select__option', function (e) {
     e.stopPropagation();
@@ -3620,6 +3743,7 @@
     $sel.find('.flexim-select__trigger .flexim-input__text').text($(this).find('.flexim-select__opt-label').text());
     $sel.find('.flexim-select__option').removeClass('flexim-dropdown__item--active');
     $(this).addClass('flexim-dropdown__item--active');
+    fleximUpdateSelectHidden($sel);
     $sel.removeClass('is-open').children('.flexim-select__trigger').attr('aria-expanded', 'false');
   });
   // Удаление чипа в мультиселекте (синхронизируем активные пункты списка).
@@ -3631,6 +3755,7 @@
       if ($(this).find('.flexim-select__opt-label').text().trim() === label) $(this).removeClass('flexim-dropdown__item--active');
     });
     $(this).closest('.flexim-chip-tag').remove();
+    fleximUpdateSelectHidden($sel);
   });
   $(document).on('click', function () {
     $('.flexim-select').removeClass('is-open').children('.flexim-select__trigger').attr('aria-expanded', 'false');
@@ -3646,13 +3771,43 @@
   });
   // Клики внутри меню (поле поиска) не закрывают дропдаун.
   $(document).on('click', '.flexim-filter-dd__menu', function (e) { e.stopPropagation(); });
-  // Выбор пункта закрывает дропдаун.
+  // Выбор пункта закрывает дропдаун и пишет значение в hidden input для отправки формы.
   $(document).on('click', '.flexim-filter-dd__menu .flexim-dropdown__item', function () {
-    $(this).closest('.flexim-filter-dd').removeClass('is-open').children('.flexim-filter').attr('aria-expanded', 'false');
+    var $dd = $(this).closest('.flexim-filter-dd');
+    $dd.find('.flexim-filter-dd__value-input').val($(this).text().trim());
+    $dd.removeClass('is-open').children('.flexim-filter').attr('aria-expanded', 'false');
   });
   // Клик вне — закрыть все.
   $(document).on('click', function () {
     $('.flexim-filter-dd').removeClass('is-open').children('.flexim-filter').attr('aria-expanded', 'false');
+  });
+
+  // Tooltip-label: крестик закрывает плашку.
+  $(document).on('click', '.flexim-tooltip-label__close', function (e) {
+    e.stopPropagation();
+    $(this).closest('.flexim-tooltip-label').remove();
+  });
+
+  // Segment control: клик по сегменту делает его активным + пишет значение в hidden input.
+  $(document).on('click', '.flexim-segment__item:not(:disabled)', function () {
+    var $seg = $(this).closest('.flexim-segment');
+    $seg.find('.flexim-segment__item').removeClass('flexim-segment__item--active').attr('aria-selected', 'false');
+    $(this).addClass('flexim-segment__item--active').attr('aria-selected', 'true');
+    $seg.find('.flexim-segment__value-input').val($(this).text().trim());
+  });
+
+  // Toggle пароля: type=password↔text, иконка eye-closed↔eye-open, aria-pressed.
+  // Кнопка живёт в слоте .flexim-input__action, иконка задаётся data-flexim-icon —
+  // меняем атрибут и перерендериваем иконку через fleximIcons.renderAll().
+  $(document).on('click', '[data-toggle-password]', function () {
+    var $btn = $(this);
+    var $input = $btn.closest('.flexim-input').find('.flexim-input__field').first();
+    var willShow = $input.attr('type') === 'password';
+    $input.attr('type', willShow ? 'text' : 'password').focus();
+    $btn.attr('aria-pressed', String(willShow));
+    $btn.attr('aria-label', willShow ? 'Скрыть пароль' : 'Показать пароль');
+    $btn.attr('data-flexim-icon', willShow ? 'eye-open' : 'eye-closed');
+    if (window.fleximIcons) window.fleximIcons.renderAll();
   });
 </script>
 </body>
