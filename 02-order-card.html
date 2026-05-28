@@ -13,14 +13,15 @@
   <link rel="stylesheet" href="./flexim-overrides.css">
 
   <style>
-    /* Только структурный каркас страницы (раскладка). Все компоненты — из системы. */
-    body { margin: 0; background: var(--background-bg); }
-    .app-shell { display: flex; min-height: 100vh; align-items: stretch; }
-    .app-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
-    .app-topbar { flex-shrink: 0; padding: 0; }
-    .app-topbar .flexim-header-menu { border-radius: 0; }
-    .app-topbar__right { display: flex; align-items: center; gap: var(--size-m); }
-    .app-content { flex: 1 1 auto; padding: 0; }
+    /*
+      Общий каркас (.app-shell / .app-main / .app-topbar / .app-content) живёт
+      в _bootstrap-flexim-overrides.css → секция "APP SHELL".
+      Ниже — только специфика этого экрана (отличия от каркаса по умолчанию +
+      page-level помощники для содержимого карточки).
+    */
+    /* У карточки заказа .app-content без паддинга — внутри сам управляет полноширинной
+       панелью табов и body. (По умолчанию там был бы padding var(--size-xl).) */
+    .app-content { padding: 0; }
     /* Полноширинная панель табов: прижата к хэдеру (0px сверху), серая линия —
        до края экрана; табы при этом инсетятся внутренним паддингом. */
     .calc-tabs { display: flex; padding: 0 var(--size-xl); }

@@ -20,13 +20,10 @@
        допустимое page-level CSS — структурный каркас»). Контент внутри —
        только из компонентов DS, типографика — классы .t-* из tokens.css.
        ───────────────────────────────────────────────────────────────── */
+    /* Базовые стили body (шрифт, цвет, фон) — в _bootstrap-flexim-overrides.css.
+       Здесь только специфика логина: чтобы .auth-shell `min-height:100vh` рассчитался
+       корректно, html/body тянем на полную высоту. */
     html, body { height: 100%; }
-    body {
-      margin: 0;
-      background: var(--background-bg);
-      font-family: var(--font-family);
-      color: var(--text-primary);
-    }
 
     .auth-shell {
       display: flex;

@@ -12,27 +12,11 @@
   <link rel="stylesheet" href="./tokens.css">
   <link rel="stylesheet" href="./flexim-overrides.css">
 
-  <style>
-    /* Каркас страницы — структурная раскладка (цвета/отступы через токены). */
-    body { margin: 0; background: var(--background-bg); }
-    .app-shell { display: flex; min-height: 100vh; align-items: stretch; }
-    .app-main { flex: 1 1 auto; min-width: 0; min-height: 100vh; display: flex; flex-direction: column; }
-    /* Шапка вплотную к краям: без отступов вокруг и без скругления. */
-    .app-topbar { flex-shrink: 0; padding: 0; }
-    .app-topbar .flexim-header-menu { border-radius: 0; }
-    .app-topbar__right { display: flex; align-items: center; gap: var(--size-m); }
-    .app-content {
-      flex: 1 1 auto;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      padding: var(--size-xl);
-    }
-    /* Отступ от строки заголовка/фильтров до таблицы. */
-    .app-content > .flexim-header { flex-shrink: 0; margin-bottom: var(--size-l); }
-    /* Высоту/скролл таблицы держит .flexim-table-wrap--page-fill (см. overrides):
-       тянется на всю высоту, тело прокручивается, полоса — в правом жёлобе вне таблицы. */
-  </style>
+  <!--
+    Каркас страницы (.app-shell / .app-main / .app-topbar / .app-content) живёт
+    в _bootstrap-flexim-overrides.css → секция "APP SHELL". Высоту/скролл таблицы
+    держит .flexim-table-wrap--page-fill (см. там же). Здесь специфики экрана нет.
+  -->
 </head>
 <body>
 

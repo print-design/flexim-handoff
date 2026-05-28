@@ -3297,3 +3297,40 @@ a:hover { color: var(--primary-dark); }
   gap: var(--size-l);
   min-width: 0;
 }
+
+/* ============================================================
+   APP SHELL — общая каркасная раскладка экранов проекта
+   (рейка слева + topbar сверху + content). Используется в
+   01-orders.html, 02-order-card.html и других экранах.
+   Уникальная специфика отдельного экрана — в его <style>
+   (например, full-width tabs, calc-body — в order-card).
+   ============================================================ */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  align-items: stretch;
+}
+.app-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.app-topbar {
+  flex-shrink: 0;
+  padding: 0;
+}
+.app-topbar .flexim-header-menu { border-radius: 0; }
+.app-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--size-m);
+}
+.app-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--size-xl);
+}
+.app-content > .flexim-header { flex-shrink: 0; margin-bottom: var(--size-l); }
