@@ -19,13 +19,13 @@
 | Стек | Где лежат компоненты | Назначение |
 |---|---|---|
 | **React** (флакон-песочница) | `flexim-app/src/components/ui/` | Интерактивное превью, обучение, демо |
-| **Bootstrap** (для прода) | `prod-mockups/_bootstrap-flexim-overrides.css` + секции `prod-mockups/index.html` | Реальная сборка экранов для PHP-программиста |
+| **Bootstrap** (для прода) | `prod-mockups/_bootstrap-flexim-overrides.css` + секции `prod-mockups/components.html` | Реальная сборка экранов для PHP-программиста |
 
 **Оба каталога эквивалентны** — каждый компонент существует в обеих версиях
 и выглядит одинаково.
 
 > **Для сборки моков под прод бери разметку из живого каталога
-> `prod-mockups/index.html`** (открыть в браузере) — там точные актуальные
+> `prod-mockups/components.html`** (открыть в браузере) — там точные актуальные
 > классы и все состояния, копировать 1:1. Все иконки — `prod-mockups/icons.html`;
 > в разметке только `<span data-flexim-icon="имя" data-size="24"></span>`
 > + `fleximIcons.renderAll()`. Названия классов ниже могут отставать от каталога —
@@ -224,7 +224,7 @@ import { Input } from '../../components/ui/input';
 + `.flexim-input` (shell 40px). Лейбл — `text-primary`, 11/12; звёздочка `.req` —
 `primary-main`. Модификатор **большого лейбла:** `.flexim-input-field--lg-label`
 (H4 Semibold 14/20, звёздочка остаётся 11/12). Матрица состояний × вариантов в
-`prod-mockups/index.html`.
+`prod-mockups/components.html`.
 
 ---
 
@@ -500,7 +500,7 @@ import {
 </div>
 ```
 
-Каталог: `prod-mockups/index.html` → секция **Filter**.
+Каталог: `prod-mockups/components.html` → секция **Filter**.
 
 ---
 
@@ -824,7 +824,7 @@ React-компонент — только Bootstrap-разметка.
 | `.flexim-stat__sub` | Подстрока (12/16 secondary) |
 
 Часто внутри `.flexim-header-h4` (подзаголовок колонки). Образец:
-`02-order-card.html`, каталог `prod-mockups/index.html` → **Stat**.
+`02-order-card.html`, каталог `prod-mockups/components.html` → **Stat**.
 
 ---
 
