@@ -696,6 +696,14 @@
       <strong>error</strong> (<code class="text-primary">.btn-danger</code> — фон <code class="text-primary">--error-50</code>).
       Размеры: <strong>M</strong> 40px (pad 8×16), <strong>S</strong> — <code class="text-primary">.btn-sm</code> 32px (pad 4×12). Скругление 8px, gap 8px, текст 14/20/700.
     </p>
+    <p class="ds-desc ds-desc-small">
+      <strong>Тег выбирай по действию, не по виду.</strong> Кнопка ведёт на другой
+      адрес → <code>&lt;a href="…" class="btn …"&gt;</code> (например, «Новый расчёт» —
+      это ссылка на <code>create.php</code>). Кнопка делает действие на странице
+      (модалка, сабмит, обработчик) → <code>&lt;button type="button" class="btn …"&gt;</code>.
+      Стиль и зона клика — на классе, визуально не отличается. Правило одинаково
+      работает для всех вариантов (primary/secondary/ghost/error/icon-only).
+    </p>
 
     <div class="group-label">Варианты (M, текст + иконка)</div>
     <p class="ds-desc ds-desc-small">Иконка 24×24 из макета (плюс).</p>
@@ -2247,14 +2255,14 @@
     <p class="ds-desc">В Figma два «хедера»: верхняя навигация (Header menu) и заголовок страницы (Page header).</p>
 
     <div class="group-label">Header menu — верхняя навигация (Figma 3806:56460)</div>
-    <p class="ds-desc ds-desc-small">h-56, горизонтальное меню (menu 14/16, active — нижний бордер 2px primary) + user-чип справа.</p>
+    <p class="ds-desc ds-desc-small">h-56, горизонтальное меню (menu 14/16, active — нижний бордер 2px primary) + user-чип справа. Табы — <strong>ссылки <code>&lt;a href&gt;</code></strong> (это переходы на другие страницы), не <code>&lt;button&gt;</code>.</p>
     <div class="flexim-header-menu mb-3">
       <nav class="flexim-header-menu__nav">
-        <button type="button" class="flexim-header-menu__item flexim-header-menu__item--active">Очередь</button>
-        <button type="button" class="flexim-header-menu__item">Печать</button>
-        <button type="button" class="flexim-header-menu__item">Ламинация</button>
-        <button type="button" class="flexim-header-menu__item">Резка</button>
-        <button type="button" class="flexim-header-menu__item">Отгрузка</button>
+        <a href="#" class="flexim-header-menu__item flexim-header-menu__item--active">Очередь</a>
+        <a href="#" class="flexim-header-menu__item">Печать</a>
+        <a href="#" class="flexim-header-menu__item">Ламинация</a>
+        <a href="#" class="flexim-header-menu__item">Резка</a>
+        <a href="#" class="flexim-header-menu__item">Отгрузка</a>
       </nav>
       <div class="flexim-user-chip">
         <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials" title="Пономарёв Сергей">ПС</span>
@@ -3293,7 +3301,7 @@
     <h2>Tabs (Flexim)</h2>
     <p class="ds-desc">Underline и pill; размеры m/s; счётчик — ChipTag size s.</p>
 
-    <div class="group-label">Underline m — воронка заказов</div>
+    <div class="group-label">Underline m — sub menu-item (Figma 3806:56487), h-40</div>
     <div class="flexim-tabs flexim-tabs--underline flexim-tabs--m mb-4" role="tablist">
       <button type="button" class="flexim-tabs__tab" role="tab">Расчёты</button>
       <button type="button" class="flexim-tabs__tab flexim-tabs__tab--active" role="tab" aria-selected="true">
@@ -3613,6 +3621,7 @@
 <footer class="ds-footer-note" style="padding: 32px 0; text-align: center; color: var(--text-tertiary);">
   <div class="container">
     Flexim · Принт-Дизайн · 2026 · Дизайн-система v1.0 · стек Bootstrap 4.0.0 + jQuery 3.5.1
+    · <a href="./00-components.html" style="color: var(--primary-main);">Старый каталог компонентов</a>
   </div>
 </footer>
 

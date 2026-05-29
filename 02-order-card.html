@@ -16,23 +16,51 @@
     /*
       Общий каркас (.app-shell / .app-main / .app-topbar / .app-content) живёт
       в _bootstrap-flexim-overrides.css → секция "APP SHELL".
-      Ниже — только специфика этого экрана (отличия от каркаса по умолчанию +
-      page-level помощники для содержимого карточки).
+      Ниже — page-level структурный каркас этого экрана (раскладка, не компоненты).
     */
     /* У карточки заказа .app-content без паддинга — внутри сам управляет полноширинной
        панелью табов и body. (По умолчанию там был бы padding var(--size-xl).) */
     .app-content { padding: 0; }
     /* Полноширинная панель табов: прижата к хэдеру (0px сверху), серая линия —
        до края экрана; табы при этом инсетятся внутренним паддингом. */
-    .calc-tabs { display: flex; padding: 0 var(--size-xl); }
-    /* Тело карточки (колонки) — со стандартными отступами, ниже панели табов. */
-    .calc-body { padding: var(--size-xl); }
+    .calc-tabs { display: flex; padding: 0 40px; }
+    /* Тело карточки (колонки) — отступы от краёв = 40px со всех сторон. */
+    .calc-body { padding: 40px; }
+    /* Зазор между левой и правой колонками = 40px (по 20px на col). */
+    .calc-body > .row { margin-left: -20px; margin-right: -20px; }
+    .calc-body > .row > [class*="col-"] { padding-left: 20px; padding-right: 20px; }
+
+    /* Шапка заказа: H1 → группа (H2) → № и дата (H3 reg) → chip-status. Узкие отступы. */
+    .calc-header-stack > * { margin: 0; }
+    .calc-header-stack > * + * { margin-top: var(--size-xxs); }
+    .calc-header-stack__chip { margin-top: var(--size-s) !important; }
+
+    /* Заголовок секции H2/H3 с вспомогательным значением справа («Материалы 90 кг»). */
+    .calc-section-title { display: flex; align-items: baseline; gap: var(--size-s); margin-bottom: var(--size-m); }
+    .calc-section-title > * { margin: 0; }
+
+    /* Верхняя строка инпутов (3 узких поля по 140). */
+    .calc-top-inputs { display: flex; gap: var(--size-l); flex-wrap: wrap; align-items: flex-end; }
+    .calc-top-inputs .flexim-input-field { width: 140px; }
+    /* Курс € / Курс $ — 2 stat-блока в ряд под инпутами. */
+    .calc-rates { display: flex; gap: var(--size-xxl); }
+
     /* Цифры в карточке «Расчёт» не должны переноситься. */
     .card .flexim-list-item__value { white-space: nowrap; }
-    /* Сворачиваемый блок «Расходы». */
+
+    /* Сворачиваемый блок «Расходы». В Figma показан раскрытым. */
     .calc-expenses { border-top: 1px solid var(--other-lines); padding-top: var(--size-m); }
     [data-expenses-toggle] .calc-expenses-icon { transition: transform .15s ease; }
     [data-expenses-toggle][aria-expanded="true"] .calc-expenses-icon { transform: rotate(180deg); }
+
+    /* Нижние действия правой колонки: «Скачать» + «Распечатать». */
+    .calc-actions { display: flex; gap: var(--size-m); margin-top: var(--size-l); }
+
+    /* Группа чекбоксов внизу левой колонки. */
+    .calc-cb-group { display: flex; flex-direction: column; gap: var(--size-s); margin: var(--size-xl) 0 var(--size-m); }
+
+    /* Расстояние между секциями левой колонки. */
+    .calc-section + .calc-section { margin-top: var(--size-xl); }
   </style>
 </head>
 <body>
@@ -59,13 +87,13 @@
     <div class="app-topbar">
       <div class="flexim-header-menu">
         <nav class="flexim-header-menu__nav">
-          <button type="button" class="flexim-header-menu__item flexim-header-menu__item--active">Отгружено</button>
-          <button type="button" class="flexim-header-menu__item">Ждёт отгрузки</button>
-          <button type="button" class="flexim-header-menu__item">Производят</button>
-          <button type="button" class="flexim-header-menu__item">В работе</button>
-          <button type="button" class="flexim-header-menu__item">Расчёты</button>
-          <button type="button" class="flexim-header-menu__item">Черновики</button>
-          <button type="button" class="flexim-header-menu__item">Корзина</button>
+          <a href="#" class="flexim-header-menu__item">Отгружено</a>
+          <a href="#" class="flexim-header-menu__item">Ждёт отгрузки</a>
+          <a href="#" class="flexim-header-menu__item">Производят</a>
+          <a href="#" class="flexim-header-menu__item flexim-header-menu__item--active">В работе</a>
+          <a href="#" class="flexim-header-menu__item">Расчёты</a>
+          <a href="#" class="flexim-header-menu__item">Черновики</a>
+          <a href="#" class="flexim-header-menu__item">Корзина</a>
         </nav>
         <div class="app-topbar__right">
           <button type="button" class="flexim-icon-btn" aria-label="Поиск"><span data-flexim-icon="search" data-size="24" aria-hidden="true"></span></button>
@@ -94,7 +122,7 @@
       <div class="row">
 
         <!-- ЛЕВАЯ КОЛОНКА: сводка по заказу -->
-        <div class="col-lg-5 mb-4">
+        <div class="col-lg-6 mb-4">
 
           <div class="mb-3">
             <a href="01-orders.html" class="btn btn-outline-primary">
@@ -103,92 +131,147 @@
             </a>
           </div>
 
-          <header class="flexim-header mb-2">
-            <div class="flexim-header__heading">
-              <h1 class="flexim-header__title">Пленка без печати ширина 390 мм</h1>
-            </div>
-          </header>
-          <div class="flexim-header-h4 mb-3"><span class="flexim-header-h4__title">№216-545 от 05.05.2026</span></div>
-
+          <!-- Шапка заказа: H1 + №-дата (H3 reg) + статус-баннер -->
+          <div class="calc-header-stack mb-3">
+            <h1 class="flexim-header__title">Пленка без печати ширина 390 мм</h1>
+            <div class="t-h3-r">№216-545 <span class="text-muted">от 05.05.2026</span></div>
+          </div>
           <div class="flexim-status-banner flexim-status-banner--warning flexim-status-banner--outline mb-4">
             <span data-flexim-icon="box" data-size="24" aria-hidden="true"></span>
             <span>Отгружено 100,85 из 90 кг</span>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-md-6 mb-3 mb-md-0">
-              <div class="flexim-header-h4 mb-2"><span class="flexim-header-h4__title">О заказе</span></div>
-              <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Заказчик</span><span class="flexim-list-item__value">Сласти</span></div>
-              <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Менеджер</span><span class="flexim-list-item__value">Корзинкина Олеся</span></div>
-              <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Тип работы</span><span class="flexim-list-item__value">Пленка без печати</span></div>
-              <div class="flexim-list-item flexim-list-item--left"><span class="flexim-list-item__label">Объём заказа</span><span class="flexim-list-item__value">90 кг</span></div>
-            </div>
-            <div class="col-md-6">
-              <div class="flexim-header-h4 mb-2"><span class="flexim-header-h4__title">Характеристики</span></div>
-              <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Ширина ручья</span><span class="flexim-list-item__value">390 мм</span></div>
-              <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Количество ручьёв</span><span class="flexim-list-item__value">1</span></div>
-              <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Количество ламинаций</span><span class="flexim-list-item__value">нет</span></div>
-              <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Доп. расходы с кг</span><span class="flexim-list-item__value">0 руб</span></div>
-              <div class="flexim-list-item flexim-list-item--left"><span class="flexim-list-item__label">Экосбор с 1 кг</span><span class="flexim-list-item__value">10,75 руб</span></div>
+          <!-- О заказе + Пленка (слева) и Характеристики (справа) — две колонки -->
+          <div class="calc-section">
+            <div class="row">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <h3 class="t-h3 mb-2">О заказе</h3>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Заказчик</span><span class="flexim-list-item__value">Сласти</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Объём заказа</span><span class="flexim-list-item__value">90 кг</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Менеджер</span><span class="flexim-list-item__value">Корзинкина Олеся</span></div>
+                <div class="flexim-list-item flexim-list-item--left"><span class="flexim-list-item__label">Тип работы</span><span class="flexim-list-item__value">Пленка без печати</span></div>
+
+                <h3 class="t-h3 mb-2 mt-4">Пленка</h3>
+
+                <div class="flexim-header-h4 mb-2"><span class="flexim-header-h4__title">Основная плёнка</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Марка плёнки</span><span class="flexim-list-item__value">HGPL прозрачка</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Толщина</span><span class="flexim-list-item__value">35 мкм 31,85 г/м²</span></div>
+                <div class="flexim-list-item flexim-list-item--left"><span class="flexim-list-item__label">Лыжи</span><span class="flexim-list-item__value">без лыж</span></div>
+
+                <div class="flexim-header-h4 mb-2 mt-3"><span class="flexim-header-h4__title">Ламинация 1 (сольвент)</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Марка плёнки</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Толщина</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--left"><span class="flexim-list-item__label">Лыжи</span><span class="flexim-list-item__value">—</span></div>
+
+                <div class="flexim-header-h4 mb-2 mt-3"><span class="flexim-header-h4__title">Ламинация 2 (сольвент)</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Марка плёнки</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Толщина</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--left"><span class="flexim-list-item__label">Лыжи</span><span class="flexim-list-item__value">—</span></div>
+              </div>
+              <div class="col-md-6">
+                <h3 class="t-h3 mb-2">Характеристики</h3>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Печатная машина</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Красочность</span><span class="flexim-list-item__value">нет</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Кол-во новых форм</span><span class="flexim-list-item__value">0</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Длина этикетки</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Ширина ручья</span><span class="flexim-list-item__value">390 мм</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Кол-во ручьёв</span><span class="flexim-list-item__value">1</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Рапорт</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Кол-во этикеток в рапорте</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Кол-ва ламинаций</span><span class="flexim-list-item__value">нет</span></div>
+                <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Ширина ламинирующего вала</span><span class="flexim-list-item__value">—</span></div>
+                <div class="flexim-list-item flexim-list-item--left"><span class="flexim-list-item__label">Доп. расходы с кг</span><span class="flexim-list-item__value">0 ₽</span></div>
+              </div>
             </div>
           </div>
 
-          <div class="flexim-header-h4 mb-2"><span class="flexim-header-h4__title">Пленка</span></div>
-          <div class="mb-4">
-            <div class="flexim-list-item flexim-list-item--sep flexim-list-item--left"><span class="flexim-list-item__label">Основная пленка</span><span class="flexim-list-item__value">HGPL прозрачка</span></div>
-            <div class="flexim-list-item flexim-list-item--left"><span class="flexim-list-item__label">Параметры</span><span class="flexim-list-item__value">35 мкм – 31,85 г/м², без лыж</span></div>
+          <!-- Красочность — таблица. Для текущего примера «без печати» — пусто. -->
+          <div class="calc-section">
+            <h3 class="t-h3 mb-2">Красочность: нет</h3>
+            <div class="flexim-table-wrap">
+              <div class="flexim-table__viewport">
+                <table class="flexim-table flexim-table--rich">
+                  <thead>
+                    <tr>
+                      <th class="flexim-table__head-cell" scope="col">Цв. схема</th>
+                      <th class="flexim-table__head-cell" scope="col">Цвет</th>
+                      <th class="flexim-table__head-cell" scope="col">Запечатка</th>
+                      <th class="flexim-table__head-cell" scope="col">Тип полимера</th>
+                      <th class="flexim-table__head-cell" scope="col">Форма</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- В этом примере «Пленка без печати» — красок нет. -->
+                  </tbody>
+                </table>
+                <div class="flexim-table-empty">
+                  <div class="flexim-table-empty__desc">Печать не требуется</div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <button type="button" class="btn btn-primary">Пересчитать</button>
+          <!-- Группа чекбоксов ПФ -->
+          <div class="calc-cb-group">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="cbInclPF" disabled>
+              <label class="custom-control-label" for="cbInclPF">Включить ПФ в себестоимость</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="cbCustPays" checked>
+              <label class="custom-control-label" for="cbCustPays">Заказчик платит за ПФ</label>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-outline-primary">Пересчитать</button>
         </div>
 
         <!-- ПРАВАЯ КОЛОНКА: карточка расчёта -->
-        <div class="col-lg-7 mb-4">
+        <div class="col-lg-6 mb-4">
           <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <span>Расчёт</span>
-              <span>
-                <button type="button" class="flexim-icon-btn" aria-label="Экспорт"><span data-flexim-icon="download" data-size="24" aria-hidden="true"></span></button>
-                <button type="button" class="flexim-icon-btn" aria-label="Печать"><span data-flexim-icon="print" data-size="24" aria-hidden="true"></span></button>
-              </span>
-            </div>
             <div class="card-body">
 
-              <div class="row mb-4">
-                <div class="col-6 col-lg-3 mb-3">
-                  <div class="flexim-input-field__label mb-2">Наценка на тираж</div>
-                  <div class="flexim-input mb-2">
+              <h1 class="flexim-header__title mb-3">Расчёт</h1>
+
+              <!-- 3 узких инпута в ряд -->
+              <div class="calc-top-inputs mb-2">
+                <div class="flexim-input-field">
+                  <label class="flexim-input-field__label">Наценка на тираж</label>
+                  <div class="flexim-input">
                     <div class="flexim-input__content"><span class="flexim-input__text">71</span></div>
                     <span class="flexim-input__unit">%</span>
                   </div>
+                </div>
+                <div class="flexim-input-field">
+                  <label class="flexim-input-field__label">Наценка на тираж</label>
                   <div class="flexim-input">
                     <div class="flexim-input__content"><span class="flexim-input__text">480</span></div>
                     <span class="flexim-input__unit">₽</span>
                   </div>
                 </div>
-                <div class="col-6 col-lg-3 mb-3">
-                  <div class="flexim-input-field__label mb-2">Наценка на ПФ</div>
-                  <div class="flexim-input mb-2">
+                <div class="flexim-input-field">
+                  <label class="flexim-input-field__label">Наценка на ПФ</label>
+                  <div class="flexim-input">
                     <div class="flexim-input__content"><span class="flexim-input__text">0</span></div>
                     <span class="flexim-input__unit">%</span>
                   </div>
-                  <div class="flexim-input">
-                    <div class="flexim-input__content"><span class="flexim-input__text">0</span></div>
-                    <span class="flexim-input__unit">₽</span>
-                  </div>
-                </div>
-                <div class="col-6 col-lg-3 mb-3">
-                  <div class="flexim-input-field__label mb-2">Курс €</div>
-                  <strong>92,68</strong>
-                </div>
-                <div class="col-6 col-lg-3 mb-3">
-                  <div class="flexim-input-field__label mb-2">Курс $</div>
-                  <strong>79,22</strong>
                 </div>
               </div>
 
-              <!-- Стоимость — стопкой (flexim-stat) -->
-              <div class="flexim-header-h4 mb-3"><span class="flexim-header-h4__title">Стоимость</span></div>
+              <!-- Курсы под инпутами — 2 stat-блока -->
+              <div class="calc-rates mb-4">
+                <div class="flexim-stat">
+                  <span class="flexim-stat__label">Курс €</span>
+                  <span class="flexim-stat__value">92,68</span>
+                </div>
+                <div class="flexim-stat">
+                  <span class="flexim-stat__label">Курс $</span>
+                  <span class="flexim-stat__value">79,22</span>
+                </div>
+              </div>
+
+              <!-- Стоимость (H3) -->
+              <h3 class="t-h3 mb-3">Стоимость</h3>
               <div class="row mb-4">
                 <div class="col-md-4 mb-3">
                   <div class="flexim-header-h4 mb-2"><span class="flexim-header-h4__title">Себестоимость</span></div>
@@ -235,8 +318,11 @@
                 </div>
               </div>
 
-              <!-- Материалы — стопкой (flexim-stat) -->
-              <div class="flexim-header-h4 mb-3"><span class="flexim-header-h4__title">Материалы</span><span class="flexim-header-h4__desc">90 кг</span></div>
+              <!-- Материалы (H2) + объём справа -->
+              <div class="calc-section-title">
+                <h2 class="t-h2">Материалы</h2>
+                <span class="text-muted">90 кг</span>
+              </div>
               <div class="row mb-3">
                 <div class="col-md-4 mb-3">
                   <div class="flexim-header-h4 mb-2"><span class="flexim-header-h4__title">Основная плёнка</span><span class="flexim-header-h4__desc">90 кг</span></div>
@@ -300,14 +386,15 @@
                 </div>
               </div>
 
-              <button type="button" class="btn btn-link flexim-link-button--m" data-expenses-toggle aria-expanded="false">
+              <!-- Тоггл «Скрыть/Показать расходы». В Figma «Расходы» раскрыты по умолчанию. -->
+              <button type="button" class="btn btn-link flexim-link-button--m" data-expenses-toggle aria-expanded="true">
                 <span class="calc-expenses-icon" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
-                <span class="calc-expenses-text">Показать расходы</span>
+                <span class="calc-expenses-text">Скрыть расходы</span>
               </button>
 
-              <!-- Расходы — сворачиваемые -->
-              <div class="calc-expenses mt-3" hidden>
-                <div class="flexim-header-h4 mb-3"><span class="flexim-header-h4__title">Расходы</span></div>
+              <!-- Расходы (H2) — по умолчанию видимы, как в Figma -->
+              <div class="calc-expenses mt-3">
+                <h2 class="t-h2 mb-3">Расходы</h2>
                 <div class="row">
                   <div class="col-md-4 mb-3">
                     <div class="flexim-header-h4 mb-2"><span class="flexim-header-h4__title">Основная плёнка</span></div>
@@ -329,6 +416,18 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Нижние кнопки правой колонки -->
+              <div class="calc-actions">
+                <button type="button" class="btn btn-outline-primary">
+                  <span data-flexim-icon="download" data-size="24" aria-hidden="true"></span>
+                  Скачать
+                </button>
+                <button type="button" class="btn btn-outline-primary">
+                  <span data-flexim-icon="print" data-size="24" aria-hidden="true"></span>
+                  Распечатать
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -348,13 +447,13 @@
 <script>
   if (window.fleximIcons) window.fleximIcons.renderAll();
 
-  // Сворачиваемые «Расходы».
+  // Сворачиваемые «Расходы». Стартуем раскрытыми (как в Figma).
   $(document).on('click', '[data-expenses-toggle]', function () {
     var $exp = $('.calc-expenses');
-    var willOpen = $exp.prop('hidden');
-    $exp.prop('hidden', !willOpen);
-    $(this).attr('aria-expanded', willOpen ? 'true' : 'false');
-    $(this).find('.calc-expenses-text').text(willOpen ? 'Скрыть расходы' : 'Показать расходы');
+    var willHide = $exp.is(':visible');
+    $exp.toggle(!willHide);
+    $(this).attr('aria-expanded', willHide ? 'false' : 'true');
+    $(this).find('.calc-expenses-text').text(willHide ? 'Показать расходы' : 'Скрыть расходы');
   });
 </script>
 </body>
