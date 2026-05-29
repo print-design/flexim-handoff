@@ -23,12 +23,25 @@
     .app-content { padding: 0; }
     /* Полноширинная панель табов: прижата к хэдеру (0px сверху), серая линия —
        до края экрана; табы при этом инсетятся внутренним паддингом. */
-    .calc-tabs { display: flex; padding: 0 40px; }
-    /* Тело карточки (колонки) — отступы от краёв = 40px со всех сторон. */
-    .calc-body { padding: 40px; }
-    /* Зазор между левой и правой колонками = 40px (по 20px на col). */
-    .calc-body > .row { margin-left: -20px; margin-right: -20px; }
-    .calc-body > .row > [class*="col-"] { padding-left: 20px; padding-right: 20px; }
+    .calc-tabs { display: flex; padding: 0 32px; }
+    /* Тело карточки (колонки) — отступы от краёв = 32px со всех сторон. */
+    .calc-body { padding: 32px; }
+    /* Зазор между левой и правой колонками = 32px (по 16px на col). */
+    .calc-body > .row { margin-left: -16px; margin-right: -16px; }
+    .calc-body > .row > [class*="col-"] { padding-left: 16px; padding-right: 16px; }
+    /* Внутренние паддинги карточки «Расчёт» = 24px. */
+    .calc-body .card > .card-body { padding: 24px; }
+
+    /* Внутри секций сводки заказа list-item — label/value делят строку 50/50 (fill/fill),
+       а не label = фикс. 180px. Так значения помещаются в одну строку даже в узкой колонке. */
+    .calc-section .flexim-list-item--left .flexim-list-item__label,
+    .calc-section .flexim-list-item--left .flexim-list-item__value {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    .calc-section .flexim-list-item--left .flexim-list-item__value {
+      text-align: right;
+    }
 
     /* Шапка заказа: H1 → группа (H2) → № и дата (H3 reg) → chip-status. Узкие отступы. */
     .calc-header-stack > * { margin: 0; }
