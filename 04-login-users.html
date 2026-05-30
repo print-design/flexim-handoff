@@ -180,28 +180,40 @@
     /* «Нет в списке?» — отдельной строкой над ссылкой */
     .auth-fallback__text { display: block; }
 
-    /* Мобильный вид */
+    /* Мобильный header (лого + бренд-имя) — на десктопе скрыт. */
+    .auth-mobile-header { display: none; }
+
+    /* Мобильный вид (Figma 6750:81405): без hero, лого+бренд сверху формы. */
     @media (max-width: 900px) {
       .auth-shell { flex-direction: column; }
-      .auth-hero {
-        position: static;       /* сбрасываем sticky */
-        height: auto;           /* сбрасываем 100vh */
-        align-self: stretch;
-        flex: 0 0 200px;
-        min-height: 200px;
-      }
-      .auth-hero__brand {
-        left: var(--size-l);
-        bottom: var(--size-l);
-        gap: var(--size-m);
-      }
-      .auth-hero .flexim-logo__mark { width: 40px; height: 40px; }
+      .auth-hero { display: none; }
+
       .auth-form {
         flex: 1 1 auto;
-        padding: var(--size-xl);
-        align-items: flex-start;
+        padding: var(--size-xxl);   /* 32px по Figma */
+        align-items: stretch;
       }
-      .auth-form__card { gap: var(--size-xl); }
+      .auth-form__card {
+        max-width: 100%;
+        gap: var(--size-xxxl);      /* 40px между блоками card */
+      }
+
+      .auth-mobile-header {
+        display: flex;
+        align-items: center;
+        gap: var(--size-xl);        /* 24px между лого и текстом */
+        margin-bottom: var(--size-l); /* 20px + gap card 40 = 60 до title */
+      }
+      .auth-mobile-header__logo {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+      }
+      .auth-mobile-header__brand-name {
+        margin: 0;
+        color: var(--text-primary);
+        white-space: nowrap;
+      }
     }
   </style>
 </head>
@@ -222,6 +234,13 @@
 
   <main class="auth-form">
     <div class="auth-form__card">
+
+      <!-- Мобильный header (Figma 6750:81405) — на десктопе скрыт через CSS. -->
+      <header class="auth-mobile-header" aria-hidden="false">
+        <span class="flexim-logo__mark auth-mobile-header__logo" aria-hidden="true"></span>
+        <p class="t-h2 auth-mobile-header__brand-name">Принт-Дизайн</p>
+      </header>
+
       <header>
         <h1 class="t-h2-r auth-form__title">Кто входит?</h1>
         <p class="t-body auth-form__subtitle">Выберите свой профиль, чтобы продолжить.</p>

@@ -113,25 +113,38 @@
     }
     .auth-form__actions .btn-block + .btn-block { margin-top: 0; }
 
-    /* Мобильный вид — стек: hero сверху, форма снизу */
+    /* Мобильный header (лого + бренд-имя) — на десктопе скрыт. */
+    .auth-mobile-header { display: none; }
+
+    /* Мобильный вид (Figma 6750:81405).
+       Hero-картинки нет; вместо неё — лого + «Принт-Дизайн» в строку
+       наверху формы. Padding 32 по периметру, gap 60 до title H2. */
     @media (max-width: 900px) {
       .auth-shell { flex-direction: column; }
-      .auth-hero {
-        position: static;       /* сбрасываем sticky */
-        height: auto;           /* сбрасываем 100vh */
-        align-self: stretch;
-        flex: 0 0 280px;
-        min-height: 280px;
-      }
-      .auth-hero__brand {
-        left: var(--size-l);
-        bottom: var(--size-l);
-        gap: var(--size-m);
-      }
-      .auth-hero .flexim-logo__mark { width: 40px; height: 40px; }
+      .auth-hero { display: none; }
+
       .auth-form {
         flex: 1 1 auto;
-        padding: var(--size-xl);
+        padding: var(--size-xxl);   /* 32px по Figma */
+        align-items: stretch;
+      }
+      .auth-form__card { max-width: 100%; }
+
+      .auth-mobile-header {
+        display: flex;
+        align-items: center;
+        gap: var(--size-xl);        /* 24px между лого и текстом */
+        margin-bottom: var(--size-l); /* 20px + gap card 40 = 60 до title */
+      }
+      .auth-mobile-header__logo {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+      }
+      .auth-mobile-header__brand-name {
+        margin: 0;
+        color: var(--text-primary);
+        white-space: nowrap;
       }
     }
   </style>
@@ -157,6 +170,14 @@
   <main class="auth-form">
     <!-- <?php // POST /login.php — валидация на бэке ?> -->
     <form class="auth-form__card" method="post" action="#" novalidate>
+
+      <!-- Мобильный header (Figma 6750:81405) — на десктопе скрыт через CSS.
+           На мобилке заменяет hero-блок: лого + бренд-имя в строку. -->
+      <header class="auth-mobile-header" aria-hidden="false">
+        <span class="flexim-logo__mark auth-mobile-header__logo" aria-hidden="true"></span>
+        <p class="t-h2 auth-mobile-header__brand-name">Принт-Дизайн</p>
+      </header>
+
       <h1 class="t-h2-r auth-form__title">Вход</h1>
 
       <div class="auth-form__fields">
