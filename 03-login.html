@@ -245,22 +245,42 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="./icons/icons.js"></script>
 <script>
+  console.log('[03-login] script loaded; jQuery?', typeof window.jQuery, 'fleximIcons?', !!window.fleximIcons);
   if (window.fleximIcons) window.fleximIcons.renderAll();
 
-  // Тогглер пароля: type=password↔text, иконка eye-closed↔eye-open, aria-pressed.
-  // Кнопка живёт в слоте .flexim-input__clear (action-slot), иконка задаётся
-  // через data-flexim-icon — переключаем атрибут и перерендериваем иконку.
-  $(document).on('click', '[data-toggle-password]', function () {
-    var $btn = $(this);
-    var $input = $btn.closest('.flexim-input').find('.flexim-input__field').first();
-    var willShow = $input.attr('type') === 'password';
+  // Универсальный обработчик тоггла пароля — НЕ зависит от jQuery
+  // (нативный addEventListener в делегированной форме). Так точно сработает,
+  // даже если что-то выше упало с ошибкой и не дало jQuery-делегированию ожить.
+  function fleximTogglePassword(btn) {
+    var shell = btn.closest('.flexim-input');
+    var input = shell && shell.querySelector('.flexim-input__field');
+    if (!input) {
+      console.warn('[toggle-password] не нашёл .flexim-input__field рядом с кнопкой', btn);
+      return;
+    }
+    var showing = input.getAttribute('type') === 'text';
+    var nextType  = showing ? 'password' : 'text';
+    var nextIcon  = showing ? 'eye-closed' : 'eye-open';
+    var nextLabel = showing ? 'Показать пароль' : 'Скрыть пароль';
 
-    $input.attr('type', willShow ? 'text' : 'password').focus();
-    $btn.attr('aria-pressed', String(willShow));
-    $btn.attr('aria-label', willShow ? 'Скрыть пароль' : 'Показать пароль');
-    $btn.attr('data-flexim-icon', willShow ? 'eye-open' : 'eye-closed');
+    input.setAttribute('type', nextType);
+    btn.setAttribute('data-flexim-icon', nextIcon);
+    btn.setAttribute('aria-pressed', String(!showing));
+    btn.setAttribute('aria-label', nextLabel);
 
-    if (window.fleximIcons) window.fleximIcons.renderAll();
+    if (window.fleximIcons && typeof window.fleximIcons.create === 'function') {
+      var size = parseInt(btn.getAttribute('data-size') || '24', 10);
+      btn.innerHTML = '';
+      btn.appendChild(window.fleximIcons.create(nextIcon, size));
+    }
+    console.log('[toggle-password] OK →', nextType);
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-toggle-password]');
+    if (!btn) return;
+    e.preventDefault();
+    fleximTogglePassword(btn);
   });
 </script>
 </body>
