@@ -890,6 +890,13 @@ label, .col-form-label {
   border-color: var(--error-20);
   color: var(--error-main);
 }
+/* Figma «Сделан расчет» (4542:91903): infographic-blue, только бордер без заливки —
+   используется через комбинацию --blue + --outline. */
+.flexim-status-banner--blue {
+  background: var(--infographic-blue-5);
+  border-color: var(--infographic-blue-20);
+  color: var(--infographic-blue);
+}
 /* Outline: белый фон + цветная рамка и текст (карточка заказа, отгрузка). */
 .flexim-status-banner--outline {
   background: var(--surface-white);
@@ -913,6 +920,10 @@ label, .col-form-label {
 .flexim-status-banner--outline.flexim-status-banner--error {
   border-color: var(--error-main);
   color: var(--error-main);
+}
+.flexim-status-banner--outline.flexim-status-banner--blue {
+  border-color: var(--infographic-blue);
+  color: var(--infographic-blue);
 }
 /* Иконка статуса — 24px, наследует цвет варианта (currentColor), не сжимается. */
 .flexim-status-banner > svg {
@@ -1572,13 +1583,16 @@ label, .col-form-label {
   max-height: 320px;
   overflow: auto;
 }
-/* Экран списка: таблица на всю высоту content; скролл в правом жёлобе вне сетки ячеек. */
+/* Экран списка: таблица на всю высоту content; скролл в правом жёлобе вне сетки ячеек.
+   Боковые padding'и дают визуальный отступ между бордером таблицы и крайними
+   ячейками, чтобы контент не липнул к рамке. */
 .flexim-table-wrap--page-fill {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding-left: var(--size-m);
   padding-right: var(--size-m);
 }
 .flexim-table-wrap--page-fill .flexim-table__viewport {
@@ -1749,6 +1763,7 @@ label, .col-form-label {
 .flexim-table__status-dot--pink   { background: var(--infographic-pink); }
 .flexim-table__status-dot--yellow { background: var(--infographic-yellow); }
 .flexim-table__status-dot--orange { background: var(--infographic-terracot); }
+.flexim-table__status-dot--info   { background: var(--info-main); }
 /* Ячейка с иконкой-действием (кебаб / иконки). */
 .flexim-table__cell-action {
   display: inline-flex;
@@ -1766,7 +1781,7 @@ label, .col-form-label {
 .flexim-table__cell-action:hover { color: var(--primary-light); }
 .flexim-table__cell--icon { width: 40px; text-align: center; }
 /* «Богатая» таблица: строки по контенту (свитч, кнопка, двухстрочные ячейки). */
-.flexim-table--rich .flexim-table__head-cell { height: auto; padding: 8px; vertical-align: middle; }
+.flexim-table--rich .flexim-table__head-cell { height: 48px; padding: 8px; vertical-align: middle; }
 .flexim-table--rich .flexim-table__cell { height: auto; padding: 8px; vertical-align: middle; }
 /* Первая колонка (ID/номер заказа) — без переноса, по ширине содержимого.
    width:1% + white-space:nowrap = «shrink-to-fit»: ID всегда влезает целиком. */
@@ -1779,6 +1794,18 @@ label, .col-form-label {
    Ужимаем до фикс-ширины с переносом, чтобы отдать место остальным колонкам. */
 .flexim-table--name-clamp > thead > tr > .flexim-table__head-cell:nth-child(4),
 .flexim-table--name-clamp > tbody > tr > .flexim-table__cell:nth-child(4) {
+  max-width: 260px;
+  white-space: normal;
+  word-break: break-word;
+}
+/* Таблица модуля «Упаковка» (05-pack): № — 2-я колонка, «Заказ» — 3-я. */
+.flexim-table--pack-cols > thead > tr > .flexim-table__head-cell:nth-child(2),
+.flexim-table--pack-cols > tbody > tr > .flexim-table__cell:nth-child(2) {
+  width: 1%;
+  white-space: nowrap;
+}
+.flexim-table--pack-cols > thead > tr > .flexim-table__head-cell:nth-child(3),
+.flexim-table--pack-cols > tbody > tr > .flexim-table__cell:nth-child(3) {
   max-width: 260px;
   white-space: normal;
   word-break: break-word;
@@ -2424,13 +2451,13 @@ label, .col-form-label {
   background: var(--background-paper);
   box-shadow: 0 2px 8px rgba(141, 134, 173, 0.2);
   border-radius: var(--size-xs);
+  border-bottom: 1px solid var(--other-lines);
 }
 .flexim-header-menu__nav {
   display: flex;
   align-items: stretch;
   gap: var(--size-xxl);
   align-self: stretch;
-  border-bottom: 1px solid var(--other-lines);
 }
 /* Таб = ссылка-навигация (<a href>), не кнопка. Стили работают и для <a>, и для <button>. */
 .flexim-header-menu__item {
@@ -2755,7 +2782,41 @@ a.flexim-user-chip__title:hover {
    SEARCH (Figma 4341:94353) — поле с иконкой поиска слева + кнопка «Найти»
    ============================================================ */
 .flexim-search-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+/* В топбаре row не растягивается — поле должно быть «своей» ширины, а не на всю шапку */
+.flexim-search-row--fill { flex: 0 0 auto; min-width: 0; flex-wrap: nowrap; align-items: stretch; }
 .flexim-search { display: flex; flex-direction: column; gap: 4px; width: 316px; max-width: 100%; }
+/* Модификатор для топбара/инлайн-вариантов: ширина по контенту, без label */
+.flexim-search--fill { width: auto; flex: 0 0 auto; min-width: 0; }
+/* Поле в топбаре, активное состояние (есть чипы ИЛИ инпут в фокусе):
+   минимум 220px, лёгкая заливка для контраста с белой шапкой. */
+.flexim-search--fill .flexim-search__field {
+  min-width: 220px;
+  background: var(--background-bg);
+}
+/* Поле в топбаре, default state (нет чипов, нет фокуса): схлопывается
+   до иконки — нет фона, бордера, фиксированной ширины. Выглядит как
+   просто иконка-кнопка в шапке. Клик/фокус разворачивает обратно. */
+.flexim-search--fill .flexim-search__field:not(:focus-within):not(:has(.flexim-chip-tag)) {
+  min-width: 0;
+  background: transparent;
+  border-color: transparent;
+}
+.flexim-search--fill .flexim-search__field:not(:focus-within):not(:has(.flexim-chip-tag)) .flexim-search__input {
+  width: 0;
+  min-width: 0;
+}
+/* Collapsed-состояние: курсор-указатель, никакой коробки на ховер,
+   меняем только цвет иконки. */
+.flexim-search--fill .flexim-search__field:not(:focus-within):not(:has(.flexim-chip-tag)) {
+  cursor: pointer;
+}
+.flexim-search--fill .flexim-search__field:not(:focus-within):not(:has(.flexim-chip-tag)):hover {
+  box-shadow: none;
+  background: transparent;
+}
+.flexim-search--fill .flexim-search__field:not(:focus-within):not(:has(.flexim-chip-tag)):hover .flexim-search__icon {
+  color: var(--primary-light);
+}
 .flexim-search__field {
   display: flex;
   align-items: center;
@@ -2773,14 +2834,59 @@ a.flexim-user-chip__title:hover {
   color: var(--primary-main);
 }
 .flexim-search__input {
-  flex: 1 1 auto; min-width: 0;
+  /* Инпут заполняет ОСТАТОК свободного места в поле.
+     width:0 убирает браузерную «дефолтную ширину» от атрибута size,
+     min-width:4px оставляет место под каретку (когда чипы заняли всё поле),
+     field-sizing:content — при печати инпут растёт под текст (Safari 18+/Chrome 123+). */
+  flex: 1 1 0;
+  width: 0;
+  min-width: 4px;
+  field-sizing: content;
   border: 0; outline: 0; background: transparent;
   font: 400 14px/20px var(--font-family);
   color: var(--text-primary);
   padding: 0;
+  caret-color: var(--primary-main);
 }
+/* Кнопка «Очистить всё» — розовый ×, показывается справа когда есть чипы. */
+.flexim-search__clear-all {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: var(--primary-main);
+}
+.flexim-search__clear-all:hover { color: var(--primary-dark); }
+/* Прячем «очистить всё», если в поле нет чипов */
+.flexim-search__field:not(:has(.flexim-chip-tag)) .flexim-search__clear-all { display: none; }
 .flexim-search__input::placeholder { color: var(--text-secondary); }
-.flexim-search__chips { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 4px; overflow: hidden; }
+/* Чипы — естественная ширина, не ужимаются. Если их сумма больше
+   доступного места в поле — пушат поле шире (см. min-width поля выше). */
+.flexim-search__chips { flex: 0 0 auto; min-width: 0; display: flex; align-items: center; gap: 4px; }
+/* Chip внутри search-поля: и поле, и чип — белые → шадоу теряется на фоне.
+   Даём тонкий бордер для контраста. */
+.flexim-search__field .flexim-chip-tag {
+  border: 1px solid var(--other-lines);
+  background: var(--surface-white);
+  box-shadow: none;
+}
+.flexim-search__field .flexim-chip-tag:hover:not(.disabled) {
+  border-color: var(--primary-main);
+  box-shadow: none;
+}
+/* «Выключенный» чип: dimmed, через клик. Зажат — это активный фильтр. */
+.flexim-search__field .flexim-chip-tag.is-off {
+  background: var(--background-bg);
+  color: var(--text-tertiary);
+  border-color: var(--other-lines);
+}
+.flexim-search__field .flexim-chip-tag.is-off .flexim-chip-dismiss { color: var(--text-tertiary); }
 .flexim-search__clear {
   flex: 0 0 24px; width: 24px; height: 24px;
   display: inline-flex; align-items: center; justify-content: center;
@@ -2836,7 +2942,11 @@ a.flexim-user-chip__title:hover {
   position: absolute;
   z-index: 30;
   top: calc(100% + var(--size-xxs));
-  left: 0;
+  /* Панель фильтров прижата к правому краю шапки, поэтому поповер
+     раскрываем от ПРАВОГО края триггера влево — иначе у крайних правых
+     фильтров («Наименование») меню уезжает за край экрана. */
+  right: 0;
+  left: auto;
   min-width: 260px;
   display: none;
 }

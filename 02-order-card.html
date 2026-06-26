@@ -109,7 +109,17 @@
           <a href="#" class="flexim-header-menu__item">Корзина</a>
         </nav>
         <div class="app-topbar__right">
-          <button type="button" class="flexim-icon-btn" aria-label="Поиск"><span data-flexim-icon="search" data-size="24" aria-hidden="true"></span></button>
+          <!-- SEARCH (Figma 4341:94353) — поле с чипами активных условий + «Найти» -->
+          <div class="flexim-search-row flexim-search-row--fill" data-flexim-search>
+            <div class="flexim-search flexim-search--fill">
+              <div class="flexim-search__field">
+                <span class="flexim-search__icon" data-flexim-icon="search" data-size="24" aria-hidden="true"></span>
+                <div class="flexim-search__chips"></div>
+                <input class="flexim-search__input" type="text" placeholder="Поиск">
+                <button type="button" class="flexim-search__clear-all" aria-label="Очистить всё"><span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span></button>
+              </div>
+            </div>
+          </div>
           <div class="flexim-user-chip">
             <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials" title="Пономарёв Сергей">ПС</span>
             <span class="flexim-user-chip__name">
@@ -469,5 +479,7 @@
     $(this).find('.calc-expenses-text').text(willHide ? 'Показать расходы' : 'Скрыть расходы');
   });
 </script>
+<!-- Search-with-chips в топбаре (Figma 4341:94353): add/remove/toggle/filter -->
+<script src="./_search-topbar.js"></script>
 </body>
 </html>

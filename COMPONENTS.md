@@ -248,6 +248,62 @@ import { Input } from '../../components/ui/input';
 <SearchField placeholder="Поиск…" onClear={() => setQuery('')} value={query} />
 ```
 
+**Bootstrap-разметка** (`prod-mockups/_bootstrap-flexim-overrides.css`):
+`.flexim-search` (колонка) → `.flexim-search__field` (40px shell с иконкой и
+полем) → `.flexim-search__chips` (контейнер чипов внутри) → `.flexim-search__input`
+→ `.flexim-search__clear-all` (×). См. подробнее «Search в топбаре» ниже.
+
+---
+
+#### Search в топбаре (collapsed-search)
+
+Компактный поиск в шапке экрана: по умолчанию показывает только иконку лупы,
+разворачивается в полноценное поле при фокусе или когда в нём есть чипы.
+
+**Поведение:**
+
+- **Default** (нет чипов, не в фокусе): только розовая иконка-лупа, без фона
+  и бордера. На hover — иконка становится `primary-light`.
+- **Focused / has chips**: поле разворачивается до min-width 220px, появляются
+  фон `background-bg`, бордер `other-lines`, инпут с плейсхолдером «Поиск».
+- **Чип не влезает в 220px**: поле «хагает» (растёт под содержимое).
+- **Печать**: инпут растёт под текст (`field-sizing: content`), поле тоже растёт.
+- **Enter в инпуте**: текст → новый чип, инпут очищается.
+- **× на чипе**: снимает один чип. **× справа в поле**: снимает все.
+- **Backspace в пустом инпуте**: снимает последний чип.
+- **Клик по чипу (не по ×)**: toggle чип «выключен/включён» (is-off — не
+  участвует в фильтре, но в DOM остаётся).
+
+**Bootstrap-разметка** (статичная, см. шапку `prod-mockups/01-orders.html`):
+
+```html
+<div class="flexim-search-row flexim-search-row--fill" data-flexim-search>
+  <div class="flexim-search flexim-search--fill">
+    <div class="flexim-search__field">
+      <span class="flexim-search__icon" data-flexim-icon="search" data-size="24" aria-hidden="true"></span>
+      <div class="flexim-search__chips"></div>
+      <input class="flexim-search__input" type="text" placeholder="Поиск">
+      <button type="button" class="flexim-search__clear-all" aria-label="Очистить всё">
+        <span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</div>
+```
+
+**Подключение поведения** (один тег в конце страницы):
+
+```html
+<script src="./_search-topbar.js"></script>
+```
+
+`_search-topbar.js` навешивает обработчики на любые `[data-flexim-search]` на
+странице (add chip, remove, toggle, фильтр строк ближайшей `.flexim-table`).
+Фильтр — substring AND по всем активным чипам.
+
+**Где использовать:** топбар любого экрана-списка (заказы, склад, план,
+упаковка и т.д.) — везде где над таблицей нужна шапка с быстрым поиском.
+
 ---
 
 #### DatePickerField
@@ -346,18 +402,42 @@ import { SelectField, type SelectOption } from '../../components/ui/select';
 
 #### StatusBanner
 
-`flexim-app/src/components/ui/status-banner.tsx`. «Полосы» статуса на всю
-ширину карточки (вверху или внутри). 7+ типов под бизнес-сценарии
-(`production`, `ready`, `blocked`, …).
+`flexim-app/src/components/ui/status-banner.tsx`. **Карточный** баннер статуса
+на всю ширину карточки заказа (max 520px, radius 12, pad 12×16, иконка 24px,
+text-h4). Не путать с табличным `ChipStatus` в списке заказов.
+
+Источник истины: Figma «Статус» (`4542:91809`). **10 типов** в порядке Figma:
+
+| # | Ключ | Подпись | Иконка | Стиль |
+|---|---|---|---|---|
+| 1 | `draft` | Черновик | `Pencil` | neutral fill |
+| 2 | `calc-done` | Сделан расчет | `Calculator` | **outline** (белый фон, синий бордер `infographic-blue`) |
+| 3 | `tech-card` | Составлена тех. карта | `FileText` | neutral fill |
+| 4 | `cp-sent` | Отправлено коммерческое предложение | `FileText` | neutral fill |
+| 5 | `sent-to-work` | Отправлено в работу | `Check` | success fill |
+| 6 | `waiting-approval` | Ждет одобрения менеджером | `Clock` | warning fill |
+| 7 | `makeready` | Приладка | `Settings` | info fill |
+| 8 | `cut` | Резка | `Scissors` | info fill |
+| 9 | `price-changed` | Стоимость изменилась | `TrendingUp` | error fill |
+| 10 | `rejected` | Заявка отклонена | `AlertCircle` | error fill |
 
 ```tsx
-<StatusBanner type="ready">Заказ готов к отгрузке</StatusBanner>
+<StatusBanner type="sent-to-work" />
+<StatusBanner
+  type="price-changed"
+  action={{ label: 'Пересчитать', onClick: handleRecalc }}
+/>
 ```
 
-**Bootstrap:** `.flexim-status-banner` + модификатор варианта (`--success`,
-`--warning`, …). **Outline** (белый фон, цветная рамка и текст):
-`.flexim-status-banner--outline` вместе с вариантом, напр.
-`.flexim-status-banner--warning.flexim-status-banner--outline` — карточка заказа.
+`calc-done` — единственный outline-стиль (без 5%-заливки, цветной бордер на
+полную). Все остальные — filled (5% фон + 20% бордер + main-цвет текста/иконки).
+
+**Bootstrap-зеркало:** `.flexim-status-banner` + модификатор варианта
+(`--success`, `--warning`, `--error`, `--info`, `--neutral`, `--blue`).
+Outline (белый фон, цветная рамка и текст): `.flexim-status-banner--outline`
+вместе с вариантом, напр. `.flexim-status-banner--blue.flexim-status-banner--outline`
+для «Сделан расчёт». Полный набор 10 баннеров — в каталоге
+`prod-mockups/components.html` → секция Statuses.
 
 ---
 
@@ -677,6 +757,16 @@ import {
   action={<Button>Создать заказ</Button>}
 />
 ```
+
+**Высоты строк** (Bootstrap):
+- `.flexim-table--m` — head и body 40px (компактные таблицы)
+- `.flexim-table--rich` — head 48px фиксировано, body по контенту (для
+  «богатых» таблиц с двухстрочными ячейками, свитчами, кнопками — список
+  заказов и т.п.)
+
+**Боковые отступы внутри рамки** (Bootstrap, экраны-списки):
+`.flexim-table-wrap--page-fill` имеет симметричные `padding-left/right: 16px`,
+чтобы первая колонка (ID) и последняя (action `›`) не липли к бордеру таблицы.
 
 ---
 

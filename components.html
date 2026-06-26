@@ -929,6 +929,26 @@
       <span class="flexim-chip-status flexim-chip-status--success flexim-chip-status--clickable">Готов <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span>
     </div>
 
+    <div class="group-label">Chip status — статусы заказа (каноничный список из прода)</div>
+    <p class="ds-desc ds-desc-small">Источник истины: <code>flexim-app/src/components/ui/chip-status.tsx</code> → <code>ORDER_STATUS</code>. Подписи и привязка к вариантам — 1:1 с этой картой. Кандидаты с пометкой «<code>?</code>» в коде — best-effort, требуют сверки в Figma. Черновик не показан — для него нужен отдельный grey-токен (TODO).</p>
+    <div class="d-flex flex-wrap mb-3" style="gap: 8px;">
+      <!-- draft (Черновик) — TODO: нет токена (нужен grey, не black) -->
+      <span class="flexim-chip-status flexim-chip-status--blue">Сделан расчёт</span>
+      <span class="flexim-chip-status flexim-chip-status--terracot">Составлена тех. карта</span>
+      <span class="flexim-chip-status flexim-chip-status--yellow">Ждём подтверждения</span>
+      <span class="flexim-chip-status flexim-chip-status--green">Ждём постановки в план</span>
+      <span class="flexim-chip-status flexim-chip-status--error">Отклонено</span>
+      <span class="flexim-chip-status flexim-chip-status--purple">В плане печати</span>
+      <span class="flexim-chip-status flexim-chip-status--violet">В плане ламинации</span>
+      <span class="flexim-chip-status flexim-chip-status--blue">В плане резки</span>
+      <span class="flexim-chip-status flexim-chip-status--brick">Режется</span>
+      <span class="flexim-chip-status flexim-chip-status--brick">Сняли с резки</span>
+      <span class="flexim-chip-status flexim-chip-status--info">Готово к упаковке</span>
+      <span class="flexim-chip-status flexim-chip-status--pink">Ждёт отгрузки</span>
+      <span class="flexim-chip-status flexim-chip-status--orange">Отгружено</span>
+      <span class="flexim-chip-status flexim-chip-status--black">В корзине</span>
+    </div>
+
   </div>
 </section>
 
@@ -2192,6 +2212,39 @@
       </div>
       <button type="button" class="flexim-search__btn">Найти</button>
     </div>
+
+    <h3 style="margin-top: 2rem;">Search в топбаре (collapsed)</h3>
+    <p class="ds-desc">
+      Компактный поиск для шапки: по умолчанию — только иконка-лупа,
+      разворачивается в поле при фокусе или когда есть чипы. Готовое поведение
+      (add/remove/toggle/фильтр строк ближайшей <code>.flexim-table</code>) —
+      <code>_search-topbar.js</code>. На странице с этим паттерном подключить
+      один тег: <code>&lt;script src="./_search-topbar.js"&gt;&lt;/script&gt;</code>.
+      Эталон применения — <code>01-orders.html</code>.
+    </p>
+
+    <div class="ds-topbar-demo" style="background: var(--background-paper); border: 1px solid var(--other-lines); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; gap: 24px;">
+      <div style="font: 600 14px/16px var(--font-family); color: var(--text-secondary);">Имитация шапки →</div>
+      <div class="app-topbar__right" style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
+        <div class="flexim-search-row flexim-search-row--fill" data-flexim-search>
+          <div class="flexim-search flexim-search--fill">
+            <div class="flexim-search__field">
+              <span class="flexim-search__icon" data-flexim-icon="search" data-size="24" aria-hidden="true"></span>
+              <div class="flexim-search__chips"></div>
+              <input class="flexim-search__input" type="text" placeholder="Поиск">
+              <button type="button" class="flexim-search__clear-all" aria-label="Очистить всё"><span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="flexim-user-chip">
+          <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials">ПС</span>
+          <span class="flexim-user-chip__name">
+            <span class="flexim-user-chip__title">Пономарёв&nbsp;Сергей</span>
+            <span class="flexim-user-chip__role">Технолог</span>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -3109,7 +3162,23 @@
 <section id="statuses" class="ds-section">
   <div class="container">
     <h2>Statuses</h2>
-    <p class="ds-desc">Баннеры заказа Figma «Статус»: max 520px, radius 12, pad 12×16.</p>
+    <p class="ds-desc">Баннеры заказа Figma «Статус» (4542:91809): max 520px, radius 12, pad 12×16. Порядок по Figma — от черновика до отклонения.</p>
+    <div class="flexim-status-banner flexim-status-banner--neutral mb-2">
+      <span data-flexim-icon="edit" data-size="24"></span>
+      <span>Черновик</span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--blue flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="calculator" data-size="24"></span>
+      <span>Сделан расчет</span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--neutral mb-2">
+      <span data-flexim-icon="doc" data-size="24"></span>
+      <span>Составлена тех. карта</span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--neutral mb-2">
+      <span data-flexim-icon="doc" data-size="24"></span>
+      <span>Отправлено коммерческое предложение</span>
+    </div>
     <div class="flexim-status-banner flexim-status-banner--success mb-2">
       <span data-flexim-icon="check-big" data-size="24"></span>
       <span>Отправлено в работу</span>
@@ -3117,10 +3186,6 @@
     <div class="flexim-status-banner flexim-status-banner--warning mb-2">
       <span data-flexim-icon="time" data-size="24"></span>
       <span>Ждет одобрения менеджером</span>
-    </div>
-    <div class="flexim-status-banner flexim-status-banner--neutral mb-2">
-      <span data-flexim-icon="doc" data-size="24"></span>
-      <span>Отправлено коммерческое предложение</span>
     </div>
     <div class="flexim-status-banner flexim-status-banner--info mb-2">
       <span data-flexim-icon="settings" data-size="24"></span>
@@ -3781,5 +3846,7 @@
     if (window.fleximIcons) window.fleximIcons.renderAll();
   });
 </script>
+<!-- Демо collapsed-search в шапке (см. секцию Search → «Search в топбаре») -->
+<script src="./_search-topbar.js"></script>
 </body>
 </html>
