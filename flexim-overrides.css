@@ -858,7 +858,8 @@ label, .col-form-label {
 .flexim-status-banner {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 8px;
   max-width: 520px;
   padding: 12px 16px;
   border-radius: 12px;
@@ -933,7 +934,7 @@ label, .col-form-label {
 }
 .flexim-status-banner > span {
   min-width: 0;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2071,6 +2072,10 @@ label, .col-form-label {
   padding: 40px 40px 16px;
   flex-shrink: 0;
 }
+.flexim-side-panel__subhead {
+  flex: none;          /* не сжимается, не скроллится */
+  padding: 0 40px 16px;
+}
 .flexim-side-panel__heading {
   display: flex;
   flex: 1 1 auto;
@@ -2119,6 +2124,12 @@ label, .col-form-label {
   overflow-y: auto;
   padding: 16px 40px;
 }
+/* Плавное растворение верхних строк скролла под фикс-шапкой.
+   #000 — это альфа-маска (не видимый цвет), цвет содержимого не меняет. */
+.flexim-side-panel__body--faded {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24px);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 24px);
+}
 .flexim-side-panel__placeholder {
   border: 2px dashed var(--other-lines);
   border-radius: 8px;
@@ -2135,6 +2146,80 @@ label, .col-form-label {
   flex-shrink: 0;
   background: var(--surface-white);
 }
+
+/* ============ ORDER TRACKING (таймлайн статусов) ============
+   Figma: «Order tracking» 7141:83790, «timeline status» 7141:24449,
+   «timeline header» 7166:119266, сайдбар «Трекинг заказа» 8026:48637.
+   Точка статуса окрашивается по цветовому кодированию статусов (1:1 с chip-status). */
+
+/* узкий вариант правой панели (Figma — 400px вместо дефолтных 600) */
+.flexim-side-panel--narrow { width: 400px; }
+
+/* шапка трекинга: имя заказа / заказчик / номер / текущий статус.
+   Типографику задаём утилитами .t-* в разметке (см. ниже), здесь — только layout. */
+.flexim-tracking-head { display: flex; flex-direction: column; gap: 8px; }
+.flexim-tracking-head__info { display: flex; flex-direction: column; gap: 4px; }
+.flexim-tracking-head__current  { display: flex; align-items: center; gap: 8px; }
+.flexim-tracking-head__current-qty { color: var(--text-secondary); }
+
+/* список таймлайна */
+.flexim-order-tracking { display: flex; flex-direction: column; }
+.flexim-timeline-status { display: flex; gap: 8px; align-items: flex-start; }
+
+/* левая колонка: точка + соединительная линия */
+.flexim-timeline-status__rail {
+  display: flex; flex-direction: column; align-items: center;
+  align-self: stretch; padding-top: 4px; flex-shrink: 0;
+}
+.flexim-timeline-status__dot {
+  flex-shrink: 0; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--infographic-black);
+}
+.flexim-timeline-status__line {
+  flex: 1 0 0; min-height: 8px; width: 2px; background: var(--other-lines);
+}
+.flexim-timeline-status:last-child .flexim-timeline-status__line { display: none; }
+
+/* правая колонка: контент */
+.flexim-timeline-status__content {
+  display: flex; flex-direction: column; gap: 4px;
+  padding-bottom: var(--size-l); flex: 1 1 auto; min-width: 0;
+}
+.flexim-timeline-status__header {
+  display: flex; gap: 4px; align-items: baseline;
+  font: 400 14px/20px var(--font-family); color: var(--text-primary);
+}
+.flexim-timeline-status--current .flexim-timeline-status__header { font-weight: 600; }
+.flexim-timeline-status__time {
+  font: 400 11px/12px var(--font-family); color: var(--text-primary);
+}
+.flexim-timeline-status__desc {
+  display: flex; gap: 4px;
+  font: 400 11px/12px var(--font-family); color: var(--text-secondary);
+}
+
+/* цвет точки = цвет статуса из продукта (tokens.css --status-*) */
+.flexim-timeline-status__dot--draft         { background: var(--status-draft); }
+.flexim-timeline-status__dot--calc-done     { background: var(--status-calc-done); }
+.flexim-timeline-status__dot--tech-card     { background: var(--status-tech-card); }
+.flexim-timeline-status__dot--wait-approval { background: var(--status-wait-approval); }
+.flexim-timeline-status__dot--wait-plan     { background: var(--status-wait-plan); }
+.flexim-timeline-status__dot--plan-print    { background: var(--status-plan-print); }
+.flexim-timeline-status__dot--plan-lam      { background: var(--status-plan-lam); }
+.flexim-timeline-status__dot--plan-cut      { background: var(--status-plan-cut); }
+.flexim-timeline-status__dot--makeready-cut { background: var(--status-makeready-cut); }
+.flexim-timeline-status__dot--cutting       { background: var(--status-cutting); }
+.flexim-timeline-status__dot--ready-pack    { background: var(--status-ready-pack); }
+.flexim-timeline-status__dot--wait-ship     { background: var(--status-wait-ship); }
+.flexim-timeline-status__dot--shipped       { background: var(--status-shipped); }
+
+/* Будущие (ещё не наступившие) стадии трекинга (Figma 7084-127679):
+   пустая серая точка-кольцо, серый текст, без времени.
+   Пройденные и текущая стадии остаются в своих продуктовых цветах (--status-*). */
+.flexim-timeline-status--st-planned .flexim-timeline-status__dot { background: var(--surface-white); box-shadow: inset 0 0 0 1.5px var(--other-lines); }
+.flexim-timeline-status--st-planned .flexim-timeline-status__line { background: none; width: 0; border-left: 2px dashed var(--other-lines); }
+.flexim-timeline-status--st-planned .flexim-timeline-status__header,
+.flexim-timeline-status--st-planned .flexim-timeline-status__time { color: var(--text-secondary); }
 
 .flexim-tooltip-demo {
   display: flex;
@@ -3457,3 +3542,50 @@ a:hover { color: var(--primary-dark); }
   padding: var(--size-xl);
 }
 .app-content > .flexim-header { flex-shrink: 0; margin-bottom: var(--size-l); }
+
+/* ============================================================
+   FOTOMETKA — выбор типа фотометки (Figma «metrky» 7981:106156).
+   Ряд марок 40×40 (внутри марка 32×32). Выбранная — фон primary-50,
+   скругление 4, под маркой галочка check-small. Цвет марки = currentColor
+   (default — text-primary, выбранная — primary-main).
+   ============================================================ */
+.flexim-fotometka-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--size-xs);
+}
+.flexim-fotometka {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-xxs);
+  width: 40px;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--size-xxs);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.flexim-fotometka__mark {
+  display: block;
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+.flexim-fotometka__mark path { fill: currentColor; }
+.flexim-fotometka__check { display: none; }
+.flexim-fotometka:hover:not(.is-selected) { color: var(--primary-light); }
+.flexim-fotometka.is-selected {
+  align-self: flex-start;
+  padding: var(--size-xxs) 0;
+  background: var(--primary-50);
+  color: var(--primary-main);
+}
+.flexim-fotometka.is-selected .flexim-fotometka__check {
+  display: block;
+  color: var(--primary-main);
+}

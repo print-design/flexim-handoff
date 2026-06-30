@@ -320,6 +320,7 @@
     <li class="nav-item"><a class="nav-link" href="#segment-control">Segment</a></li>
     <li class="nav-item"><a class="nav-link" href="#selects">Select</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-side-panel">Sidebar</a></li>
+    <li class="nav-item"><a class="nav-link" href="#flexim-order-tracking">Order tracking</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-slider">Slider</a></li>
     <li class="nav-item"><a class="nav-link" href="#stat">Stat</a></li>
     <li class="nav-item"><a class="nav-link" href="#statuses">Statuses</a></li>
@@ -2983,6 +2984,128 @@
   </div>
 </section>
 
+<section id="flexim-order-tracking" class="ds-section">
+  <div class="container">
+    <h2>Order tracking / Трекинг заказа</h2>
+    <p class="ds-desc">Таймлайн статусов заказа в правой панели. Новые события сверху; верхняя строка — <code>--current</code> (жирное имя). Цвет точки — по продуктовой палитре <code>--status-*</code> (снята из прод-трекинга StatusTrack), не из Figma и не из chip-status каталога.</p>
+
+    <div class="group-label mb-2">Цвета точек (13 статусов из продукта)</div>
+    <div class="d-flex flex-wrap mb-4">
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--draft mr-2"></span><span class="t-label">Черновик</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--calc-done mr-2"></span><span class="t-label">Сделан расчёт</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--tech-card mr-2"></span><span class="t-label">Тех. карта</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-approval mr-2"></span><span class="t-label">Ждём подтверждения</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-plan mr-2"></span><span class="t-label">Ждём постановки в план</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-print mr-2"></span><span class="t-label">В плане печати</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-lam mr-2"></span><span class="t-label">В плане ламинации</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-cut mr-2"></span><span class="t-label">В плане резки</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--makeready-cut mr-2"></span><span class="t-label">Приладка на резке</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--cutting mr-2"></span><span class="t-label">Режется</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--ready-pack mr-2"></span><span class="t-label">Готово к упаковке</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-ship mr-2"></span><span class="t-label">Ждёт отгрузки</span></span>
+      <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped mr-2"></span><span class="t-label">Отгружено</span></span>
+    </div>
+
+    <div class="group-label mb-2">Пример таймлайна (3 строки)</div>
+    <div class="flexim-order-tracking mb-4">
+      <div class="flexim-timeline-status flexim-timeline-status--current">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header">
+            <span class="flexim-timeline-status__name">Отгружено</span>
+          </div>
+          <span class="flexim-timeline-status__time">24.06.2026, 18:33</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-ship" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header">
+            <span class="flexim-timeline-status__name">Ждёт отгрузки</span>
+          </div>
+          <span class="flexim-timeline-status__time">20.06.2026, 10:27</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--ready-pack" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header">
+            <span class="flexim-timeline-status__name">Готово к упаковке</span>
+          </div>
+          <span class="flexim-timeline-status__time">20.06.2026, 03:58</span>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-side-panel-open="ds-tracking-panel">Открыть панель «Трекинг заказа»</button>
+    <p class="ds-desc mt-2 mb-0">Полный демо-экран: <a href="06-order-tracking.html">06-order-tracking.html</a></p>
+
+    <div class="flexim-side-panel-backdrop" data-side-panel-backdrop="ds-tracking-panel"></div>
+    <aside class="flexim-side-panel flexim-side-panel--narrow" id="ds-tracking-panel" role="dialog" aria-modal="true" aria-labelledby="ds-tracking-panel-title">
+      <div class="flexim-side-panel__header">
+        <div class="flexim-side-panel__heading">
+          <h3 class="flexim-side-panel__title" id="ds-tracking-panel-title">Трекинг заказа</h3>
+        </div>
+        <button type="button" class="flexim-side-panel__close" data-side-panel-close aria-label="Закрыть">
+          <span data-flexim-icon="x" data-size="24" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="flexim-tracking-head flexim-side-panel__subhead">
+        <div class="flexim-tracking-head__info">
+          <p class="t-h3 m-0">Арахис 50 гр + Фисташка 50 гр</p>
+          <p class="t-h4 m-0">Регион Снек</p>
+          <p class="t-body m-0">№66_236 от 20.05.2026</p>
+        </div>
+        <div class="flexim-tracking-head__current">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
+          <span class="t-body">Отгружено</span>
+          <span class="t-label flexim-tracking-head__current-qty">224,51 из 200 кг</span>
+        </div>
+      </div>
+      <div class="flexim-side-panel__body">
+        <div class="flexim-order-tracking">
+          <div class="flexim-timeline-status flexim-timeline-status--current">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
+              <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header">
+                <span class="flexim-timeline-status__name">Отгружено</span>
+              </div>
+              <span class="flexim-timeline-status__time">24.06.2026, 18:33</span>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-ship" aria-hidden="true"></span>
+              <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header">
+                <span class="flexim-timeline-status__name">Ждёт отгрузки</span>
+              </div>
+              <span class="flexim-timeline-status__time">20.06.2026, 10:27</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flexim-side-panel__footer">
+        <button type="button" class="btn btn-primary" data-side-panel-close>Закрыть</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
 <section id="flexim-sidebar" class="ds-section">
   <div class="container">
     <h2>Navigation (Left menu)</h2>
@@ -3715,8 +3838,18 @@
 
   // Sidebar (правая панель): открытие/закрытие.
   function openSidePanel(id) {
-    $('#' + id).addClass('is-open');
+    var $panel = $('#' + id);
+    $panel.addClass('is-open');
     $('[data-side-panel-backdrop="' + id + '"]').addClass('is-open');
+    // трекинг: проскроллить тело к текущему статусу
+    var panel = $panel.get(0);
+    var body = panel && panel.querySelector('.flexim-side-panel__body');
+    var cur  = panel && panel.querySelector('.flexim-timeline-status--current');
+    if (body && cur) {
+      var bRect = body.getBoundingClientRect();
+      var cRect = cur.getBoundingClientRect();
+      body.scrollTop += (cRect.bottom - bRect.bottom) + 16;
+    }
   }
   function closeSidePanel($panel) {
     var id = $panel.attr('id');

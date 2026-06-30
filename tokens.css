@@ -95,6 +95,22 @@
   --infographic-shrek: #78AA0D;       --infographic-shrek-5: #78AA0D0D;       --infographic-shrek-20: #78AA0D33;
   --infographic-green: #0A9D4E;       --infographic-green-5: #0A9D4E0D;       --infographic-green-20: #0A9D4E33;
 
+  /* Цвета статусов заказа — сняты из продукта (прод-трекинг StatusTrack).
+     Легаси-палитра прода; держим как токены, чтобы не плодить #hex по разметке. */
+  --status-draft:         #808080; /* Черновик (gray) */
+  --status-calc-done:     #4682B4; /* Сделан расчёт (steelblue) */
+  --status-tech-card:     #8B4513; /* Составлена тех. карта (saddlebrown) */
+  --status-wait-approval: #DAA520; /* Ждём подтверждения (goldenrod) */
+  --status-wait-plan:     #3CB371; /* Ждём постановки в план (mediumseagreen) */
+  --status-plan-print:    #9933FF; /* В плане печати */
+  --status-plan-lam:      #4D009A; /* В плане ламинации */
+  --status-plan-cut:      #27004E; /* В плане резки */
+  --status-makeready-cut: #D2691E; /* Приладка на резке (chocolate) */
+  --status-cutting:       #A52A2A; /* Режется (brown) */
+  --status-ready-pack:    #AFEEEE; /* Готово к упаковке (paleturquoise) */
+  --status-wait-ship:     #BC8F8F; /* Ждёт отгрузки (rosybrown) */
+  --status-shipped:       #D2691E; /* Отгружено (chocolate) */
+
   /* Sizes / spacing */
   --size-xxs: 4px;
   --size-xs:  8px;

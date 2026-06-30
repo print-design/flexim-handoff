@@ -770,6 +770,63 @@ import {
 
 ---
 
+#### Order tracking (таймлайн статусов)
+
+Bootstrap: `.flexim-order-tracking`, `.flexim-timeline-status`, `.flexim-tracking-head`.
+Правая панель — `.flexim-side-panel--narrow` (400px). Демо: `06-order-tracking.html`,
+каталог `#flexim-order-tracking`.
+
+**Назначение:** история статусов заказа в сайдбаре «Трекинг заказа». Новые события
+**сверху**; верхняя строка — `--current` (жирное имя статуса).
+
+**Классы:**
+| Класс | Назначение |
+|---|---|
+| `.flexim-order-tracking` | контейнер списка |
+| `.flexim-timeline-status` | одна строка (rail + content) |
+| `.flexim-timeline-status--current` | последнее по времени событие (жирный name) |
+| `.flexim-timeline-status__rail` | колонка точки + линии |
+| `.flexim-timeline-status__dot` | точка 12px |
+| `.flexim-timeline-status__dot--{color}` | цвет точки (см. карту ниже) |
+| `.flexim-timeline-status__line` | соединитель `--other-lines`, скрыт у `:last-child` |
+| `.flexim-timeline-status__content` | name + time (+ опционально `__desc`) |
+| `.flexim-tracking-head` | шапка заказа над таймлайном |
+
+**Карта «статус → цвет точки»** (палитра снята из прод-трекинга `StatusTrack`, токены `--status-*` в `tokens.css` — не Figma, не chip-status):
+
+| Статус | модификатор | токен |
+|---|---|---|
+| Черновик | `--draft` | `--status-draft` |
+| Сделан расчёт | `--calc-done` | `--status-calc-done` |
+| Составлена тех. карта | `--tech-card` | `--status-tech-card` |
+| Ждём подтверждения | `--wait-approval` | `--status-wait-approval` |
+| Ждём постановки в план | `--wait-plan` | `--status-wait-plan` |
+| В плане печати | `--plan-print` | `--status-plan-print` |
+| В плане ламинации | `--plan-lam` | `--status-plan-lam` |
+| В плане резки | `--plan-cut` | `--status-plan-cut` |
+| Приладка на резке | `--makeready-cut` | `--status-makeready-cut` |
+| Режется | `--cutting` | `--status-cutting` |
+| Готово к упаковке | `--ready-pack` | `--status-ready-pack` |
+| Ждёт отгрузки | `--wait-ship` | `--status-wait-ship` |
+| Отгружено | `--shipped` | `--status-shipped` |
+
+```html
+<div class="flexim-timeline-status flexim-timeline-status--current">
+  <div class="flexim-timeline-status__rail">
+    <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
+    <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+  </div>
+  <div class="flexim-timeline-status__content">
+    <div class="flexim-timeline-status__header">
+      <span class="flexim-timeline-status__name">Отгружено</span>
+    </div>
+    <span class="flexim-timeline-status__time">24.06.2026, 18:33</span>
+  </div>
+</div>
+```
+
+---
+
 ### 🪟 Оверлеи
 
 #### Modal
