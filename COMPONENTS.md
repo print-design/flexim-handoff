@@ -403,41 +403,54 @@ import { SelectField, type SelectOption } from '../../components/ui/select';
 #### StatusBanner
 
 `flexim-app/src/components/ui/status-banner.tsx`. **Карточный** баннер статуса
-на всю ширину карточки заказа (max 520px, radius 12, pad 12×16, иконка 24px,
-text-h4). Не путать с табличным `ChipStatus` в списке заказов.
+на всю ширину карточки заказа (max 520px, radius 12, pad 12×16, gap 8px,
+иконка 24px, text-h4). Не путать с табличным `ChipStatus` в списке заказов.
 
-Источник истины: Figma «Статус» (`4542:91809`). **10 типов** в порядке Figma:
+**Визуальный эталон прод-статусов:** `prod-mockups/_status-banners-column.html`.
+Стиль **outline** — белый фон, цветной бордер 1px, цветной текст и иконка,
+пара «иконка + текст» по центру.
 
-| # | Ключ | Подпись | Иконка | Стиль |
-|---|---|---|---|---|
-| 1 | `draft` | Черновик | `Pencil` | neutral fill |
-| 2 | `calc-done` | Сделан расчет | `Calculator` | **outline** (белый фон, синий бордер `infographic-blue`) |
-| 3 | `tech-card` | Составлена тех. карта | `FileText` | neutral fill |
-| 4 | `cp-sent` | Отправлено коммерческое предложение | `FileText` | neutral fill |
-| 5 | `sent-to-work` | Отправлено в работу | `Check` | success fill |
-| 6 | `waiting-approval` | Ждет одобрения менеджером | `Clock` | warning fill |
-| 7 | `makeready` | Приладка | `Settings` | info fill |
-| 8 | `cut` | Резка | `Scissors` | info fill |
-| 9 | `price-changed` | Стоимость изменилась | `TrendingUp` | error fill |
-| 10 | `rejected` | Заявка отклонена | `AlertCircle` | error fill |
+**15 продовых статусов** (порядок по ходу заказа; цвета — как на проде, не Figma):
+
+| # | Ключ | Подпись | Цвет | Иконка | Прогресс |
+|---|---|---|---|---|---|
+| 1 | `draft` | Черновик | neutral | `Pencil` | — |
+| 2 | `calc-done` | Сделан расчёт | infographic-blue | `Check` | — |
+| 3 | `tech-card` | Составлена тех. карта | infographic-terracot | `FileText` | — |
+| 4 | `wait-approval` | Ждём подтверждения | warning | `Clock` | — |
+| 5 | `wait-plan` | Ждём постановки в план | success | `CheckCheck` | — |
+| 6 | `rejected` | Отклонено | error | `XCircle` | — |
+| 7 | `plan-print` | В плане печати | infographic-violet | `Printer` | — |
+| 8 | `plan-lam` | В плане ламинации | infographic-violet | `Layers` | — |
+| 9 | `plan-cut` | В плане резки | infographic-indigo* | `Scissors` | — |
+| 10 | `cutting` | Режется | infographic-pink | `Scissors` | да |
+| 11 | `cut-stopped` | Сняли с резки | infographic-pink | `XCircle` | подзаголовок |
+| 12 | `ready-pack` | Готово к упаковке | infographic-blue | `Boxes` | да |
+| 13 | `wait-ship` | Ждёт отгрузки | infographic-mauve* | `Package` | да |
+| 14 | `shipped` | Отгружено | warning | `Package` | да |
+| 15 | `in-trash` | В корзине | infographic-black | `Trash2` | — |
+
+\* `infographic-indigo`, `infographic-mauve`, `infographic-cyan` — токены сняты
+на глаз с прода; **TODO: уточнить в Figma**.
 
 ```tsx
-<StatusBanner type="sent-to-work" />
-<StatusBanner
-  type="price-changed"
-  action={{ label: 'Пересчитать', onClick: handleRecalc }}
-/>
+<StatusBanner type="calc-done" />
+<StatusBanner type="shipped" progress="767,71 из 700 кг" />
 ```
 
-`calc-done` — единственный outline-стиль (без 5%-заливки, цветной бордер на
-полную). Все остальные — filled (5% фон + 20% бордер + main-цвет текста/иконки).
+| Prop | Тип | Описание |
+|---|---|---|
+| `type` | `StatusBannerType` | Ключ статуса |
+| `progress` | `string?` | «X из Y кг/шт» или подзаголовок (напр. «: дошнга») |
+| `action` | `{ label, onClick? }?` | Кнопка справа (Figma «Пересчитать») |
 
-**Bootstrap-зеркало:** `.flexim-status-banner` + модификатор варианта
-(`--success`, `--warning`, `--error`, `--info`, `--neutral`, `--blue`).
-Outline (белый фон, цветная рамка и текст): `.flexim-status-banner--outline`
-вместе с вариантом, напр. `.flexim-status-banner--blue.flexim-status-banner--outline`
-для «Сделан расчёт». Полный набор 10 баннеров — в каталоге
-`prod-mockups/components.html` → секция Statuses.
+Все 15 статусов — outline: белый фон, цветной бордер и текст, без заливки.
+
+**Bootstrap-зеркало:** `.flexim-status-banner` + модификатор цвета
+(`--success`, `--warning`, `--error`, `--neutral`, `--info`, `--blue`, `--terracot`,
+`--violet`, `--indigo`, `--mauve`, `--black`, …) + `.flexim-status-banner--outline`
+для прод-стиля. Прогресс: `<span class="flexim-status-banner__progress">`.
+Полный набор — `prod-mockups/components.html` → секция Statuses.
 
 ---
 
@@ -1009,6 +1022,16 @@ React-компонент — только Bootstrap-разметка.
 | `TopBar` | `components/layout/TopBar.tsx` | Шапка, поиск, уведомления, UserMenu |
 | `UserMenu` | `components/layout/user-menu.tsx` | Аватар + dropdown |
 | `BrandLogo` | `components/BrandLogo.tsx` | Логотип `full`/`icon-only`, размеры m/s |
+
+**Bootstrap-разметка** (для prod-mockups):
+композит `.flexim-user-menu` оборачивает обычный `.flexim-user-chip` (как
+`<button>`-триггер) и `.flexim-user-menu__menu` с `.flexim-dropdown` внутри.
+Меню прижато к правому краю чипа (`right: 0; top: 100% + 4px`). Поведение —
+тогглит `.is-open` на обёртке, паттерн полностью идентичен `.flexim-filter-dd`.
+Подключение поведения — один тег `<script src="./_user-menu.js"></script>`
+в конце страницы. Эталон применения — шапка в `01-orders.html` /
+`02-order-card.html`. Демо в каталоге — секция «User menu → Интерактивный
+composite».
 
 ---
 

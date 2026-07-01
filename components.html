@@ -931,22 +931,22 @@
     </div>
 
     <div class="group-label">Chip status — статусы заказа (каноничный список из прода)</div>
-    <p class="ds-desc ds-desc-small">Источник истины: <code>flexim-app/src/components/ui/chip-status.tsx</code> → <code>ORDER_STATUS</code>. Подписи и привязка к вариантам — 1:1 с этой картой. Кандидаты с пометкой «<code>?</code>» в коде — best-effort, требуют сверки в Figma. Черновик не показан — для него нужен отдельный grey-токен (TODO).</p>
+    <p class="ds-desc ds-desc-small">Цвета синхронизированы со статус-баннерами (<code>_status-banners-column.html</code>): один статус — один цвет и в баннере, и в чипе, и в точке таблицы. Токены <code>indigo</code>, <code>mauve</code> сняты с прода — <strong>TODO: уточнить в Figma</strong>.</p>
     <div class="d-flex flex-wrap mb-3" style="gap: 8px;">
-      <!-- draft (Черновик) — TODO: нет токена (нужен grey, не black) -->
+      <span class="flexim-chip-status flexim-chip-status--neutral">Черновик</span>
       <span class="flexim-chip-status flexim-chip-status--blue">Сделан расчёт</span>
       <span class="flexim-chip-status flexim-chip-status--terracot">Составлена тех. карта</span>
-      <span class="flexim-chip-status flexim-chip-status--yellow">Ждём подтверждения</span>
-      <span class="flexim-chip-status flexim-chip-status--green">Ждём постановки в план</span>
+      <span class="flexim-chip-status flexim-chip-status--warning">Ждём подтверждения</span>
+      <span class="flexim-chip-status flexim-chip-status--success">Ждём постановки в план</span>
       <span class="flexim-chip-status flexim-chip-status--error">Отклонено</span>
-      <span class="flexim-chip-status flexim-chip-status--purple">В плане печати</span>
+      <span class="flexim-chip-status flexim-chip-status--violet">В плане печати</span>
       <span class="flexim-chip-status flexim-chip-status--violet">В плане ламинации</span>
-      <span class="flexim-chip-status flexim-chip-status--blue">В плане резки</span>
-      <span class="flexim-chip-status flexim-chip-status--brick">Режется</span>
-      <span class="flexim-chip-status flexim-chip-status--brick">Сняли с резки</span>
-      <span class="flexim-chip-status flexim-chip-status--info">Готово к упаковке</span>
-      <span class="flexim-chip-status flexim-chip-status--pink">Ждёт отгрузки</span>
-      <span class="flexim-chip-status flexim-chip-status--orange">Отгружено</span>
+      <span class="flexim-chip-status flexim-chip-status--indigo">В плане резки</span>
+      <span class="flexim-chip-status flexim-chip-status--pink">Режется</span>
+      <span class="flexim-chip-status flexim-chip-status--pink">Сняли с резки</span>
+      <span class="flexim-chip-status flexim-chip-status--blue">Готово к упаковке</span>
+      <span class="flexim-chip-status flexim-chip-status--mauve">Ждёт отгрузки</span>
+      <span class="flexim-chip-status flexim-chip-status--warning">Отгружено</span>
       <span class="flexim-chip-status flexim-chip-status--black">В корзине</span>
     </div>
 
@@ -2318,16 +2318,30 @@
         <a href="#" class="flexim-header-menu__item">Резка</a>
         <a href="#" class="flexim-header-menu__item">Отгрузка</a>
       </nav>
-      <div class="flexim-user-chip">
-        <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials" title="Пономарёв Сергей">ПС</span>
-        <span class="flexim-user-chip__name">
-          <a href="#" class="flexim-user-chip__title">Пономарёв Сергей</a>
-          <span class="flexim-user-chip__role">Технолог</span>
-        </span>
+      <div class="flexim-user-menu">
+        <button type="button" class="flexim-user-chip" aria-haspopup="true" aria-expanded="false">
+          <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials" title="Пономарёв Сергей">ПС</span>
+          <span class="flexim-user-chip__name">
+            <span class="flexim-user-chip__title">Пономарёв Сергей</span>
+            <span class="flexim-user-chip__role">Технолог</span>
+          </span>
+        </button>
+        <div class="flexim-user-menu__menu flexim-dropdown" role="menu">
+          <div class="flexim-dropdown__items">
+            <a href="#" class="flexim-dropdown__item" role="menuitem">
+              <span data-flexim-icon="user" data-size="24" aria-hidden="true"></span>
+              <span>Мои настройки</span>
+            </a>
+            <a href="#" class="flexim-dropdown__item" role="menuitem">
+              <span data-flexim-icon="logout" data-size="24" aria-hidden="true"></span>
+              <span>Выход</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <p class="ds-desc ds-desc-small">Компактный вариант (mobile): гамбургер + поиск + user-чип.</p>
+    <p class="ds-desc ds-desc-small">Компактный вариант (mobile): гамбургер + поиск + user-menu.</p>
     <div class="flexim-header-menu mb-4">
       <div class="flexim-header-menu__compact">
         <button type="button" class="flexim-icon-btn" aria-label="Меню">
@@ -2337,12 +2351,26 @@
           <span data-flexim-icon="search" data-size="24" aria-hidden="true"></span>
         </button>
       </div>
-      <div class="flexim-user-chip">
-        <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials" title="Пономарёв Сергей">ПС</span>
-        <span class="flexim-user-chip__name">
-          <a href="#" class="flexim-user-chip__title">Пономарёв Сергей</a>
-          <span class="flexim-user-chip__role">Технолог</span>
-        </span>
+      <div class="flexim-user-menu">
+        <button type="button" class="flexim-user-chip" aria-haspopup="true" aria-expanded="false">
+          <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials" title="Пономарёв Сергей">ПС</span>
+          <span class="flexim-user-chip__name">
+            <span class="flexim-user-chip__title">Пономарёв Сергей</span>
+            <span class="flexim-user-chip__role">Технолог</span>
+          </span>
+        </button>
+        <div class="flexim-user-menu__menu flexim-dropdown" role="menu">
+          <div class="flexim-dropdown__items">
+            <a href="#" class="flexim-dropdown__item" role="menuitem">
+              <span data-flexim-icon="user" data-size="24" aria-hidden="true"></span>
+              <span>Мои настройки</span>
+            </a>
+            <a href="#" class="flexim-dropdown__item" role="menuitem">
+              <span data-flexim-icon="logout" data-size="24" aria-hidden="true"></span>
+              <span>Выход</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -3395,7 +3423,7 @@
         </div>
         <div class="flexim-tracking-head__current">
           <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
-          <span class="t-body">Отгружено</span>
+          <span class="flexim-tracking-head__current-name">Отгружено</span>
           <span class="t-label flexim-tracking-head__current-qty">224,51 из 200 кг</span>
         </div>
       </div>
@@ -3778,46 +3806,68 @@
 <section id="statuses" class="ds-section">
   <div class="container">
     <h2>Statuses</h2>
-    <p class="ds-desc">Баннеры заказа Figma «Статус» (4542:91809): max 520px, radius 12, pad 12×16. Порядок по Figma — от черновика до отклонения.</p>
-    <div class="flexim-status-banner flexim-status-banner--neutral mb-2">
+    <p class="ds-desc">Баннеры статуса заказа: max 520px, radius 12, pad 12×16, gap 8px, иконка 24px. Прод-набор — outline (белый фон, цветной бордер), эталон <code>_status-banners-column.html</code>.</p>
+
+    <div class="group-label mb-2">15 продовых статусов заказа (outline)</div>
+    <div class="flexim-status-banner flexim-status-banner--neutral flexim-status-banner--outline mb-2">
       <span data-flexim-icon="edit" data-size="24"></span>
       <span>Черновик</span>
     </div>
     <div class="flexim-status-banner flexim-status-banner--blue flexim-status-banner--outline mb-2">
-      <span data-flexim-icon="calculator" data-size="24"></span>
-      <span>Сделан расчет</span>
+      <span data-flexim-icon="check-small" data-size="24"></span>
+      <span>Сделан расчёт</span>
     </div>
-    <div class="flexim-status-banner flexim-status-banner--neutral mb-2">
+    <div class="flexim-status-banner flexim-status-banner--terracot flexim-status-banner--outline mb-2">
       <span data-flexim-icon="doc" data-size="24"></span>
       <span>Составлена тех. карта</span>
     </div>
-    <div class="flexim-status-banner flexim-status-banner--neutral mb-2">
-      <span data-flexim-icon="doc" data-size="24"></span>
-      <span>Отправлено коммерческое предложение</span>
-    </div>
-    <div class="flexim-status-banner flexim-status-banner--success mb-2">
-      <span data-flexim-icon="check-big" data-size="24"></span>
-      <span>Отправлено в работу</span>
-    </div>
-    <div class="flexim-status-banner flexim-status-banner--warning mb-2">
+    <div class="flexim-status-banner flexim-status-banner--warning flexim-status-banner--outline mb-2">
       <span data-flexim-icon="time" data-size="24"></span>
-      <span>Ждет одобрения менеджером</span>
+      <span>Ждём подтверждения</span>
     </div>
-    <div class="flexim-status-banner flexim-status-banner--info mb-2">
-      <span data-flexim-icon="settings" data-size="24"></span>
-      <span>Приладка</span>
+    <div class="flexim-status-banner flexim-status-banner--success flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="check-big" data-size="24"></span>
+      <span>Ждём постановки в план</span>
     </div>
-    <div class="flexim-status-banner flexim-status-banner--info mb-2">
-      <span data-flexim-icon="cut" data-size="24"></span>
-      <span>Резка</span>
-    </div>
-    <div class="flexim-status-banner flexim-status-banner--error mb-2">
-      <span data-flexim-icon="graph-line" data-size="24"></span>
-      <span>Стоимость изменилась</span>
-    </div>
-    <div class="flexim-status-banner flexim-status-banner--error">
+    <div class="flexim-status-banner flexim-status-banner--error flexim-status-banner--outline mb-2">
       <span data-flexim-icon="error-circle" data-size="24"></span>
-      <span>Заявка отклонена</span>
+      <span>Отклонено</span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--violet flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="print" data-size="24"></span>
+      <span>В плане печати</span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--violet flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="divide" data-size="24"></span>
+      <span>В плане ламинации</span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--indigo flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="cut" data-size="24"></span>
+      <span>В плане резки</span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--pink flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="cut" data-size="24"></span>
+      <span>Режется <span class="flexim-status-banner__progress">65,25 из 170 кг</span></span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--pink flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="error-circle" data-size="24"></span>
+      <span>Сняли с резки <span class="flexim-status-banner__progress">: дошнга</span></span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--blue flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="boxes" data-size="24"></span>
+      <span>Готово к упаковке <span class="flexim-status-banner__progress">X из Y кг</span></span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--mauve flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="box" data-size="24"></span>
+      <span>Ждёт отгрузки <span class="flexim-status-banner__progress">392,12 из 350 кг</span></span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--warning flexim-status-banner--outline mb-2">
+      <span data-flexim-icon="box" data-size="24"></span>
+      <span>Отгружено <span class="flexim-status-banner__progress">767,71 из 700 кг</span></span>
+    </div>
+    <div class="flexim-status-banner flexim-status-banner--black flexim-status-banner--outline mb-4">
+      <span data-flexim-icon="trash" data-size="24"></span>
+      <span>В корзине</span>
     </div>
   </div>
 </section>
@@ -4094,6 +4144,36 @@
           <span data-flexim-icon="logout" data-size="24" aria-hidden="true"></span>
           Выйти
         </button>
+      </div>
+
+      <div class="group-label mt-4">Интерактивный composite — .flexim-user-menu</div>
+      <p class="ds-desc">
+        Клик по user-chip → меню разворачивается под ним справа. Поведение —
+        <code>_user-menu.js</code>. Эталон применения — шапка в
+        <code>01-orders.html</code> / <code>02-order-card.html</code>.
+      </p>
+      <div style="background: var(--background-paper); border: 1px solid var(--other-lines); border-radius: 8px; padding: 12px 16px; display: flex; justify-content: flex-end;">
+        <div class="flexim-user-menu">
+          <button type="button" class="flexim-user-chip" aria-haspopup="true" aria-expanded="false">
+            <span class="flexim-avatar flexim-avatar--m flexim-avatar--initials" title="Пономарёв Сергей">ПС</span>
+            <span class="flexim-user-chip__name">
+              <span class="flexim-user-chip__title">Пономарёв Сергей</span>
+              <span class="flexim-user-chip__role">Технолог</span>
+            </span>
+          </button>
+          <div class="flexim-user-menu__menu flexim-dropdown" role="menu">
+            <div class="flexim-dropdown__items">
+              <a href="#" class="flexim-dropdown__item" role="menuitem">
+                <span data-flexim-icon="user" data-size="24" aria-hidden="true"></span>
+                <span>Мои настройки</span>
+              </a>
+              <a href="#" class="flexim-dropdown__item" role="menuitem">
+                <span data-flexim-icon="logout" data-size="24" aria-hidden="true"></span>
+                <span>Выход</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -4471,6 +4551,8 @@
     if (window.fleximIcons) window.fleximIcons.renderAll();
   });
 </script>
+<!-- Демо user-menu (см. секцию User menu → «Интерактивный composite») -->
+<script src="./_user-menu.js"></script>
 <!-- Демо collapsed-search в шапке (см. секцию Search → «Search в топбаре») -->
 <script src="./_search-topbar.js"></script>
 </body>

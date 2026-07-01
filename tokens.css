@@ -94,6 +94,10 @@
   --infographic-brick: #940A2B;       --infographic-brick-5: #940A2B0D;       --infographic-brick-20: #940A2B33;
   --infographic-shrek: #78AA0D;       --infographic-shrek-5: #78AA0D0D;       --infographic-shrek-20: #78AA0D33;
   --infographic-green: #0A9D4E;       --infographic-green-5: #0A9D4E0D;       --infographic-green-20: #0A9D4E33;
+  /* TODO: уточнить в Figma — снято на глаз с прода (_status-banners-column.html) */
+  --infographic-indigo: #241663;       --infographic-indigo-5: #2416630D;       --infographic-indigo-20: #24166333;
+  --infographic-mauve: #B0848F;        --infographic-mauve-5: #B0848F0D;        --infographic-mauve-20: #B0848F33;
+  --infographic-cyan: #29ABE2;         --infographic-cyan-5: #29ABE20D;         --infographic-cyan-20: #29ABE233;
 
   /* Цвета статусов заказа — совпадают с палитрой статус-баннеров ДС.
      Легаси-палитра прода; держим как токены, чтобы не плодить #hex по разметке. */

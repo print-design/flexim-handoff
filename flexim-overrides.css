@@ -838,6 +838,16 @@ label, .col-form-label {
 .flexim-chip-status--shrek:hover { background: var(--infographic-shrek-20); }
 .flexim-chip-status--green { background: var(--infographic-green-5); --chip-dot: var(--infographic-green); }
 .flexim-chip-status--green:hover { background: var(--infographic-green-20); }
+/* Синхронизировано со статус-баннерами: neutral (Черновик), indigo (В плане резки), mauve (Ждёт отгрузки). */
+.flexim-chip-status--neutral { background: var(--neutral-5); --chip-dot: var(--neutral-main); }
+.flexim-chip-status--neutral:hover { background: var(--neutral-20); }
+.flexim-chip-status--indigo { background: var(--infographic-indigo-5); --chip-dot: var(--infographic-indigo); }
+.flexim-chip-status--indigo:hover { background: var(--infographic-indigo-20); }
+.flexim-chip-status--mauve { background: var(--infographic-mauve-5); --chip-dot: var(--infographic-mauve); }
+.flexim-chip-status--mauve:hover { background: var(--infographic-mauve-20); }
+.flexim-chip-status--strong.flexim-chip-status--neutral { background: var(--neutral-20); }
+.flexim-chip-status--strong.flexim-chip-status--indigo { background: var(--infographic-indigo-20); }
+.flexim-chip-status--strong.flexim-chip-status--mauve { background: var(--infographic-mauve-20); }
 /* Насыщенный вариант (фон 20%) — статичный показ hover/выбранного состояния. */
 .flexim-chip-status--strong.flexim-chip-status--success { background: var(--success-20); }
 .flexim-chip-status--strong.flexim-chip-status--warning { background: var(--warning-20); }
@@ -898,7 +908,42 @@ label, .col-form-label {
   border-color: var(--infographic-blue-20);
   color: var(--infographic-blue);
 }
-/* Outline: белый фон + цветная рамка и текст (карточка заказа, отгрузка). */
+.flexim-status-banner--terracot {
+  background: var(--infographic-terracot-5);
+  border-color: var(--infographic-terracot-20);
+  color: var(--infographic-terracot);
+}
+.flexim-status-banner--violet {
+  background: var(--infographic-violet-5);
+  border-color: var(--infographic-violet-20);
+  color: var(--infographic-violet);
+}
+.flexim-status-banner--orange {
+  background: var(--infographic-orange-5);
+  border-color: var(--infographic-orange-20);
+  color: var(--infographic-orange);
+}
+.flexim-status-banner--black {
+  background: var(--infographic-black-5);
+  border-color: var(--infographic-black-20);
+  color: var(--infographic-black);
+}
+.flexim-status-banner--indigo {
+  background: var(--infographic-indigo-5);
+  border-color: var(--infographic-indigo-20);
+  color: var(--infographic-indigo);
+}
+.flexim-status-banner--mauve {
+  background: var(--infographic-mauve-5);
+  border-color: var(--infographic-mauve-20);
+  color: var(--infographic-mauve);
+}
+.flexim-status-banner--cyan {
+  background: var(--infographic-cyan-5);
+  border-color: var(--infographic-cyan-20);
+  color: var(--infographic-cyan);
+}
+/* Outline: белый фон + цветная рамка и текст (прод-статусы и карточка заказа). */
 .flexim-status-banner--outline {
   background: var(--surface-white);
 }
@@ -922,12 +967,51 @@ label, .col-form-label {
   border-color: var(--error-main);
   color: var(--error-main);
 }
+.flexim-status-banner--pink {
+  background: var(--infographic-pink-5);
+  border-color: var(--infographic-pink-20);
+  color: var(--infographic-pink);
+}
+.flexim-status-banner--outline.flexim-status-banner--pink {
+  background: var(--surface-white);
+  border-color: var(--infographic-pink);
+  color: var(--infographic-pink);
+}
 .flexim-status-banner--outline.flexim-status-banner--blue {
   border-color: var(--infographic-blue);
   color: var(--infographic-blue);
 }
+.flexim-status-banner--outline.flexim-status-banner--terracot {
+  border-color: var(--infographic-terracot);
+  color: var(--infographic-terracot);
+}
+.flexim-status-banner--outline.flexim-status-banner--violet {
+  border-color: var(--infographic-violet);
+  color: var(--infographic-violet);
+}
+.flexim-status-banner--outline.flexim-status-banner--orange {
+  border-color: var(--infographic-orange);
+  color: var(--infographic-orange);
+}
+.flexim-status-banner--outline.flexim-status-banner--black {
+  border-color: var(--infographic-black);
+  color: var(--infographic-black);
+}
+.flexim-status-banner--outline.flexim-status-banner--indigo {
+  border-color: var(--infographic-indigo);
+  color: var(--infographic-indigo);
+}
+.flexim-status-banner--outline.flexim-status-banner--mauve {
+  border-color: var(--infographic-mauve);
+  color: var(--infographic-mauve);
+}
+.flexim-status-banner--outline.flexim-status-banner--cyan {
+  border-color: var(--infographic-cyan);
+  color: var(--infographic-cyan);
+}
 /* Иконка статуса — 24px, наследует цвет варианта (currentColor), не сжимается. */
-.flexim-status-banner > svg {
+.flexim-status-banner > svg,
+.flexim-status-banner > [data-flexim-icon] {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
@@ -938,6 +1022,10 @@ label, .col-form-label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.flexim-status-banner__progress {
+  font-weight: 400;
+  opacity: 0.85;
 }
 
 .flexim-notificator {
@@ -1744,6 +1832,13 @@ label, .col-form-label {
 .flexim-table__stack-main { font: 400 14px/16px var(--font-family); color: var(--text-primary); }
 .flexim-table__stack-main--bold { font-weight: 700; }
 .flexim-table__stack-sub  { font: 400 11px/12px var(--font-family); color: var(--text-secondary); }
+/* Ячейка статуса: чип + подпись прогресса под ним (вертикально, влево). */
+.flexim-table__status-cell {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--size-xxs);
+  align-items: flex-start;
+}
 /* Статус: цветная точка + текст. */
 .flexim-table__status {
   display: inline-flex;
@@ -1765,6 +1860,14 @@ label, .col-form-label {
 .flexim-table__status-dot--yellow { background: var(--infographic-yellow); }
 .flexim-table__status-dot--orange { background: var(--infographic-terracot); }
 .flexim-table__status-dot--info   { background: var(--info-main); }
+/* Синхронизировано со статус-баннерами (карта «статус → цвет»). */
+.flexim-table__status-dot--neutral  { background: var(--neutral-main); }
+.flexim-table__status-dot--warning  { background: var(--warning-main); }
+.flexim-table__status-dot--error    { background: var(--error-main); }
+.flexim-table__status-dot--terracot { background: var(--infographic-terracot); }
+.flexim-table__status-dot--indigo   { background: var(--infographic-indigo); }
+.flexim-table__status-dot--mauve    { background: var(--infographic-mauve); }
+.flexim-table__status-dot--black    { background: var(--infographic-black); }
 /* Ячейка с иконкой-действием (кебаб / иконки). */
 .flexim-table__cell-action {
   display: inline-flex;
@@ -2161,6 +2264,7 @@ label, .col-form-label {
 .flexim-tracking-head__info { display: flex; flex-direction: column; gap: 4px; }
 .flexim-tracking-head__current  { display: flex; align-items: center; gap: 8px; }
 .flexim-tracking-head__current-qty { color: var(--text-secondary); }
+.flexim-tracking-head__current-name { font: 500 14px/20px var(--font-family); color: var(--text-primary); }
 
 /* список таймлайна */
 .flexim-order-tracking { display: flex; flex-direction: column; }
@@ -2628,6 +2732,33 @@ label, .col-form-label {
   display: inline-flex;
   align-items: center;
   gap: var(--size-xs);
+}
+/* User-chip в роли триггера (когда обёрнут в .flexim-user-menu): сбрасываем
+   дефолты button (бордер, фон, паддинг), оставляем layout и hover. */
+button.flexim-user-chip {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+button.flexim-user-chip:hover .flexim-user-chip__title { color: var(--primary-light); }
+/* Композит «пользовательское меню»: триггер user-chip + dropdown справа.
+   Паттерн один-в-один с .flexim-filter-dd; меню прижато к правому краю,
+   потому что user-chip живёт в правом верхнем углу шапки. */
+.flexim-user-menu { position: relative; display: inline-flex; }
+.flexim-user-menu__menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + var(--size-xxs));
+  right: 0;
+  min-width: 220px;
+  display: none;
+}
+.flexim-user-menu.is-open .flexim-user-menu__menu { display: flex; }
+.flexim-user-menu.is-open > button.flexim-user-chip .flexim-user-chip__title {
+  color: var(--primary-light);
 }
 .flexim-user-chip__name {
   display: flex;
