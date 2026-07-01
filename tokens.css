@@ -95,21 +95,21 @@
   --infographic-shrek: #78AA0D;       --infographic-shrek-5: #78AA0D0D;       --infographic-shrek-20: #78AA0D33;
   --infographic-green: #0A9D4E;       --infographic-green-5: #0A9D4E0D;       --infographic-green-20: #0A9D4E33;
 
-  /* Цвета статусов заказа — сняты из продукта (прод-трекинг StatusTrack).
+  /* Цвета статусов заказа — совпадают с палитрой статус-баннеров ДС.
      Легаси-палитра прода; держим как токены, чтобы не плодить #hex по разметке. */
-  --status-draft:         #808080; /* Черновик (gray) */
-  --status-calc-done:     #4682B4; /* Сделан расчёт (steelblue) */
-  --status-tech-card:     #8B4513; /* Составлена тех. карта (saddlebrown) */
-  --status-wait-approval: #DAA520; /* Ждём подтверждения (goldenrod) */
-  --status-wait-plan:     #3CB371; /* Ждём постановки в план (mediumseagreen) */
-  --status-plan-print:    #9933FF; /* В плане печати */
-  --status-plan-lam:      #4D009A; /* В плане ламинации */
-  --status-plan-cut:      #27004E; /* В плане резки */
-  --status-makeready-cut: #D2691E; /* Приладка на резке (chocolate) */
-  --status-cutting:       #A52A2A; /* Режется (brown) */
-  --status-ready-pack:    #AFEEEE; /* Готово к упаковке (paleturquoise) */
-  --status-wait-ship:     #BC8F8F; /* Ждёт отгрузки (rosybrown) */
-  --status-shipped:       #D2691E; /* Отгружено (chocolate) */
+  --status-draft:         var(--neutral-main);        /* Черновик — neutral */
+  --status-calc-done:     var(--infographic-blue);     /* Сделан расчёт */
+  --status-tech-card:     var(--infographic-terracot); /* Составлена тех. карта */
+  --status-wait-approval: var(--warning-main);         /* Ждём подтверждения */
+  --status-wait-plan:     var(--success-main);         /* Ждём постановки в план */
+  --status-plan-print:    var(--infographic-violet);   /* В плане печати */
+  --status-plan-lam:      var(--infographic-violet);   /* В плане ламинации */
+  --status-plan-cut:      var(--infographic-indigo);   /* В плане резки */
+  --status-makeready-cut: var(--infographic-pink);     /* Приладка на резке (как «Режется») */
+  --status-cutting:       var(--infographic-pink);     /* Режется — розовый (красный = только ошибки) */
+  --status-ready-pack:    var(--infographic-blue);     /* Готово к упаковке */
+  --status-wait-ship:     var(--infographic-mauve);    /* Ждёт отгрузки */
+  --status-shipped:       var(--warning-main);         /* Отгружено */
 
   /* Sizes / spacing */
   --size-xxs: 4px;
