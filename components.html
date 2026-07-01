@@ -3006,42 +3006,370 @@
       <span class="d-flex align-items-center mr-3 mb-2"><span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped mr-2"></span><span class="t-label">Отгружено</span></span>
     </div>
 
-    <div class="group-label mb-2">Пример таймлайна (3 строки)</div>
-    <div class="flexim-order-tracking mb-4">
-      <div class="flexim-timeline-status flexim-timeline-status--current">
-        <div class="flexim-timeline-status__rail">
-          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
-          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
-        </div>
-        <div class="flexim-timeline-status__content">
-          <div class="flexim-timeline-status__header">
-            <span class="flexim-timeline-status__name">Отгружено</span>
+    <div class="group-label mb-2">Три образца прогресса</div>
+    <p class="ds-desc mb-3">Одна модель, разные стадии: пройденные — в продуктовых цветах, текущая — жирная, будущие — серые (пустое кольцо + пунктирная линия).</p>
+    <div class="row mb-4">
+      <div class="col-md-4 mb-4">
+        <div class="group-label mb-2">Заказ завершён</div>
+        <div class="flexim-order-tracking">
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--draft" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Черновик</span></div>
+            </div>
           </div>
-          <span class="flexim-timeline-status__time">24.06.2026, 18:33</span>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--calc-done" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Сделан расчёт</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--tech-card" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Составлена тех. карта</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-approval" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждём подтверждения</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-plan" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждём постановки в план</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-print" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане печати</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-lam" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане ламинации</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-cut" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане резки</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--makeready-cut" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Приладка на резке</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--cutting" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Режется</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--ready-pack" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Готово к упаковке</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-ship" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждёт отгрузки</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--current">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Отгружено</span></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="flexim-timeline-status">
-        <div class="flexim-timeline-status__rail">
-          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-ship" aria-hidden="true"></span>
-          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
-        </div>
-        <div class="flexim-timeline-status__content">
-          <div class="flexim-timeline-status__header">
-            <span class="flexim-timeline-status__name">Ждёт отгрузки</span>
+      <div class="col-md-4 mb-4">
+        <div class="group-label mb-2">Половина пройдена</div>
+        <div class="flexim-order-tracking">
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--draft" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Черновик</span></div>
+            </div>
           </div>
-          <span class="flexim-timeline-status__time">20.06.2026, 10:27</span>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--calc-done" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Сделан расчёт</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--tech-card" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Составлена тех. карта</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-approval" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждём подтверждения</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-plan" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждём постановки в план</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-print" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане печати</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--current flexim-timeline-status--line-dashed">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-lam" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане ламинации</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане резки</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Приладка на резке</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Режется</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Готово к упаковке</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждёт отгрузки</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Отгружено</span></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="flexim-timeline-status">
-        <div class="flexim-timeline-status__rail">
-          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--ready-pack" aria-hidden="true"></span>
-          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
-        </div>
-        <div class="flexim-timeline-status__content">
-          <div class="flexim-timeline-status__header">
-            <span class="flexim-timeline-status__name">Готово к упаковке</span>
+      <div class="col-md-4 mb-4">
+        <div class="group-label mb-2">Первый статус</div>
+        <div class="flexim-order-tracking">
+          <div class="flexim-timeline-status flexim-timeline-status--current flexim-timeline-status--line-dashed">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--draft" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Черновик</span></div>
+            </div>
           </div>
-          <span class="flexim-timeline-status__time">20.06.2026, 03:58</span>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Сделан расчёт</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Составлена тех. карта</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждём подтверждения</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждём постановки в план</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане печати</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане ламинации</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане резки</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Приладка на резке</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Режется</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Готово к упаковке</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждёт отгрузки</span></div>
+            </div>
+          </div>
+          <div class="flexim-timeline-status flexim-timeline-status--st-planned">
+            <div class="flexim-timeline-status__rail">
+              <span class="flexim-timeline-status__dot" aria-hidden="true"></span>
+            </div>
+            <div class="flexim-timeline-status__content">
+              <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Отгружено</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3071,36 +3399,201 @@
           <span class="t-label flexim-tracking-head__current-qty">224,51 из 200 кг</span>
         </div>
       </div>
-      <div class="flexim-side-panel__body">
+      <div class="flexim-side-panel__body flexim-side-panel__body--faded" style="padding-bottom: var(--size-xl)">
         <div class="flexim-order-tracking">
-          <div class="flexim-timeline-status flexim-timeline-status--current">
-            <div class="flexim-timeline-status__rail">
-              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
-              <span class="flexim-timeline-status__line" aria-hidden="true"></span>
-            </div>
-            <div class="flexim-timeline-status__content">
-              <div class="flexim-timeline-status__header">
-                <span class="flexim-timeline-status__name">Отгружено</span>
-              </div>
-              <span class="flexim-timeline-status__time">24.06.2026, 18:33</span>
-            </div>
-          </div>
-          <div class="flexim-timeline-status">
-            <div class="flexim-timeline-status__rail">
-              <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-ship" aria-hidden="true"></span>
-              <span class="flexim-timeline-status__line" aria-hidden="true"></span>
-            </div>
-            <div class="flexim-timeline-status__content">
-              <div class="flexim-timeline-status__header">
-                <span class="flexim-timeline-status__name">Ждёт отгрузки</span>
-              </div>
-              <span class="flexim-timeline-status__time">20.06.2026, 10:27</span>
-            </div>
-          </div>
+      <!-- foreach ($trackingEvents as $event): -->
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--draft" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Черновик</span></div>
+          <span class="flexim-timeline-status__time">20.05.2026, 16:42</span>
         </div>
       </div>
-      <div class="flexim-side-panel__footer">
-        <button type="button" class="btn btn-primary" data-side-panel-close>Закрыть</button>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--calc-done" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Сделан расчёт</span></div>
+          <span class="flexim-timeline-status__time">20.05.2026, 16:42</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--tech-card" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Составлена тех. карта</span></div>
+          <span class="flexim-timeline-status__time">20.05.2026, 16:43</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-approval" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждём подтверждения</span></div>
+          <span class="flexim-timeline-status__time">21.05.2026, 16:27</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-plan" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждём постановки в план</span></div>
+          <span class="flexim-timeline-status__time">21.05.2026, 16:28</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-print" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане печати</span></div>
+          <span class="flexim-timeline-status__time">22.05.2026, 09:16</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-lam" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане ламинации</span></div>
+          <span class="flexim-timeline-status__time">11.06.2026, 11:20</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-cut" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане резки</span></div>
+          <span class="flexim-timeline-status__time">11.06.2026, 14:07</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-lam" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане ламинации</span></div>
+          <span class="flexim-timeline-status__time">15.06.2026, 10:32</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-print" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане печати</span></div>
+          <span class="flexim-timeline-status__time">15.06.2026, 10:32</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-lam" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане ламинации</span></div>
+          <span class="flexim-timeline-status__time">16.06.2026, 11:34</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-print" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане печати</span></div>
+          <span class="flexim-timeline-status__time">17.06.2026, 08:13</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-lam" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане ламинации</span></div>
+          <span class="flexim-timeline-status__time">17.06.2026, 12:06</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--plan-cut" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">В плане резки</span></div>
+          <span class="flexim-timeline-status__time">17.06.2026, 12:19</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--makeready-cut" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Приладка на резке</span></div>
+          <span class="flexim-timeline-status__time">20.06.2026, 01:59</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--cutting" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Режется</span></div>
+          <span class="flexim-timeline-status__time">20.06.2026, 01:59</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--ready-pack" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Готово к упаковке</span></div>
+          <span class="flexim-timeline-status__time">20.06.2026, 03:58</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--wait-ship" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Ждёт отгрузки</span></div>
+          <span class="flexim-timeline-status__time">20.06.2026, 10:27</span>
+        </div>
+      </div>
+      <div class="flexim-timeline-status flexim-timeline-status--current">
+        <div class="flexim-timeline-status__rail">
+          <span class="flexim-timeline-status__dot flexim-timeline-status__dot--shipped" aria-hidden="true"></span>
+          <span class="flexim-timeline-status__line" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-timeline-status__content">
+          <div class="flexim-timeline-status__header"><span class="flexim-timeline-status__name">Отгружено</span></div>
+          <span class="flexim-timeline-status__time">24.06.2026, 18:33</span>
+        </div>
+      </div>
+      <!-- endforeach -->
+        </div>
       </div>
     </aside>
   </div>
