@@ -878,14 +878,6 @@
       <span class="flexim-chip-tag flexim-chip-tag--m disabled">Disabled</span>
     </div>
 
-    <div class="group-label">Chip status — семантика</div>
-    <div class="d-flex flex-wrap mb-3" style="gap: 8px;">
-      <span class="flexim-chip-status flexim-chip-status--success">Готов</span>
-      <span class="flexim-chip-status flexim-chip-status--warning">Ожидает плёнку</span>
-      <span class="flexim-chip-status flexim-chip-status--error">Брак</span>
-      <span class="flexim-chip-status flexim-chip-status--info">На проверке</span>
-    </div>
-
     <div class="group-label">Chip status — все цвета</div>
     <div class="d-flex flex-wrap mb-3" style="gap: 8px;">
       <span class="flexim-chip-status flexim-chip-status--success">success</span>
@@ -949,6 +941,18 @@
       <span class="flexim-chip-status flexim-chip-status--mauve">Ждёт отгрузки</span>
       <span class="flexim-chip-status flexim-chip-status--warning">Отгружено</span>
       <span class="flexim-chip-status flexim-chip-status--black">В корзине</span>
+    </div>
+
+    <div class="group-label">Chip status — в ячейке таблицы (обязательно чип, подпись ниже — опционально)</div>
+    <p class="ds-desc ds-desc-small">Статус в таблицах-списках: кликабельный чип в обёртке <code>.flexim-table__status-cell</code>; под ним — <b>опциональная</b> подпись прогресса <code>.flexim-table__stack-sub</code> «X из Y кг/шт», если она есть на реальном экране. Клик по статусу открывает трекинг. Эталоны: 01-orders, 05-pack, 06-order-tracking.</p>
+    <div class="d-flex flex-wrap mb-3" style="gap: 32px;">
+      <span class="flexim-table__status-cell">
+        <span class="flexim-chip-status flexim-chip-status--warning flexim-chip-status--clickable">Отгружено <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span>
+        <span class="flexim-table__stack-sub">767,71 из 700 кг</span>
+      </span>
+      <span class="flexim-table__status-cell">
+        <span class="flexim-chip-status flexim-chip-status--neutral flexim-chip-status--clickable">Черновик <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span>
+      </span>
     </div>
 
   </div>
@@ -3916,7 +3920,7 @@
             <td class="flexim-table__cell">13 апр 2019</td>
             <td class="flexim-table__cell"><a href="#" class="flexim-table__link flexim-table__link--bold">ООО «Ромашка»</a></td>
             <td class="flexim-table__cell">Петрова А.</td>
-            <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--blue"></span>Ждём постановки в план</span></td>
+            <td class="flexim-table__cell"><span class="flexim-chip-status flexim-chip-status--success flexim-chip-status--clickable">Ждём постановки в план <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span></td>
             <td class="flexim-table__cell"><div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="ft-sw1" checked><label class="custom-control-label" for="ft-sw1"></label></div></td>
             <td class="flexim-table__cell"><button type="button" class="btn btn-outline-primary btn-sm">Начать</button></td>
             <td class="flexim-table__cell"><button type="button" class="flexim-table__cell-action" aria-label="Меню"><span data-flexim-icon="kebab" data-size="24" aria-hidden="true"></span></button></td>
@@ -3927,7 +3931,7 @@
             <td class="flexim-table__cell"><span class="flexim-table__stack"><span class="flexim-table__stack-main">23 ноя</span><span class="flexim-table__stack-sub">2020</span></span></td>
             <td class="flexim-table__cell"><a href="#" class="flexim-table__link flexim-table__link--bold">ИП Тарасова Мария</a></td>
             <td class="flexim-table__cell"><span class="flexim-table__stack"><span class="flexim-table__stack-main">Петрыгин-</span><span class="flexim-table__stack-sub">Родионов П.</span></span></td>
-            <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--pink"></span>В плане ламинации</span></td>
+            <td class="flexim-table__cell"><span class="flexim-chip-status flexim-chip-status--violet flexim-chip-status--clickable">В плане ламинации <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span></td>
             <td class="flexim-table__cell"><div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="ft-sw2" checked><label class="custom-control-label" for="ft-sw2"></label></div></td>
             <td class="flexim-table__cell"><button type="button" class="btn btn-outline-primary btn-sm">Начать</button></td>
             <td class="flexim-table__cell"><button type="button" class="flexim-table__cell-action" aria-label="Меню"><span data-flexim-icon="kebab" data-size="24" aria-hidden="true"></span></button></td>
@@ -3938,7 +3942,7 @@
             <td class="flexim-table__cell">19 дек 2020</td>
             <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Роспромсбыт»</a></td>
             <td class="flexim-table__cell">Пономарёва М.</td>
-            <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--yellow"></span>Ждём</span></td>
+            <td class="flexim-table__cell"><span class="flexim-chip-status flexim-chip-status--warning flexim-chip-status--clickable">Ждём подтверждения <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span></td>
             <td class="flexim-table__cell"><div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="ft-sw3" checked><label class="custom-control-label" for="ft-sw3"></label></div></td>
             <td class="flexim-table__cell"><button type="button" class="btn btn-outline-primary btn-sm">Начать</button></td>
             <td class="flexim-table__cell"><button type="button" class="flexim-table__cell-action" aria-label="Меню"><span data-flexim-icon="kebab" data-size="24" aria-hidden="true"></span></button></td>
@@ -3949,7 +3953,7 @@
             <td class="flexim-table__cell">13 апр 2019</td>
             <td class="flexim-table__cell"><a href="#" class="flexim-table__link">ООО «Уралпромснабсбыт»</a></td>
             <td class="flexim-table__cell">Иванова Р.</td>
-            <td class="flexim-table__cell"><span class="flexim-table__status"><span class="flexim-table__status-dot flexim-table__status-dot--green"></span>В плане ламинации</span></td>
+            <td class="flexim-table__cell"><span class="flexim-chip-status flexim-chip-status--violet flexim-chip-status--clickable">В плане ламинации <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span></td>
             <td class="flexim-table__cell"><div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="ft-sw4" disabled><label class="custom-control-label" for="ft-sw4"></label></div></td>
             <td class="flexim-table__cell"><button type="button" class="btn btn-outline-primary btn-sm" disabled>Начать</button></td>
             <td class="flexim-table__cell"><button type="button" class="flexim-table__cell-action" aria-label="Меню"><span data-flexim-icon="kebab" data-size="24" aria-hidden="true"></span></button></td>
@@ -3986,13 +3990,13 @@
         <tbody>
           <tr class="flexim-table__row">
             <td class="flexim-table__cell"><span class="flexim-table__stack"><span class="flexim-table__stack-sub">123455</span><span class="flexim-table__stack-main flexim-table__stack-main--bold">26.09</span></span></td>
-            <td class="flexim-table__cell"><span class="flexim-chip-status flexim-chip-status--success">ОПЛАЧЕНО</span></td>
+            <td class="flexim-table__cell"><span class="flexim-chip-status flexim-chip-status--warning flexim-chip-status--clickable">Отгружено <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span></td>
             <td class="flexim-table__cell"><a href="#" class="flexim-table__link">Открыть заказ</a></td>
             <td class="flexim-table__cell flexim-table__cell--right">26.09</td>
           </tr>
           <tr class="flexim-table__row">
             <td class="flexim-table__cell"><span class="flexim-table__stack"><span class="flexim-table__stack-main">26.09</span><span class="flexim-table__stack-sub">123455</span></span></td>
-            <td class="flexim-table__cell"><span class="flexim-chip-status flexim-chip-status--warning">ЖДЁМ ОПЛАТУ</span></td>
+            <td class="flexim-table__cell"><span class="flexim-chip-status flexim-chip-status--pink flexim-chip-status--clickable">Режется <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span></td>
             <td class="flexim-table__cell"><a href="#" class="flexim-table__link flexim-table__link--bold">ООО «Ромашка»</a></td>
             <td class="flexim-table__cell flexim-table__cell--right">123455</td>
           </tr>

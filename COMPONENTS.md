@@ -781,6 +781,26 @@ import {
 `.flexim-table-wrap--page-fill` имеет симметричные `padding-left/right: 16px`,
 чтобы первая колонка (ID) и последняя (action `›`) не липли к бордеру таблицы.
 
+**Статус заказа в таблице — обязательно чипом.**
+Статус в таблицах-списках показывается **только чипом** `.flexim-chip-status`
+(кликабельный, вариант — по цвету статуса, см. «Chip status — статусы заказа»),
+а **не** цветной точкой `.flexim-table__status`. Под чипом — **опциональная**
+подпись прогресса «X из Y кг/шт» (`.flexim-table__stack-sub`), если она есть на
+реальном экране. Обёртка — `.flexim-table__status-cell` (вертикальный стек,
+влево). Клик по статусу открывает трекинг заказа.
+
+```html
+<td class="flexim-table__cell">
+  <span class="flexim-table__status-cell">
+    <span class="flexim-chip-status flexim-chip-status--warning flexim-chip-status--clickable">Отгружено
+      <span data-flexim-icon="arrow-right" data-size="16" aria-hidden="true"></span></span>
+    <span class="flexim-table__stack-sub">767,71 из 700 кг</span><!-- опционально -->
+  </span>
+</td>
+```
+
+Эталоны: `01-orders.html`, `05-pack.html`, `06-order-tracking.html`.
+
 ---
 
 #### Order tracking (таймлайн статусов)

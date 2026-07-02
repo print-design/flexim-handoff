@@ -864,6 +864,11 @@ label, .col-form-label {
 .flexim-chip-status--strong.flexim-chip-status--brick { background: var(--infographic-brick-20); }
 .flexim-chip-status--strong.flexim-chip-status--shrek { background: var(--infographic-shrek-20); }
 .flexim-chip-status--strong.flexim-chip-status--green { background: var(--infographic-green-20); }
+/* Подложка чипа — 18% цвета статуса (плотнее базовых 5%). Правило ниже базовых
+   вариантов по файлу и той же специфичности → перебивает их фон; hover и
+   --strong (20%) выше по специфичности и не затрагиваются. В старых браузерах
+   без color-mix декларация игнорируется и остаётся базовый фон 5%. */
+.flexim-chip-status { background: color-mix(in srgb, var(--chip-dot) 18%, #fff); }
 
 .flexim-status-banner {
   display: flex;
