@@ -314,6 +314,101 @@ import { Input } from '../../components/ui/input';
 
 ---
 
+#### Date picker (календарь)
+
+Выпадающий календарь. **Bootstrap:** `.flexim-datepicker` в
+`prod-mockups/_bootstrap-flexim-overrides.css` (базовый класс) + модификаторы.
+Каталог: `prod-mockups/components.html` → секция `#datepicker`.
+
+**Три варианта:**
+
+| Модификатор | Назначение | Figma |
+|---|---|---|
+| без модификатора | Базовый — диапазон дат (`__range` с двумя полями `03.12.2023 – 03.12.2023`) | 4370:124074 |
+| `--with-time` | Одиночная дата + селекты часов и минут в шапке | **8056:17909** |
+| `--presets` | С колонкой пресетов слева (Сегодня, Вчера, Эта неделя, Этот месяц, Этот квартал, Этот год) | — |
+
+##### Разметка `--with-time` (ширина 420, padding и radius 24)
+
+```html
+<div class="flexim-datepicker flexim-datepicker--with-time">
+  <div class="flexim-datepicker__header">
+    <div class="flexim-datepicker__nav-group">
+      <button class="flexim-datepicker__nav">◀</button>
+      <button class="flexim-datepicker__nav">▶</button>
+    </div>
+    <button class="flexim-datepicker__nav">×</button>
+  </div>
+
+  <div class="flexim-datepicker__month-time">
+    <div class="flexim-datepicker__month">
+      <span class="flexim-datepicker__month-label">Сентябрь 2024</span>
+      <span data-flexim-icon="arrow-down-small" data-size="24"></span>
+    </div>
+    <div class="flexim-datepicker__time">
+      <div class="flexim-datepicker__time-select is-empty"><span>ч</span><span data-flexim-icon="arrow-down-small" data-size="24"></span></div>
+      <span class="flexim-datepicker__time-sep">:</span>
+      <div class="flexim-datepicker__time-select is-empty"><span>м</span><span data-flexim-icon="arrow-down-small" data-size="24"></span></div>
+    </div>
+  </div>
+
+  <div class="flexim-datepicker__calendar"><!-- weekdays + weeks --></div>
+  <div class="flexim-datepicker__footer">
+    <button class="btn btn-primary">Применить</button>
+    <button class="btn btn-outline-primary">Сбросить</button>
+  </div>
+  <input type="hidden" class="flexim-datepicker__value-input" name="datetime" value="">
+</div>
+```
+
+##### Состояния ячейки даты (`.flexim-datepicker__day`)
+
+| Модификатор | Что выглядит |
+|---|---|
+| — (default) | Обычный день, `--text-primary` |
+| `--weekend` | Сб/Вс, `--primary-main` (розовый) |
+| `--muted` | Соседний месяц, `--text-disabled` (побеждает `--weekend`) |
+| `--today` | Сегодня, border 1px `--other-lines` |
+| `--selected` | Одиночный выбор, фон `--primary-50` + текст `--primary-main` |
+| `--range` | Средняя ячейка диапазона, фон-полоса `--primary-50` |
+| `--range-start` / `--range-end` | Концы диапазона, розовый кружок `--primary-main` + белый текст |
+
+**Hover:** пустая ячейка → лёгкий `--other-table-hover`; `--today` → `--primary-50`;
+`--selected` → чуть темнее (`--primary-100`). Muted/range — без hover.
+
+##### Селекты HH:MM
+
+- Ширина 80px, высота 40, `padding 4/12`, `border-radius 8`. Между HH и MM — `«:»` gap 4.
+- **Placeholder-состояние:** класс `.is-empty` → текст `«ч»` / `«м»` цветом `--text-tertiary`.
+  Как только пользователь выбрал значение — класс снимается, показывается число (`pad2`).
+- Hover → бордер `--primary-main`. Focus/open → бордер + 3px розовое кольцо `--primary-50`.
+- Список часов 00..23, минут — 00..55 с шагом 5.
+
+##### Живая логика (`_datepicker-time.js`)
+
+Подключён в каталоге и в превью. Автоматически находит все
+`.flexim-datepicker--with-time` и оживляет их:
+
+- селекты месяца / часов / минут открывают dropdown списком;
+- стрелки ◀ ▶ переключают месяц (с перескоком года);
+- клик по ячейке (кроме `--muted`) выбирает дату;
+- крест закрывает overlay-хост (`.flexim-popup` / `.flexim-modal` / `[data-datepicker-host]`);
+- «Сбросить» — сегодня + время пусто;
+- «Применить» — обновляет hidden input + диспатчит `flexim:datepicker-apply`;
+- **По умолчанию: сегодняшний день выбран, время «ч/м» пустое.**
+
+**Скрытый input** `.flexim-datepicker__value-input` пишется в ISO 8601:
+- без времени: `2024-09-09`
+- с временем: `2024-09-09T14:30` (только если оба поля заполнены).
+
+##### React
+
+Полноценный компонент календаря в React пока не реализован (есть
+`DatePickerField` — только input с маской). Для новых экранов брать
+Bootstrap-вариант из каталога.
+
+---
+
 #### SelectField
 
 `flexim-app/src/components/ui/select.tsx`

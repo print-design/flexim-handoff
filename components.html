@@ -1186,9 +1186,17 @@
 <section id="datepicker" class="ds-section">
   <div class="container">
     <h2>Date picker</h2>
-    <p class="ds-desc">Выпадающий календарь: селектор месяца, навигация, поля диапазона дат, сетка дней с состояниями (сегодня, диапазон, выходные, дни соседних месяцев) и пресетами периодов.</p>
+    <p class="ds-desc">
+      Выпадающий календарь: селектор месяца, навигация, сетка дней с состояниями
+      (default / hover / today / selected / disabled, диапазон, выходные,
+      соседний месяц). Три варианта: <strong>базовый</strong> (диапазон дат),
+      <strong>с выбором времени</strong> (одиночная дата + HH:MM), <strong>с пресетами</strong>
+      (быстрые периоды слева). Вариант «с выбором времени» — рабочий, подключён
+      <code>_datepicker-time.js</code>: клики по датам, стрелкам, HH и MM обновляют
+      скрытое поле <code>datetime</code> в ISO 8601.
+    </p>
 
-    <div class="group-label">Базовый</div>
+    <div class="group-label">Базовый (диапазон)</div>
     <div class="flexim-datepicker mb-4">
       <div class="flexim-datepicker__header">
         <div class="flexim-datepicker__month">
@@ -1270,6 +1278,100 @@
       </div>
       <input type="hidden" class="flexim-datepicker__value-input" name="date_from" value="2023-12-03">
       <input type="hidden" class="flexim-datepicker__value-input" name="date_to" value="2023-12-03">
+    </div>
+
+    <div class="group-label">С выбором времени (Figma 8056:17909)</div>
+    <p class="ds-desc ds-desc-small">Одиночный выбор даты + селекты часов и минут в шапке. Ширина 420, padding и radius 24. Шапка разнесена: стрелки слева, крест справа; ниже — селект месяца (растянут) и HH:MM (по 80px). У ячеек добавлено состояние <code>--selected</code> (одиночный выбор) и hover для пустых/today/selected.</p>
+    <div class="flexim-datepicker flexim-datepicker--with-time mb-4">
+      <div class="flexim-datepicker__header">
+        <div class="flexim-datepicker__nav-group">
+          <button type="button" class="flexim-datepicker__nav" aria-label="Предыдущий месяц"><span data-flexim-icon="arrow-left" data-size="24" aria-hidden="true"></span></button>
+          <button type="button" class="flexim-datepicker__nav" aria-label="Следующий месяц"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></button>
+        </div>
+        <button type="button" class="flexim-datepicker__nav" aria-label="Закрыть"><span data-flexim-icon="x" data-size="24" aria-hidden="true"></span></button>
+      </div>
+
+      <div class="flexim-datepicker__month-time">
+        <div class="flexim-datepicker__month">
+          <span class="flexim-datepicker__month-label">Сентябрь 2024</span>
+          <span class="flexim-datepicker__month-icon" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-datepicker__time">
+          <div class="flexim-datepicker__time-select is-empty" tabindex="0" role="button" aria-label="Часы">
+            <span>ч</span>
+            <span data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+          </div>
+          <span class="flexim-datepicker__time-sep">:</span>
+          <div class="flexim-datepicker__time-select is-empty" tabindex="0" role="button" aria-label="Минуты">
+            <span>м</span>
+            <span data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flexim-datepicker__calendar">
+        <div class="flexim-datepicker__weekdays">
+          <span class="flexim-datepicker__weekday">Пн</span>
+          <span class="flexim-datepicker__weekday">Вт</span>
+          <span class="flexim-datepicker__weekday">Ср</span>
+          <span class="flexim-datepicker__weekday">Чт</span>
+          <span class="flexim-datepicker__weekday">Пт</span>
+          <span class="flexim-datepicker__weekday flexim-datepicker__weekday--weekend">Сб</span>
+          <span class="flexim-datepicker__weekday flexim-datepicker__weekday--weekend">Вс</span>
+        </div>
+
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">28</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">29</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">30</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">31</span>
+          <span class="flexim-datepicker__day">1</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--weekend">2</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--weekend">3</span>
+        </div>
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day">4</span>
+          <span class="flexim-datepicker__day">5</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--today">6</span>
+          <span class="flexim-datepicker__day">7</span>
+          <span class="flexim-datepicker__day">8</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--selected flexim-datepicker__day--weekend">9</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--weekend">10</span>
+        </div>
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day">11</span>
+          <span class="flexim-datepicker__day">12</span>
+          <span class="flexim-datepicker__day">13</span>
+          <span class="flexim-datepicker__day">14</span>
+          <span class="flexim-datepicker__day">15</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--weekend">16</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--weekend">17</span>
+        </div>
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day">18</span>
+          <span class="flexim-datepicker__day">19</span>
+          <span class="flexim-datepicker__day">20</span>
+          <span class="flexim-datepicker__day">21</span>
+          <span class="flexim-datepicker__day">22</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--weekend">23</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--weekend">24</span>
+        </div>
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day">25</span>
+          <span class="flexim-datepicker__day">26</span>
+          <span class="flexim-datepicker__day">27</span>
+          <span class="flexim-datepicker__day">28</span>
+          <span class="flexim-datepicker__day">29</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--weekend">30</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted flexim-datepicker__day--weekend">1</span>
+        </div>
+      </div>
+
+      <div class="flexim-datepicker__footer">
+        <button type="button" class="btn btn-primary">Применить</button>
+        <button type="button" class="btn btn-outline-primary">Сбросить</button>
+      </div>
+      <input type="hidden" class="flexim-datepicker__value-input" name="datetime" value="">
     </div>
 
     <div class="group-label">С пресетами</div>
@@ -4396,6 +4498,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="./icons/icons.js"></script>
+<script src="./_datepicker-time.js"></script>
 <script>
   if (window.fleximIcons) window.fleximIcons.renderAll();
 </script>

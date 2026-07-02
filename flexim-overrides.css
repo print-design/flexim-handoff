@@ -808,43 +808,34 @@ label, .col-form-label {
   background: radial-gradient(circle at center, var(--chip-dot, var(--text-secondary)) 4px, transparent 4px);
   opacity: 1;
 }
+/* Чипы в таблицах и списках — статус-индикатор, не кнопка. Фон всегда «-5»,
+   hover не меняет цвет (было -20 → визуально ярко / «переярчено»).
+   Насыщенный вариант доступен через явный модификатор --strong (см. ниже).
+   Клик-вариант --clickable добавляет cursor:pointer и легкий hover-фон
+   в 8%, чтобы отличать от статичного чипа. */
 .flexim-chip-status--success { background: var(--success-5); --chip-dot: var(--success-main); }
-.flexim-chip-status--success:hover { background: var(--success-20); }
 .flexim-chip-status--warning { background: var(--warning-5); --chip-dot: var(--warning-main); }
-.flexim-chip-status--warning:hover { background: var(--warning-20); }
-.flexim-chip-status--error { background: var(--error-5); --chip-dot: var(--error-main); }
-.flexim-chip-status--error:hover { background: var(--error-20); }
-.flexim-chip-status--info { background: var(--info-5); --chip-dot: var(--info-main); }
-.flexim-chip-status--info:hover { background: var(--info-20); }
-.flexim-chip-status--black { background: var(--infographic-black-5); --chip-dot: var(--infographic-black); }
-.flexim-chip-status--black:hover { background: var(--infographic-black-20); }
-.flexim-chip-status--blue { background: var(--infographic-blue-5); --chip-dot: var(--infographic-blue); }
-.flexim-chip-status--blue:hover { background: var(--infographic-blue-20); }
-.flexim-chip-status--purple { background: var(--infographic-purple-5); --chip-dot: var(--infographic-purple); }
-.flexim-chip-status--purple:hover { background: var(--infographic-purple-20); }
-.flexim-chip-status--violet { background: var(--infographic-violet-5); --chip-dot: var(--infographic-violet); }
-.flexim-chip-status--violet:hover { background: var(--infographic-violet-20); }
-.flexim-chip-status--pink { background: var(--infographic-pink-5); --chip-dot: var(--infographic-pink); }
-.flexim-chip-status--pink:hover { background: var(--infographic-pink-20); }
-.flexim-chip-status--orange { background: var(--infographic-orange-5); --chip-dot: var(--infographic-orange); }
-.flexim-chip-status--orange:hover { background: var(--infographic-orange-20); }
-.flexim-chip-status--yellow { background: var(--infographic-yellow-5); --chip-dot: var(--infographic-yellow); }
-.flexim-chip-status--yellow:hover { background: var(--infographic-yellow-20); }
-.flexim-chip-status--terracot { background: var(--infographic-terracot-5); --chip-dot: var(--infographic-terracot); }
-.flexim-chip-status--terracot:hover { background: var(--infographic-terracot-20); }
-.flexim-chip-status--brick { background: var(--infographic-brick-5); --chip-dot: var(--infographic-brick); }
-.flexim-chip-status--brick:hover { background: var(--infographic-brick-20); }
-.flexim-chip-status--shrek { background: var(--infographic-shrek-5); --chip-dot: var(--infographic-shrek); }
-.flexim-chip-status--shrek:hover { background: var(--infographic-shrek-20); }
-.flexim-chip-status--green { background: var(--infographic-green-5); --chip-dot: var(--infographic-green); }
-.flexim-chip-status--green:hover { background: var(--infographic-green-20); }
+.flexim-chip-status--error   { background: var(--error-5);   --chip-dot: var(--error-main); }
+.flexim-chip-status--info    { background: var(--info-5);    --chip-dot: var(--info-main); }
+.flexim-chip-status--black   { background: var(--infographic-black-5);   --chip-dot: var(--infographic-black); }
+.flexim-chip-status--blue    { background: var(--infographic-blue-5);    --chip-dot: var(--infographic-blue); }
+.flexim-chip-status--purple  { background: var(--infographic-purple-5);  --chip-dot: var(--infographic-purple); }
+.flexim-chip-status--violet  { background: var(--infographic-violet-5);  --chip-dot: var(--infographic-violet); }
+.flexim-chip-status--pink    { background: var(--infographic-pink-5);    --chip-dot: var(--infographic-pink); }
+.flexim-chip-status--orange  { background: var(--infographic-orange-5);  --chip-dot: var(--infographic-orange); }
+.flexim-chip-status--yellow  { background: var(--infographic-yellow-5);  --chip-dot: var(--infographic-yellow); }
+.flexim-chip-status--terracot{ background: var(--infographic-terracot-5);--chip-dot: var(--infographic-terracot); }
+.flexim-chip-status--brick   { background: var(--infographic-brick-5);   --chip-dot: var(--infographic-brick); }
+.flexim-chip-status--shrek   { background: var(--infographic-shrek-5);   --chip-dot: var(--infographic-shrek); }
+.flexim-chip-status--green   { background: var(--infographic-green-5);   --chip-dot: var(--infographic-green); }
 /* Синхронизировано со статус-баннерами: neutral (Черновик), indigo (В плане резки), mauve (Ждёт отгрузки). */
 .flexim-chip-status--neutral { background: var(--neutral-5); --chip-dot: var(--neutral-main); }
-.flexim-chip-status--neutral:hover { background: var(--neutral-20); }
-.flexim-chip-status--indigo { background: var(--infographic-indigo-5); --chip-dot: var(--infographic-indigo); }
-.flexim-chip-status--indigo:hover { background: var(--infographic-indigo-20); }
-.flexim-chip-status--mauve { background: var(--infographic-mauve-5); --chip-dot: var(--infographic-mauve); }
-.flexim-chip-status--mauve:hover { background: var(--infographic-mauve-20); }
+.flexim-chip-status--indigo  { background: var(--infographic-indigo-5); --chip-dot: var(--infographic-indigo); }
+.flexim-chip-status--mauve   { background: var(--infographic-mauve-5);  --chip-dot: var(--infographic-mauve); }
+
+/* Лёгкий hover только у кликабельных чипов — не заливка -20, а еле заметный оттенок.
+   Пока используем тот же -5 сверху — визуально почти не меняется, но обозначает hoverability. */
+.flexim-chip-status--clickable:hover { filter: brightness(0.97); }
 .flexim-chip-status--strong.flexim-chip-status--neutral { background: var(--neutral-20); }
 .flexim-chip-status--strong.flexim-chip-status--indigo { background: var(--infographic-indigo-20); }
 .flexim-chip-status--strong.flexim-chip-status--mauve { background: var(--infographic-mauve-20); }
@@ -3602,6 +3593,179 @@ a:hover { color: var(--primary-dark); }
   width: 100%;
 }
 .flexim-datepicker__footer > * { margin: 0; }
+
+/* ============ Вариант --with-time (Figma 8056:17909) ============
+   Одиночный выбор даты + селекты HH:MM в шапке. Ширина 420, padding и
+   radius 24 (--size-xl). Шапка разнесена: слева стрелки, справа крест.
+   Ниже — селект месяца (растянут) + два селекта времени (по 80px). */
+
+.flexim-datepicker--with-time {
+  width: 420px;
+  padding: var(--size-xl);
+  border-radius: var(--size-xl);
+}
+.flexim-datepicker--with-time .flexim-datepicker__header {
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+}
+/* Группа стрелок ◀ ▶ слева */
+.flexim-datepicker__nav-group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-m);
+}
+/* Строка «Селект месяца + HH:MM» */
+.flexim-datepicker__month-time {
+  display: flex;
+  gap: var(--size-l);
+  align-items: center;
+  width: 100%;
+}
+.flexim-datepicker--with-time .flexim-datepicker__month {
+  cursor: pointer;
+  transition: border-color .15s ease;
+}
+.flexim-datepicker--with-time .flexim-datepicker__month:hover {
+  border-color: var(--primary-main);
+}
+.flexim-datepicker--with-time .flexim-datepicker__month.is-focus,
+.flexim-datepicker--with-time .flexim-datepicker__month:focus-within {
+  border-color: var(--primary-main);
+  box-shadow: 0 0 0 3px var(--primary-50);
+}
+/* Группа селектов времени */
+.flexim-datepicker__time {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-xxs);
+  flex-shrink: 0;
+}
+.flexim-datepicker__time-select {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-xs);
+  width: 80px;
+  height: 40px;
+  padding: var(--size-xxs) var(--size-s);
+  background: var(--surface-white);
+  border: 1px solid var(--other-lines);
+  border-radius: var(--size-xs);
+  color: var(--text-primary);
+  font: 400 14px/20px var(--font-family);
+  cursor: pointer;
+  transition: border-color .15s ease;
+}
+.flexim-datepicker__time-select:hover { border-color: var(--primary-main); }
+.flexim-datepicker__time-select.is-focus,
+.flexim-datepicker__time-select:focus-within {
+  border-color: var(--primary-main);
+  box-shadow: 0 0 0 3px var(--primary-50);
+  outline: none;
+}
+.flexim-datepicker__time-select > span:first-child {
+  flex: 1 0 0;
+  min-width: 0;
+  text-align: left;
+}
+/* Placeholder-состояние (текст «ч» / «м» пока время не выбрано) */
+.flexim-datepicker__time-select.is-empty > span:first-child {
+  color: var(--text-tertiary);
+}
+.flexim-datepicker__time-select > span:last-child {
+  flex-shrink: 0;
+  color: var(--primary-main);
+  line-height: 0;
+}
+.flexim-datepicker__time-sep {
+  color: var(--text-primary);
+  font: 400 14px/20px var(--font-family);
+  padding: 0 var(--size-xxs);
+}
+
+/* В новом варианте будни (Пн-Пт) — --text-primary, а не --secondary.
+   Выходные (Сб/Вс) остаются --primary-main через модификатор weekend. */
+.flexim-datepicker--with-time .flexim-datepicker__weekday {
+  color: var(--text-primary);
+}
+.flexim-datepicker--with-time .flexim-datepicker__weekday--weekend {
+  color: var(--primary-main);
+}
+
+/* Одиночный выбор: фон --primary-50, розовый текст (без круга, как у range) */
+.flexim-datepicker__day--selected {
+  background: var(--primary-50);
+  color: var(--primary-main);
+  font-weight: 600;
+}
+.flexim-datepicker__day--selected.flexim-datepicker__day--weekend {
+  color: var(--primary-main);
+}
+
+/* Hover на пустой ячейке — очень лёгкий серый.
+   Не срабатывает на muted / today / selected / range-*. */
+.flexim-datepicker__day:hover:not(.flexim-datepicker__day--muted):not(.flexim-datepicker__day--today):not(.flexim-datepicker__day--selected):not(.flexim-datepicker__day--range):not(.flexim-datepicker__day--range-start):not(.flexim-datepicker__day--range-end) {
+  background: var(--other-table-hover);
+  cursor: pointer;
+}
+/* Hover на today (рамка уже есть) — добавляем розовую подсветку */
+.flexim-datepicker__day--today:hover {
+  background: var(--primary-50);
+  cursor: pointer;
+}
+/* Hover на выбранной ячейке — чуть темнее (насыщенный primary-50) */
+.flexim-datepicker__day--selected:hover {
+  background: var(--primary-100, var(--primary-50));
+  cursor: pointer;
+}
+
+/* Соседний месяц: muted побеждает weekend (в Figma эти дни всегда disabled-цвет,
+   не розовый). Без этого правила выходной из соседнего месяца окрашивался в --primary-main. */
+.flexim-datepicker__day--muted.flexim-datepicker__day--weekend {
+  color: var(--text-disabled);
+}
+.flexim-datepicker__day--muted { color: var(--text-disabled); }
+
+/* Позиционирование popup-dropdown у селектов (месяц/HH/MM) */
+.flexim-datepicker--with-time .flexim-datepicker__month,
+.flexim-datepicker__time-select {
+  position: relative;
+}
+.flexim-datepicker__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 20;
+  display: none;
+  min-width: 100%;
+  max-height: 240px;
+  overflow-y: auto;
+  padding: var(--size-xxs);
+  background: var(--surface-white);
+  border: 1px solid var(--other-lines);
+  border-radius: var(--size-xs);
+  box-shadow: var(--shadow-m);
+  font: 400 14px/20px var(--font-family);
+  cursor: default;
+}
+.flexim-datepicker__dropdown.is-open { display: block; }
+.flexim-datepicker__dropdown-item {
+  padding: 6px 12px;
+  border-radius: var(--size-xxs);
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.flexim-datepicker__dropdown-item:hover { background: var(--other-table-hover); }
+.flexim-datepicker__dropdown-item.is-active {
+  background: var(--primary-50);
+  color: var(--primary-main);
+  font-weight: 600;
+}
+/* Селект месяца — popup шире (список месяцев + смена года), 220px */
+.flexim-datepicker--with-time .flexim-datepicker__month .flexim-datepicker__dropdown {
+  min-width: 220px;
+}
 
 /* --- Вариант с пресетами --- */
 .flexim-datepicker--presets { width: 540px; }
