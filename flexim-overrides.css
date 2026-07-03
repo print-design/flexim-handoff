@@ -813,29 +813,33 @@ label, .col-form-label {
    Насыщенный вариант доступен через явный модификатор --strong (см. ниже).
    Клик-вариант --clickable добавляет cursor:pointer и легкий hover-фон
    в 8%, чтобы отличать от статичного чипа. */
-.flexim-chip-status--success { background: var(--success-5); --chip-dot: var(--success-main); }
-.flexim-chip-status--warning { background: var(--warning-5); --chip-dot: var(--warning-main); }
-.flexim-chip-status--error   { background: var(--error-5);   --chip-dot: var(--error-main); }
-.flexim-chip-status--info    { background: var(--info-5);    --chip-dot: var(--info-main); }
-.flexim-chip-status--black   { background: var(--infographic-black-5);   --chip-dot: var(--infographic-black); }
-.flexim-chip-status--blue    { background: var(--infographic-blue-5);    --chip-dot: var(--infographic-blue); }
-.flexim-chip-status--purple  { background: var(--infographic-purple-5);  --chip-dot: var(--infographic-purple); }
-.flexim-chip-status--violet  { background: var(--infographic-violet-5);  --chip-dot: var(--infographic-violet); }
-.flexim-chip-status--pink    { background: var(--infographic-pink-5);    --chip-dot: var(--infographic-pink); }
-.flexim-chip-status--orange  { background: var(--infographic-orange-5);  --chip-dot: var(--infographic-orange); }
-.flexim-chip-status--yellow  { background: var(--infographic-yellow-5);  --chip-dot: var(--infographic-yellow); }
-.flexim-chip-status--terracot{ background: var(--infographic-terracot-5);--chip-dot: var(--infographic-terracot); }
-.flexim-chip-status--brick   { background: var(--infographic-brick-5);   --chip-dot: var(--infographic-brick); }
-.flexim-chip-status--shrek   { background: var(--infographic-shrek-5);   --chip-dot: var(--infographic-shrek); }
-.flexim-chip-status--green   { background: var(--infographic-green-5);   --chip-dot: var(--infographic-green); }
+.flexim-chip-status--success { background: var(--success-2); --chip-dot: var(--success-main); }
+.flexim-chip-status--warning { background: var(--warning-2); --chip-dot: var(--warning-main); }
+.flexim-chip-status--error   { background: var(--error-2);   --chip-dot: var(--error-main); }
+.flexim-chip-status--info    { background: var(--info-2);    --chip-dot: var(--info-main); }
+.flexim-chip-status--black   { background: var(--infographic-black-2);   --chip-dot: var(--infographic-black); }
+.flexim-chip-status--blue    { background: var(--infographic-blue-2);    --chip-dot: var(--infographic-blue); }
+.flexim-chip-status--purple  { background: var(--infographic-purple-2);  --chip-dot: var(--infographic-purple); }
+.flexim-chip-status--violet  { background: var(--infographic-violet-2);  --chip-dot: var(--infographic-violet); }
+.flexim-chip-status--pink    { background: var(--infographic-pink-2);    --chip-dot: var(--infographic-pink); }
+.flexim-chip-status--orange  { background: var(--infographic-orange-2);  --chip-dot: var(--infographic-orange); }
+.flexim-chip-status--yellow  { background: var(--infographic-yellow-2);  --chip-dot: var(--infographic-yellow); }
+.flexim-chip-status--terracot{ background: var(--infographic-terracot-2);--chip-dot: var(--infographic-terracot); }
+.flexim-chip-status--brick   { background: var(--infographic-brick-2);   --chip-dot: var(--infographic-brick); }
+.flexim-chip-status--shrek   { background: var(--infographic-shrek-2);   --chip-dot: var(--infographic-shrek); }
+.flexim-chip-status--green   { background: var(--infographic-green-2);   --chip-dot: var(--infographic-green); }
 /* Синхронизировано со статус-баннерами: neutral (Черновик), indigo (В плане резки), mauve (Ждёт отгрузки). */
-.flexim-chip-status--neutral { background: var(--neutral-5); --chip-dot: var(--neutral-main); }
-.flexim-chip-status--indigo  { background: var(--infographic-indigo-5); --chip-dot: var(--infographic-indigo); }
-.flexim-chip-status--mauve   { background: var(--infographic-mauve-5);  --chip-dot: var(--infographic-mauve); }
+.flexim-chip-status--neutral { background: var(--neutral-2); --chip-dot: var(--neutral-main); }
+.flexim-chip-status--indigo  { background: var(--infographic-indigo-2); --chip-dot: var(--infographic-indigo); }
+.flexim-chip-status--mauve   { background: var(--infographic-mauve-2);  --chip-dot: var(--infographic-mauve); }
 
 /* Лёгкий hover только у кликабельных чипов — не заливка -20, а еле заметный оттенок.
    Пока используем тот же -5 сверху — визуально почти не меняется, но обозначает hoverability. */
 .flexim-chip-status--clickable:hover { filter: brightness(0.97); }
+
+/* --flat: тихий вариант — без подложки, только точка-dot + текст.
+   Полезен когда чип-статус в плотной таблице/сводке и подложка мешает читать. */
+.flexim-chip-status--flat { background: transparent !important; }
 .flexim-chip-status--strong.flexim-chip-status--neutral { background: var(--neutral-20); }
 .flexim-chip-status--strong.flexim-chip-status--indigo { background: var(--infographic-indigo-20); }
 .flexim-chip-status--strong.flexim-chip-status--mauve { background: var(--infographic-mauve-20); }
@@ -2571,6 +2575,7 @@ label, .col-form-label {
   align-items: center;
   gap: var(--size-xxl);
   width: 60px;
+  flex-shrink: 0; /* замок ширины: рейка не сжимается рядом с широким контентом (таблицей) */
   padding: var(--size-m) 0;
   background: var(--background-paper);
   box-shadow: 0 2px 8px rgba(141, 134, 173, 0.2);
@@ -3277,7 +3282,7 @@ a.flexim-user-chip__title:hover {
 }
 /* Состояния */
 .flexim-input--hover { box-shadow: var(--shadow-s); }
-.flexim-input--focus { border: 2px solid var(--primary-light); padding: 3px 11px; }
+.flexim-input--focus { border: 2px solid var(--primary-30); padding: 3px 11px; }
 .flexim-input--error { border: 2px solid var(--error-main); padding: 3px 11px; }
 .flexim-input--disabled { background: var(--surface-disabled); }
 .flexim-input--disabled .flexim-input__icon,
@@ -3311,7 +3316,7 @@ a.flexim-user-chip__title:hover {
 .flexim-input__field::placeholder { color: var(--text-secondary); }
 .flexim-input__field:disabled { color: var(--text-disabled); cursor: not-allowed; }
 .flexim-input:focus-within:not(.flexim-input--readonly):not(.flexim-input--disabled):not(.flexim-input--error) {
-  border: 2px solid var(--primary-light);
+  border: 2px solid var(--primary-30);
   padding: 3px 11px;
 }
 
@@ -3629,10 +3634,11 @@ a:hover { color: var(--primary-dark); }
 .flexim-datepicker--with-time .flexim-datepicker__month:hover {
   border-color: var(--primary-main);
 }
+/* focus как у Input: рамка 2px primary-30, компенсация padding 1px */
 .flexim-datepicker--with-time .flexim-datepicker__month.is-focus,
 .flexim-datepicker--with-time .flexim-datepicker__month:focus-within {
-  border-color: var(--primary-main);
-  box-shadow: 0 0 0 3px var(--primary-50);
+  border: 2px solid var(--primary-30);
+  padding: var(--size-xxs) calc(var(--size-s) - 1px);
 }
 /* Группа селектов времени */
 .flexim-datepicker__time {
@@ -3657,10 +3663,11 @@ a:hover { color: var(--primary-dark); }
   transition: border-color .15s ease;
 }
 .flexim-datepicker__time-select:hover { border-color: var(--primary-main); }
+/* focus как у Input: рамка 2px primary-30, компенсация padding 1px, без outline */
 .flexim-datepicker__time-select.is-focus,
 .flexim-datepicker__time-select:focus-within {
-  border-color: var(--primary-main);
-  box-shadow: 0 0 0 3px var(--primary-50);
+  border: 2px solid var(--primary-30);
+  padding: var(--size-xxs) calc(var(--size-s) - 1px);
   outline: none;
 }
 .flexim-datepicker__time-select > span:first-child {

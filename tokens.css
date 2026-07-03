@@ -19,6 +19,9 @@
   --primary-dark: #D32564;
   --primary-contrast: #FFFFFF;
   --primary-50: #FBEDF2;
+  /* --primary-30 = primary-light @ 30% альфы. Используется в focus-рамке Input и селектов
+     (Figma 4317:83895 / 7801:129011 — состояние focus). */
+  --primary-30: #FF0E654D;
 
   /* Success */
   --success-main: #55BC04;
@@ -97,6 +100,28 @@
   /* TODO: уточнить в Figma — снято на глаз с прода (_status-banners-column.html) */
   --infographic-indigo: #241663;       --infographic-indigo-5: #2416630D;       --infographic-indigo-20: #24166333;
   --infographic-mauve: #B0848F;        --infographic-mauve-5: #B0848F0D;        --infographic-mauve-20: #B0848F33;
+
+  /* -2: очень бледный оттенок (2% альфа, hex 05) — почти незаметная подложка.
+     Используется как фон chip-status в таблицах: -5 читался как «ярко»,
+     -2 — тихо и не отвлекает от текста. Не путать с -5 (у status-banner). */
+  --success-2: #55BC0405;
+  --warning-2: #F69A2E05;
+  --error-2:   #FF284205;
+  --info-2:    #5C39E505;
+  --neutral-2: #6F6E7505;
+  --infographic-black-2:   #0B062505;
+  --infographic-blue-2:    #0F78D905;
+  --infographic-purple-2:  #3847D105;
+  --infographic-violet-2:  #AD29DB05;
+  --infographic-pink-2:    #DB299205;
+  --infographic-orange-2:  #FF716805;
+  --infographic-yellow-2:  #FFA60005;
+  --infographic-terracot-2:#D35E0A05;
+  --infographic-brick-2:   #940A2B05;
+  --infographic-shrek-2:   #78AA0D05;
+  --infographic-green-2:   #0A9D4E05;
+  --infographic-indigo-2:  #24166305;
+  --infographic-mauve-2:   #B0848F05;
   --infographic-cyan: #29ABE2;         --infographic-cyan-5: #29ABE20D;         --infographic-cyan-20: #29ABE233;
 
   /* Цвета статусов заказа — совпадают с палитрой статус-баннеров ДС.
