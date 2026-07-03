@@ -3046,7 +3046,13 @@ a.flexim-user-chip__title:hover {
   border: 1px solid var(--other-lines);
   border-radius: 8px;
 }
-.flexim-search__field--focus { border: 2px solid var(--primary-light); padding: 3px 11px; }
+.flexim-search__field--focus { border: 2px solid var(--primary-30); padding: 3px 11px; }
+/* Рабочий focus: реальный <input> внутри поля — та же рамка через :focus-within.
+   Не срабатывает у --fill (топбар над таблицей) — там своя логика hover/focus. */
+.flexim-search__field:focus-within {
+  border: 2px solid var(--primary-30);
+  padding: 3px 11px;
+}
 .flexim-search__icon {
   flex: 0 0 24px; width: 24px; height: 24px;
   display: inline-flex; align-items: center; justify-content: center;
