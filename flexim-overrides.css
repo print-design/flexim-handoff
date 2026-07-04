@@ -744,6 +744,7 @@ label, .col-form-label {
   color: var(--text-primary);
   font: 400 14px/20px var(--font-family);
   box-shadow: var(--shadow-m);
+  white-space: nowrap; /* чип — пилюля, текст внутри не переносится */
 }
 .flexim-chip-tag--m { height: 32px; padding: 4px 16px; }
 .flexim-chip-tag--s { min-height: 24px; padding: 0 12px; box-shadow: var(--shadow-s); }
@@ -1416,9 +1417,11 @@ label, .col-form-label {
   display: flex;
   align-items: center;
   gap: var(--size-s);
-  min-height: 40px;
+  /* Figma 4317:91189: высота пункта ФИКСИРОВАННАЯ 40px (не min-height!) —
+     иначе пункт с иконкой 24px раздувается до 48px паддингами. */
+  height: 40px;
   width: 100%;
-  padding: var(--size-s);
+  padding: 0 var(--size-s);
   border: 0;
   background: transparent;
   color: var(--text-primary);
@@ -2249,6 +2252,18 @@ label, .col-form-label {
   flex-shrink: 0;
   background: var(--surface-white);
 }
+
+/* ============ FILTER SIDE PANEL (фильтр склада) ============
+   Сайдбар-фильтр складского контура (roll/, pallet/, cut_source/, utilized/
+   + миграция плёнки). Форма живёт в __body панели; кнопки — сразу ПОД полями
+   (не в __footer: при короткой форме футер у дна отрывает действия от контента).
+   Группы полей — стек по модулю 8: 32 между группами, 4 лейбл→поле (input-field). */
+.flexim-filter-form { display: flex; flex-direction: column; gap: var(--size-xxl); }
+.flexim-filter-form .flexim-input-field { width: 100%; }  /* панель 600: поля во всю ширину */
+.flexim-filter-form__actions { display: flex; gap: var(--size-m); }
+/* Пара полей диапазона «От/До» — одна группа, зазор 8 */
+.flexim-filter-range { display: flex; gap: var(--size-xs); }
+.flexim-filter-range .flexim-input { flex: 1 1 0; min-width: 0; }
 
 /* ============ ORDER TRACKING (таймлайн статусов) ============
    Figma: «Order tracking» 7141:83790, «timeline status» 7141:24449,
@@ -3190,10 +3205,14 @@ a.flexim-user-chip__title:hover {
 /* Select (Figma 4317:85067) = оболочка Input + шеврон.
    Триггер — это .flexim-input с классом .flexim-select__trigger. */
 .flexim-select { position: relative; }
-.flexim-select__trigger { width: 100%; cursor: pointer; }
+/* Открытый селект поднимаем над соседними полями: без этого позиционированный
+   сосед ниже по DOM рисуется поверх выпавшего меню (стеки в форме). */
+.flexim-select.is-open { z-index: 30; }
+.flexim-select__trigger { width: 100%; cursor: pointer; user-select: none; }
 .flexim-select__trigger:focus { outline: none; }
 .flexim-select.is-open > .flexim-select__trigger {
-  border: 2px solid var(--primary-light); padding: 3px 11px;
+  /* open = focus-состояние Input: рамка --primary-30, не --primary-light */
+  border: 2px solid var(--primary-30); padding: 3px 11px;
 }
 .flexim-select__chevron {
   flex: 0 0 24px; width: 24px; height: 24px;
@@ -3202,12 +3221,22 @@ a.flexim-user-chip__title:hover {
   transition: transform .15s ease, color .15s ease;
 }
 .flexim-select.is-open .flexim-select__chevron { transform: rotate(180deg); color: var(--primary-main); }
+/* Мультиселект: чипы не сжимаются, а переносятся на новую строку;
+   триггер растёт по контенту (min-height держит базовые 40px). */
+.flexim-select--multi > .flexim-select__trigger { height: auto; min-height: 40px; }
+.flexim-select--multi .flexim-input__content { flex-wrap: wrap; }
 .flexim-select.is-disabled > .flexim-select__trigger { cursor: not-allowed; }
 .flexim-select__menu {
   position: absolute; z-index: 20; top: calc(100% + 4px); left: 0;
   width: 100%; min-width: 0;
   display: none;
 }
+/* Длинные списки: меню не выше ~7 пунктов, дальше — внутренний скролл.
+   Важно для селектов внутри скролл-контейнеров (сайдбар-фильтр). */
+.flexim-select__menu .flexim-dropdown__items { max-height: 280px; overflow-y: auto; }
+/* Drop-up: если меню не помещается снизу, JS вешает модификатор — меню
+   раскрывается вверх от триггера. */
+.flexim-select--drop-up .flexim-select__menu { top: auto; bottom: calc(100% + 4px); }
 .flexim-select.is-open .flexim-select__menu { display: flex; }
 .flexim-select__option { justify-content: flex-start; }
 .flexim-select__option .flexim-select__check { visibility: hidden; }
@@ -3321,6 +3350,17 @@ a.flexim-user-chip__title:hover {
 }
 .flexim-input__field::placeholder { color: var(--text-secondary); }
 .flexim-input__field:disabled { color: var(--text-disabled); cursor: not-allowed; }
+/* Числовые поля: прячем нативные степперы браузера (стрелочки у правого края) —
+   они не из ДС и засоряют оболочку Input. */
+.flexim-input__field[type="number"]::-webkit-outer-spin-button,
+.flexim-input__field[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.flexim-input__field[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
 .flexim-input:focus-within:not(.flexim-input--readonly):not(.flexim-input--disabled):not(.flexim-input--error) {
   border: 2px solid var(--primary-30);
   padding: 3px 11px;

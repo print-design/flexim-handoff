@@ -955,6 +955,53 @@ Bootstrap: `.flexim-order-tracking`, `.flexim-timeline-status`, `.flexim-trackin
 
 ---
 
+#### Filter side panel (фильтр склада)
+
+Bootstrap: `.flexim-side-panel` (600px) + `.flexim-filter-form`.
+Каталог `#flexim-filter-panel`, живое демо — `prod-mockups/_preview-filter-sklad.html`.
+
+**Назначение:** сайдбар-фильтр складского контура (`roll/`, `pallet/`,
+`cut_source/`, `utilized/` + два экрана миграции плёнки — 6 файлов с
+`filterModal` в проде). Применяется **только** там, где фильтр в проде
+сайдбаром; Заказы / Упаковка / План — быстрые фильтры-пилюли (см. Filters).
+Концепт «все фильтры сайдбарами» отложен и пока не используется:
+`prod-mockups/_archive/filters-all-sidebars-concept.html`.
+
+**Классы:**
+
+| Класс | Назначение |
+|---|---|
+| `.flexim-filter-form` | стек групп полей в `__body`: gap 32, поля во всю ширину |
+| `.flexim-filter-form__actions` | «Применить» (primary) + «Сбросить» (ghost) сразу под полями, gap 16 — НЕ `__footer` |
+| `.flexim-filter-range` | пара полей «От/До» в строку, gap 8 |
+
+**Поведение:** селект длинного справочника — с поиском внутри меню
+(`.flexim-filter-dd__search` + `.flexim-select__search-input`, substring-фильтр);
+меню не выше 7 пунктов (внутренний скролл), при нехватке места снизу — drop-up.
+«Отменить» нет: закрытие — ✕, Esc, клик по подложке. «Сбросить» возвращает
+дефолты («Все …», пустые поля). Диапазон «От/До» валидируется: отрицательные
+значения и «От» &gt; «До» — error-состояние Input (`--error` + hint c `error-circle`),
+сабмит блокируется.
+
+```html
+<form class="flexim-side-panel__body" method="get">
+  <div class="flexim-filter-form">
+    <div class="flexim-input-field">…Select «Марка плёнки» с поиском…</div>
+    <div class="flexim-input-field">…Select «Толщина, мкм»…</div>
+    <div class="flexim-input-field">
+      <div class="flexim-input-field__label">Ширина, мм</div>
+      <div class="flexim-filter-range">…Input «От»…Input «До»…</div>
+    </div>
+    <div class="flexim-filter-form__actions">
+      <button type="submit" class="btn btn-primary">Применить</button>
+      <button type="button" class="btn btn-flexim-ghost">Сбросить</button>
+    </div>
+  </div>
+</form>
+```
+
+---
+
 ### 🪟 Оверлеи
 
 #### Modal
