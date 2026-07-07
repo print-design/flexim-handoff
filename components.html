@@ -332,8 +332,8 @@
   <div class="toc-divider">Business</div>
   <ul class="nav">
     <li class="nav-item"><a class="nav-link" href="#flexim-user-menu">User menu</a></li>
-    <li class="nav-item"><a class="nav-link" href="#flexim-filter-panel">Filter panel</a></li>
-    <li class="nav-item"><a class="nav-link" href="#biz-filter-sklad">Filter side-panel</a></li>
+    <li class="nav-item"><a class="nav-link" href="#biz-filter-quick">Filter panel</a></li>
+    <li class="nav-item"><a class="nav-link" href="#flexim-filter-panel">Filter side panel</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-order-tracking">Order tracking</a></li>
   </ul>
 </nav>
@@ -3198,6 +3198,69 @@
   </div>
 </section>
 
+<!-- ============ BUSINESS: FILTER PANEL (быстрая фильтрация) ============ -->
+<section id="biz-filter-quick" class="ds-section">
+  <div class="container">
+    <h2>Filter panel — быстрая фильтрация</h2>
+    <p class="ds-desc">
+      Горизонтальная рейка над таблицей, собранная из атомов ДС: <strong>выбранные значения</strong>
+      как <code>.flexim-chip-tag</code> с крестиком, <strong>нераскрытые фильтры</strong> —
+      триггер <code>.flexim-filter</code> с шевроном (клик открывает <code>.flexim-filter-dd__menu</code>).
+      Используется в шапке страниц-списков: <code>01-orders.html</code>, <code>05-pack.html</code>,
+      <code>06-order-tracking.html</code>. Для складского контура — не эта панель, а сайдбар (см. ниже).
+    </p>
+
+    <div class="group-label">Живое демо: выбери пункт → станет пилюлей с крестиком. Ткни в крестик → фильтр вернётся кнопкой</div>
+    <div class="d-flex flex-wrap align-items-center mb-4" id="biz-filter-quick-panel" style="gap: var(--size-m);">
+      <span class="flexim-chip-tag flexim-chip-tag--m" data-filter-name="manager" data-filter-value="О. Снесарева" data-filter-label="Менеджер">
+        О. Снесарева
+        <button type="button" class="flexim-chip-dismiss" aria-label="Удалить фильтр">
+          <span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>
+        </button>
+      </span>
+      <div class="flexim-filter-dd" data-filter-name="customer" data-filter-label="Заказчик">
+        <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">
+          Заказчик
+          <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+        </button>
+        <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+          <div class="flexim-dropdown__items">
+            <button type="button" class="flexim-dropdown__item">ООО «Ромашка»</button>
+            <button type="button" class="flexim-dropdown__item">ООО «Славконд»</button>
+            <button type="button" class="flexim-dropdown__item">ООО «Сласти»</button>
+            <button type="button" class="flexim-dropdown__item">Матяш</button>
+            <button type="button" class="flexim-dropdown__item">Акпласт</button>
+          </div>
+        </div>
+      </div>
+      <div class="flexim-filter-dd" data-filter-name="work" data-filter-label="Тип работы">
+        <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">
+          Тип работы
+          <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+        </button>
+        <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+          <div class="flexim-dropdown__items">
+            <button type="button" class="flexim-dropdown__item">Плёнка с печатью</button>
+            <button type="button" class="flexim-dropdown__item">Плёнка без печати</button>
+            <button type="button" class="flexim-dropdown__item">Пакеты</button>
+            <button type="button" class="flexim-dropdown__item">Трубочки</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-label">Правила</div>
+    <ul class="ds-desc">
+      <li><strong>Порядок:</strong> сначала выбранные значения (chip-tag), затем нераскрытые фильтры (кнопка-триггер). Так пользователь видит слева применённые условия.</li>
+      <li><strong>Расстояние между элементами</strong> — <code>gap: var(--size-m)</code> (16px).</li>
+      <li><strong>Крестик снятия фильтра</strong> — 16px внутри <code>.flexim-chip-dismiss</code>, чтобы визуально «сидел» на пилюле chip-tag.</li>
+      <li><strong>Шеврон триггера</strong> — 24px <code>arrow-down-small</code> в <code>.flexim-filter__arrow</code>. Открытое состояние переворачивает шеврон и подсвечивает фон <code>.flexim-filter</code> в <code>--primary-50</code>.</li>
+      <li>Внутри триггера — только текст, никакой иконки категории (в Figma UI Kit так же).</li>
+      <li><strong>Складской контур</strong> (roll/, pallet/, cut_source/, utilized/) — <strong>не</strong> эта панель, а сайдбар (см. секцию «Filter side panel»). Здесь — Заказы/Упаковка/План.</li>
+    </ul>
+  </div>
+</section>
+
 <section id="flexim-filter-panel" class="ds-section">
   <div class="container">
     <h2>Filter side panel (фильтр склада)</h2>
@@ -4383,110 +4446,6 @@
   </div>
 </section>
 
-<!-- ============ BUSINESS: FILTER SIDE-PANEL (Склад) ============ -->
-<section id="biz-filter-sklad" class="ds-section">
-  <div class="container">
-    <h2>Filter side-panel — сайдбар фильтра (Склад)</h2>
-    <p class="ds-desc">
-      Редизайн фильтра склада (<code>roll/</code>, <code>pallet/</code>, <code>cut_source/</code>,
-      <code>utilized/</code>). За основу — правая панель <code>.flexim-side-panel--narrow</code> (400px)
-      из ДС, как у «Трекинга заказа». Слайдер толщины заменён на селект (дискретные значения из БД),
-      кнопка «Отменить» убрана — закрытие через ✕, Esc и клик по подложке. Форма
-      с <code>method="get"</code> — фильтры уходят в URL как query-параметры
-      (<code>?film_id=...&thickness=...&width_from=...&width_to=...</code>).
-    </p>
-
-    <div class="group-label">Разметка (кнопка → открыть панель поверх каталога)</div>
-    <button type="button" class="btn btn-primary mb-4" data-side-panel-open="biz-filter-sklad-panel">Открыть фильтр</button>
-
-    <div class="flexim-side-panel-backdrop" data-side-panel-backdrop="biz-filter-sklad-panel"></div>
-    <aside class="flexim-side-panel flexim-side-panel--narrow" id="biz-filter-sklad-panel"
-           role="dialog" aria-modal="true" aria-labelledby="biz-filter-sklad-title">
-      <div class="flexim-side-panel__header">
-        <div class="flexim-side-panel__heading">
-          <h3 class="flexim-side-panel__title" id="biz-filter-sklad-title">Фильтр</h3>
-        </div>
-        <button type="button" class="flexim-side-panel__close" data-side-panel-close aria-label="Закрыть">
-          <span data-flexim-icon="x" data-size="24" aria-hidden="true"></span>
-        </button>
-      </div>
-
-      <form class="flexim-side-panel__body" method="get" id="biz-sklad-filter">
-        <div class="filter-form">
-
-          <!-- Группа: марка плёнки -->
-          <div class="flexim-input-field">
-            <div class="flexim-input-field__label">Марка плёнки</div>
-            <div class="flexim-select">
-              <div class="flexim-input flexim-select__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
-                <div class="flexim-input__content"><span class="flexim-input__text">Все марки</span></div>
-                <span class="flexim-select__chevron" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
-              </div>
-              <div class="flexim-select__menu flexim-dropdown" role="listbox">
-                <div class="flexim-dropdown__items">
-                  <button type="button" class="flexim-dropdown__item flexim-select__option flexim-dropdown__item--active" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">Все марки</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">БОПП прозрачный</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">БОПП матовый</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">БОПП жемчужный</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">БОПП металлизированный</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">ПЭТ</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">CPP</span></button>
-                </div>
-              </div>
-              <input type="hidden" class="flexim-select__value-input" name="film_id" value="">
-            </div>
-          </div>
-
-          <!-- Группа: толщина -->
-          <div class="flexim-input-field">
-            <div class="flexim-input-field__label">Толщина, мкм</div>
-            <div class="flexim-select">
-              <div class="flexim-input flexim-select__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
-                <div class="flexim-input__content"><span class="flexim-input__text">Все толщины</span></div>
-                <span class="flexim-select__chevron" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
-              </div>
-              <div class="flexim-select__menu flexim-dropdown" role="listbox">
-                <div class="flexim-dropdown__items">
-                  <button type="button" class="flexim-dropdown__item flexim-select__option flexim-dropdown__item--active" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">Все толщины</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">20</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">25</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">30</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">35</span></button>
-                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">40</span></button>
-                </div>
-              </div>
-              <input type="hidden" class="flexim-select__value-input" name="thickness" value="">
-            </div>
-          </div>
-
-          <!-- Группа: ширина от/до -->
-          <div class="flexim-input-field">
-            <div class="flexim-input-field__label">Ширина, мм</div>
-            <div class="filter-range">
-              <div class="flexim-input">
-                <div class="flexim-input__content">
-                  <input class="flexim-input__field" type="number" name="width_from" placeholder="От" min="0" aria-label="Ширина от, мм">
-                </div>
-              </div>
-              <div class="flexim-input">
-                <div class="flexim-input__content">
-                  <input class="flexim-input__field" type="number" name="width_to" placeholder="До" min="0" aria-label="Ширина до, мм">
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </form>
-
-      <div class="flexim-side-panel__footer">
-        <button type="submit" form="biz-sklad-filter" class="btn btn-primary">Применить</button>
-        <button type="button" class="btn btn-flexim-ghost" data-biz-filter-reset>Сбросить</button>
-      </div>
-    </aside>
-  </div>
-</section>
-
 <section id="flexim-user-menu" class="ds-section">
   <div class="container">
     <h2>User menu</h2>
@@ -4745,19 +4704,52 @@
     if (window.fleximIcons) window.fleximIcons.renderAll();
   });
 
-  // «Сбросить» в бизнес-компоненте Filter side-panel (Склад):
-  // селекты возвращаются на первый пункт («Все …»), число-поля очищаются.
-  $(document).on('click', '[data-biz-filter-reset]', function () {
-    var $form = $(this).closest('.flexim-side-panel').find('form').first();
-    $form.find('.flexim-select').each(function () {
-      var $sel = $(this);
-      var $first = $sel.find('.flexim-select__option').first();
-      $sel.find('.flexim-select__option').removeClass('flexim-dropdown__item--active');
-      $first.addClass('flexim-dropdown__item--active');
-      $sel.find('.flexim-select__trigger .flexim-input__text').text($first.find('.flexim-select__opt-label').text());
-      $sel.find('.flexim-select__value-input').val('');
-    });
-    $form.find('input[type="number"]').val('');
+  // Быстрая фильтрация (#biz-filter-quick): выбор пункта в дропдауне
+  // превращает filter-триггер в chip-tag с крестиком.
+  $(document).on('click', '#biz-filter-quick-panel .flexim-filter-dd__menu .flexim-dropdown__item', function (e) {
+    e.stopPropagation();
+    var $dd = $(this).closest('.flexim-filter-dd');
+    var name = $dd.attr('data-filter-name') || '';
+    var label = $dd.attr('data-filter-label') || '';
+    var value = $(this).text().trim();
+    var $chip = $('<span class="flexim-chip-tag flexim-chip-tag--m" data-filter-name="' + name +
+                  '" data-filter-value="' + value + '" data-filter-label="' + label + '">' +
+                  value +
+                  ' <button type="button" class="flexim-chip-dismiss" aria-label="Удалить фильтр">' +
+                    '<span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>' +
+                  '</button>' +
+                  '</span>');
+    $dd.replaceWith($chip);
+    if (window.fleximIcons) window.fleximIcons.renderAll();
+  });
+
+  // Клик на крестик chip-tag внутри #biz-filter-quick — возвращает filter-триггер обратно.
+  // Опции для каждого фильтра хардкодятся здесь (в проде — приходят с сервера).
+  var BIZ_QUICK_OPTS = {
+    'manager':  ['О. Снесарева', 'Ю. Корнилова', 'Н. Миловидова', 'С. Пономарёв', 'А. Григорьева'],
+    'customer': ['ООО «Ромашка»', 'ООО «Славконд»', 'ООО «Сласти»', 'Матяш', 'Акпласт'],
+    'work':     ['Плёнка с печатью', 'Плёнка без печати', 'Пакеты', 'Трубочки']
+  };
+  $(document).on('click', '#biz-filter-quick-panel .flexim-chip-tag .flexim-chip-dismiss', function (e) {
+    e.stopPropagation();
+    var $chip = $(this).closest('.flexim-chip-tag');
+    var name  = $chip.attr('data-filter-name') || '';
+    var label = $chip.attr('data-filter-label') || name;
+    var opts = BIZ_QUICK_OPTS[name] || [];
+    var itemsHtml = opts.map(function (v) {
+      return '<button type="button" class="flexim-dropdown__item">' + v + '</button>';
+    }).join('');
+    var $dd = $('<div class="flexim-filter-dd" data-filter-name="' + name +
+                '" data-filter-label="' + label + '">' +
+                  '<button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">' +
+                    label + ' <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>' +
+                  '</button>' +
+                  '<div class="flexim-filter-dd__menu flexim-dropdown" role="menu">' +
+                    '<div class="flexim-dropdown__items">' + itemsHtml + '</div>' +
+                  '</div>' +
+                '</div>');
+    $chip.replaceWith($dd);
+    if (window.fleximIcons) window.fleximIcons.renderAll();
   });
 </script>
 <!-- Демо user-menu (см. секцию User menu → «Интерактивный composite») -->
