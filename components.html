@@ -321,8 +321,6 @@
     <li class="nav-item"><a class="nav-link" href="#segment-control">Segment</a></li>
     <li class="nav-item"><a class="nav-link" href="#selects">Select</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-side-panel">Sidebar</a></li>
-    <li class="nav-item"><a class="nav-link" href="#flexim-filter-panel">Filter panel</a></li>
-    <li class="nav-item"><a class="nav-link" href="#flexim-order-tracking">Order tracking</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-slider">Slider</a></li>
     <li class="nav-item"><a class="nav-link" href="#stat">Stat</a></li>
     <li class="nav-item"><a class="nav-link" href="#statuses">Statuses</a></li>
@@ -330,15 +328,13 @@
     <li class="nav-item"><a class="nav-link" href="#flexim-tabs">Tabs</a></li>
     <li class="nav-item"><a class="nav-link" href="#textarea">Textarea</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-tooltip">Tooltip</a></li>
-    <li class="nav-item"><a class="nav-link" href="#flexim-user-menu">User menu</a></li>
   </ul>
-  <div class="toc-divider">Legacy</div>
+  <div class="toc-divider">Business</div>
   <ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="#alerts">Alerts (legacy)</a></li>
-    <li class="nav-item"><a class="nav-link" href="#badges">Badges</a></li>
-    <li class="nav-item"><a class="nav-link" href="#progress">Progress</a></li>
-    <li class="nav-item"><a class="nav-link" href="#tables">Tables (legacy)</a></li>
-    <li class="nav-item"><a class="nav-link" href="#tabs">Tabs (legacy)</a></li>
+    <li class="nav-item"><a class="nav-link" href="#flexim-user-menu">User menu</a></li>
+    <li class="nav-item"><a class="nav-link" href="#flexim-filter-panel">Filter panel</a></li>
+    <li class="nav-item"><a class="nav-link" href="#biz-filter-sklad">Filter side-panel</a></li>
+    <li class="nav-item"><a class="nav-link" href="#flexim-order-tracking">Order tracking</a></li>
   </ul>
 </nav>
 
@@ -1374,6 +1370,87 @@
         <button type="button" class="btn btn-outline-primary">Сбросить</button>
       </div>
       <input type="hidden" class="flexim-datepicker__value-input" name="datetime" value="">
+    </div>
+
+    <div class="group-label">Split-header (год + месяц отдельно)</div>
+    <p class="ds-desc ds-desc-small">Модификатор <code>--split-header</code>. Отличается <strong>только</strong> раскладкой шапки: стрелка ‹ — селект «Год» — селект «Месяц» — стрелка ›. Ячейки, диапазон и поля дат — точно как в базовом варианте (квадратные rounded 8, розовый круг на концах диапазона, два <code>.flexim-input</code> внизу).</p>
+    <div class="flexim-datepicker flexim-datepicker--split-header mb-4">
+      <div class="flexim-datepicker__header">
+        <button type="button" class="flexim-datepicker__nav" aria-label="Предыдущий период"><span data-flexim-icon="arrow-left" data-size="24" aria-hidden="true"></span></button>
+        <div class="flexim-datepicker__month">
+          <span class="flexim-datepicker__month-label">2023</span>
+          <span class="flexim-datepicker__month-icon" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+        </div>
+        <div class="flexim-datepicker__month">
+          <span class="flexim-datepicker__month-label">Сентябрь</span>
+          <span class="flexim-datepicker__month-icon" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+        </div>
+        <button type="button" class="flexim-datepicker__nav" aria-label="Следующий период"><span data-flexim-icon="arrow-right" data-size="24" aria-hidden="true"></span></button>
+      </div>
+
+      <div class="flexim-datepicker__calendar">
+        <div class="flexim-datepicker__weekdays">
+          <span class="flexim-datepicker__weekday">Пн</span>
+          <span class="flexim-datepicker__weekday">Вт</span>
+          <span class="flexim-datepicker__weekday">Ср</span>
+          <span class="flexim-datepicker__weekday">Чт</span>
+          <span class="flexim-datepicker__weekday">Пт</span>
+          <span class="flexim-datepicker__weekday flexim-datepicker__weekday--weekend">Сб</span>
+          <span class="flexim-datepicker__weekday flexim-datepicker__weekday--weekend">Вс</span>
+        </div>
+
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">28</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">29</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">30</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">31</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--range-start"><span>1</span></span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--range">2</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--range">3</span>
+        </div>
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day flexim-datepicker__day--range">4</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--range">5</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--range">6</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--range">7</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--range">8</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--range-end"><span>9</span></span>
+          <span class="flexim-datepicker__day">10</span>
+        </div>
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day">11</span>
+          <span class="flexim-datepicker__day">12</span>
+          <span class="flexim-datepicker__day">13</span>
+          <span class="flexim-datepicker__day">14</span>
+          <span class="flexim-datepicker__day">15</span>
+          <span class="flexim-datepicker__day">16</span>
+          <span class="flexim-datepicker__day">17</span>
+        </div>
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day">18</span>
+          <span class="flexim-datepicker__day">19</span>
+          <span class="flexim-datepicker__day">20</span>
+          <span class="flexim-datepicker__day">21</span>
+          <span class="flexim-datepicker__day">22</span>
+          <span class="flexim-datepicker__day">23</span>
+          <span class="flexim-datepicker__day">24</span>
+        </div>
+        <div class="flexim-datepicker__week">
+          <span class="flexim-datepicker__day">25</span>
+          <span class="flexim-datepicker__day">26</span>
+          <span class="flexim-datepicker__day">27</span>
+          <span class="flexim-datepicker__day">28</span>
+          <span class="flexim-datepicker__day">29</span>
+          <span class="flexim-datepicker__day">30</span>
+          <span class="flexim-datepicker__day flexim-datepicker__day--muted">1</span>
+        </div>
+      </div>
+
+      <div class="flexim-datepicker__range">
+        <span class="flexim-datepicker__field">01.09.2023</span>
+        <span class="flexim-datepicker__range-sep">–</span>
+        <span class="flexim-datepicker__field">09.09.2023</span>
+      </div>
     </div>
 
     <div class="group-label">С пресетами</div>
@@ -4306,6 +4383,110 @@
   </div>
 </section>
 
+<!-- ============ BUSINESS: FILTER SIDE-PANEL (Склад) ============ -->
+<section id="biz-filter-sklad" class="ds-section">
+  <div class="container">
+    <h2>Filter side-panel — сайдбар фильтра (Склад)</h2>
+    <p class="ds-desc">
+      Редизайн фильтра склада (<code>roll/</code>, <code>pallet/</code>, <code>cut_source/</code>,
+      <code>utilized/</code>). За основу — правая панель <code>.flexim-side-panel--narrow</code> (400px)
+      из ДС, как у «Трекинга заказа». Слайдер толщины заменён на селект (дискретные значения из БД),
+      кнопка «Отменить» убрана — закрытие через ✕, Esc и клик по подложке. Форма
+      с <code>method="get"</code> — фильтры уходят в URL как query-параметры
+      (<code>?film_id=...&thickness=...&width_from=...&width_to=...</code>).
+    </p>
+
+    <div class="group-label">Разметка (кнопка → открыть панель поверх каталога)</div>
+    <button type="button" class="btn btn-primary mb-4" data-side-panel-open="biz-filter-sklad-panel">Открыть фильтр</button>
+
+    <div class="flexim-side-panel-backdrop" data-side-panel-backdrop="biz-filter-sklad-panel"></div>
+    <aside class="flexim-side-panel flexim-side-panel--narrow" id="biz-filter-sklad-panel"
+           role="dialog" aria-modal="true" aria-labelledby="biz-filter-sklad-title">
+      <div class="flexim-side-panel__header">
+        <div class="flexim-side-panel__heading">
+          <h3 class="flexim-side-panel__title" id="biz-filter-sklad-title">Фильтр</h3>
+        </div>
+        <button type="button" class="flexim-side-panel__close" data-side-panel-close aria-label="Закрыть">
+          <span data-flexim-icon="x" data-size="24" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <form class="flexim-side-panel__body" method="get" id="biz-sklad-filter">
+        <div class="filter-form">
+
+          <!-- Группа: марка плёнки -->
+          <div class="flexim-input-field">
+            <div class="flexim-input-field__label">Марка плёнки</div>
+            <div class="flexim-select">
+              <div class="flexim-input flexim-select__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
+                <div class="flexim-input__content"><span class="flexim-input__text">Все марки</span></div>
+                <span class="flexim-select__chevron" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+              </div>
+              <div class="flexim-select__menu flexim-dropdown" role="listbox">
+                <div class="flexim-dropdown__items">
+                  <button type="button" class="flexim-dropdown__item flexim-select__option flexim-dropdown__item--active" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">Все марки</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">БОПП прозрачный</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">БОПП матовый</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">БОПП жемчужный</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">БОПП металлизированный</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">ПЭТ</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">CPP</span></button>
+                </div>
+              </div>
+              <input type="hidden" class="flexim-select__value-input" name="film_id" value="">
+            </div>
+          </div>
+
+          <!-- Группа: толщина -->
+          <div class="flexim-input-field">
+            <div class="flexim-input-field__label">Толщина, мкм</div>
+            <div class="flexim-select">
+              <div class="flexim-input flexim-select__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
+                <div class="flexim-input__content"><span class="flexim-input__text">Все толщины</span></div>
+                <span class="flexim-select__chevron" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+              </div>
+              <div class="flexim-select__menu flexim-dropdown" role="listbox">
+                <div class="flexim-dropdown__items">
+                  <button type="button" class="flexim-dropdown__item flexim-select__option flexim-dropdown__item--active" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">Все толщины</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">20</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">25</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">30</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">35</span></button>
+                  <button type="button" class="flexim-dropdown__item flexim-select__option" role="option"><span class="flexim-select__check" data-flexim-icon="check-big" data-size="24" aria-hidden="true"></span><span class="flexim-select__opt-label">40</span></button>
+                </div>
+              </div>
+              <input type="hidden" class="flexim-select__value-input" name="thickness" value="">
+            </div>
+          </div>
+
+          <!-- Группа: ширина от/до -->
+          <div class="flexim-input-field">
+            <div class="flexim-input-field__label">Ширина, мм</div>
+            <div class="filter-range">
+              <div class="flexim-input">
+                <div class="flexim-input__content">
+                  <input class="flexim-input__field" type="number" name="width_from" placeholder="От" min="0" aria-label="Ширина от, мм">
+                </div>
+              </div>
+              <div class="flexim-input">
+                <div class="flexim-input__content">
+                  <input class="flexim-input__field" type="number" name="width_to" placeholder="До" min="0" aria-label="Ширина до, мм">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+
+      <div class="flexim-side-panel__footer">
+        <button type="submit" form="biz-sklad-filter" class="btn btn-primary">Применить</button>
+        <button type="button" class="btn btn-flexim-ghost" data-biz-filter-reset>Сбросить</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
 <section id="flexim-user-menu" class="ds-section">
   <div class="container">
     <h2>User menu</h2>
@@ -4374,204 +4555,6 @@
   </div>
 </section>
 
-<!-- ============ ТАБЛИЦЫ ============ -->
-<section id="tables" class="ds-section">
-  <div class="container">
-    <h2>Таблицы</h2>
-    <p class="ds-desc">
-      Тёмная шапка с UPPER-метками, строки разделены тонкой <code class="text-primary">other-lines</code>,
-      hover подсвечивает <code class="text-primary">other-table-hover</code>.
-    </p>
-
-    <div class="group-label">Стандартная таблица заказов</div>
-    <div class="card mb-4">
-      <table class="table table-hover mb-0">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Дата</th>
-            <th>Заказчик</th>
-            <th>Тип работы</th>
-            <th>Менеджер</th>
-            <th>Объём, кг</th>
-            <th>Статус</th>
-            <th>Действия</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- <?php foreach ($orders as $order): ?> -->
-          <tr>
-            <td><strong>78-174</strong></td>
-            <td>12.05.2026</td>
-            <td>УФА ПАК</td>
-            <td>Плёнка с печатью</td>
-            <td>Ю. Корнилова</td>
-            <td class="text-right">2 450</td>
-            <td><span class="badge badge-soft-warning">Ждём подтверждения</span></td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary">Открыть</button>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>713-3</strong></td>
-            <td>11.05.2026</td>
-            <td>Столичная бумага</td>
-            <td>Плёнка без печати</td>
-            <td>С. Пономарёв</td>
-            <td class="text-right">800</td>
-            <td><span class="badge badge-soft-info">В плане резки</span></td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary">Открыть</button>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>229-1813</strong></td>
-            <td>10.05.2026</td>
-            <td>АО ДМЗ</td>
-            <td>Самоклеящиеся</td>
-            <td>А. Григорьева</td>
-            <td class="text-right">1 200</td>
-            <td><span class="badge badge-soft-success">Отгружено</span></td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary">Открыть</button>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>421-89</strong></td>
-            <td>09.05.2026</td>
-            <td>Сыркофф</td>
-            <td>Плёнка с печатью</td>
-            <td>О. Корзинкина</td>
-            <td class="text-right">3 800</td>
-            <td><span class="badge badge-soft-primary">В плане печати</span></td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary">Открыть</button>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>552-12</strong></td>
-            <td>08.05.2026</td>
-            <td>Гемакон</td>
-            <td>Плёнка без печати</td>
-            <td>В. Макарова</td>
-            <td class="text-right">540</td>
-            <td><span class="badge badge-soft-danger">Сбой расчёта</span></td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary">Открыть</button>
-            </td>
-          </tr>
-          <!-- <?php endforeach; ?> -->
-        </tbody>
-      </table>
-    </div>
-
-    <div class="group-label">Полосатая таблица (.table-striped)</div>
-    <div class="card mb-4">
-      <table class="table table-striped mb-0">
-        <thead>
-          <tr>
-            <th>Машина</th>
-            <th>Скорость</th>
-            <th>Ширина</th>
-            <th>Цена работы</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Comiflex</td><td class="text-right">9 км/ч</td><td class="text-right">1510 мм</td><td class="text-right">3 055 ₽/ч</td></tr>
-          <tr><td>Soma Optima</td><td class="text-right">12 км/ч</td><td class="text-right">1450 мм</td><td class="text-right">3 800 ₽/ч</td></tr>
-          <tr><td>ZBS-1</td><td class="text-right">8 км/ч</td><td class="text-right">1200 мм</td><td class="text-right">2 200 ₽/ч</td></tr>
-          <tr><td>Atlas</td><td class="text-right">15 км/ч</td><td class="text-right">1700 мм</td><td class="text-right">4 500 ₽/ч</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="group-label">Пагинация</div>
-    <nav>
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">«</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item"><a class="page-link" href="#">»</a></li>
-      </ul>
-    </nav>
-  </div>
-</section>
-
-<!-- ============ БЭЙДЖИ ============ -->
-<section id="badges" class="ds-section">
-  <div class="container">
-    <h2>Бэйджи и статусы</h2>
-    <p class="ds-desc">
-      Стандартные сплошные + наши <code class="text-primary">.badge-soft-*</code>
-      (полупрозрачный фон, цветной текст).
-    </p>
-
-    <div class="group-label">Сплошные</div>
-    <div class="mb-3">
-      <span class="badge badge-primary mr-2">Primary</span>
-      <span class="badge badge-success mr-2">Success</span>
-      <span class="badge badge-warning mr-2">Warning</span>
-      <span class="badge badge-danger mr-2">Danger</span>
-      <span class="badge badge-info mr-2">Info</span>
-      <span class="badge badge-secondary mr-2">Secondary</span>
-    </div>
-
-    <div class="group-label">Soft (для статусов заказа)</div>
-    <div>
-      <span class="badge badge-soft-primary mr-2">В плане печати</span>
-      <span class="badge badge-soft-warning mr-2">Ждём подтверждения</span>
-      <span class="badge badge-soft-info mr-2">В плане резки</span>
-      <span class="badge badge-soft-success mr-2">Отгружено</span>
-      <span class="badge badge-soft-danger mr-2">Сбой</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ АЛЕРТЫ ============ -->
-<section id="alerts" class="ds-section">
-  <div class="container">
-    <h2>Алерты</h2>
-    <p class="ds-desc">Сообщения сверху страницы или в форме.</p>
-    <div class="alert alert-primary">Новый расчёт сохранён как черновик.</div>
-    <div class="alert alert-success">Заказ успешно создан и отправлен в план печати.</div>
-    <div class="alert alert-warning">Ширина ручья выходит за пределы машины Comiflex (1510 мм).</div>
-    <div class="alert alert-danger">Ошибка: не указан менеджер. Сохранение невозможно.</div>
-    <div class="alert alert-info">В очереди печати ещё 3 заказа перед этим.</div>
-  </div>
-</section>
-
-<!-- ============ ТАБЫ ============ -->
-<section id="tabs" class="ds-section">
-  <div class="container">
-    <h2>Табы — воронка заказов</h2>
-    <p class="ds-desc">
-      Используются в существующем модуле «Заказы» как переключатель статусов.
-    </p>
-    <ul class="nav nav-tabs">
-      <li class="nav-item"><a class="nav-link" href="#">Расчёты</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Черновики</a></li>
-      <li class="nav-item"><a class="nav-link active" href="#">В работе</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Производят</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Ждёт отгрузки</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Отгружено</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Корзина</a></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ============ ПРОГРЕСС ============ -->
-<section id="progress" class="ds-section">
-  <div class="container">
-    <h2>Прогресс</h2>
-    <p class="ds-desc">Для индикации упаковки, готовности тиража и т.п.</p>
-    <div class="progress mb-2"><div class="progress-bar" style="width: 25%">25%</div></div>
-    <div class="progress mb-2"><div class="progress-bar" style="width: 60%">60%</div></div>
-    <div class="progress"><div class="progress-bar" style="width: 100%">Готово</div></div>
-  </div>
-</section>
 
 <!-- ============ FOOTER ============ -->
 <footer class="ds-footer-note" style="padding: 32px 0; text-align: center; color: var(--text-tertiary);">
@@ -4760,6 +4743,21 @@
     $btn.attr('aria-label', willShow ? 'Скрыть пароль' : 'Показать пароль');
     $btn.attr('data-flexim-icon', willShow ? 'eye-open' : 'eye-closed');
     if (window.fleximIcons) window.fleximIcons.renderAll();
+  });
+
+  // «Сбросить» в бизнес-компоненте Filter side-panel (Склад):
+  // селекты возвращаются на первый пункт («Все …»), число-поля очищаются.
+  $(document).on('click', '[data-biz-filter-reset]', function () {
+    var $form = $(this).closest('.flexim-side-panel').find('form').first();
+    $form.find('.flexim-select').each(function () {
+      var $sel = $(this);
+      var $first = $sel.find('.flexim-select__option').first();
+      $sel.find('.flexim-select__option').removeClass('flexim-dropdown__item--active');
+      $first.addClass('flexim-dropdown__item--active');
+      $sel.find('.flexim-select__trigger .flexim-input__text').text($first.find('.flexim-select__opt-label').text());
+      $sel.find('.flexim-select__value-input').val('');
+    });
+    $form.find('input[type="number"]').val('');
   });
 </script>
 <!-- Демо user-menu (см. секцию User menu → «Интерактивный composite») -->

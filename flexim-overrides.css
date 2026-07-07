@@ -3820,6 +3820,23 @@ a:hover { color: var(--primary-dark); }
   min-width: 220px;
 }
 
+/* ============ Вариант --split-header ============
+   Отличается ТОЛЬКО раскладкой шапки: стрелка ‹ — селект «Год» —
+   селект «Месяц» — стрелка ›. Ячейки, диапазоны и поля дат — как
+   в базовом варианте (квадратные rounded 8, розовый кружок на концах диапазона,
+   `.flexim-datepicker__range` с двумя Input-полями внизу). */
+
+.flexim-datepicker--split-header .flexim-datepicker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-xs);
+}
+.flexim-datepicker--split-header .flexim-datepicker__month {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 /* --- Вариант с пресетами --- */
 .flexim-datepicker--presets { width: 540px; }
 .flexim-datepicker__body {
@@ -3860,6 +3877,23 @@ a:hover { color: var(--primary-dark); }
   gap: var(--size-l);
   min-width: 0;
 }
+
+/* ============================================================
+   FILTER FORM — page-level layout для формы фильтра в сайдбаре.
+   Стек групп «поле+лейбл» разведён на 32 (правило близости),
+   пары полей «от»/«до» стоят близко — 8. Используется в
+   сайдбаре фильтра склада (roll/, pallet/, cut_source/, utilized/).
+   ============================================================ */
+.filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xxl);           /* 32 — главные группы разведены */
+}
+.filter-range {
+  display: flex;
+  gap: var(--size-xs);            /* 8  — «от»/«до» одна группа */
+}
+.filter-range .flexim-input { flex: 1 1 0; min-width: 0; }
 
 /* ============================================================
    APP SHELL — общая каркасная раскладка экранов проекта
