@@ -667,6 +667,147 @@ import {
 
 ---
 
+#### Attachment (вложения)
+
+Bootstrap: атомы в `_bootstrap-flexim-overrides.css`, каталог
+`components.html` → секция `#attachment`. Figma `7183:62796`
+(атомы) и `7183:53855` (полный флоу с модалкой удаления и Lightbox).
+
+**Назначение:** прикрепление файлов в формах — карточка «Ручей»,
+ТЗ, комментарии заказа. Одна прикреплённая роль (например, «С подписью
+заказчика» / «Без подписи заказчика») = одна пара **[кнопка upload,
+миниатюра]**. Пока файла нет — показывается кнопка; после загрузки на
+её месте появляется миниатюра.
+
+**Атомы:**
+
+| Класс | Что делает |
+|---|---|
+| `.flexim-attachment-upload` | Кнопка «Загрузить» — pill h-40, тень M, иконка `upload` 24px + текст Bold 14/20 `--primary-main`. Триггер `<input type="file">` (скрытый). |
+| `.flexim-attachment-card` | Миниатюра 80×84, radius 10, border 2px `--primary-main`, `overflow: hidden`. Внутри `.flexim-attachment-card__img`. |
+| `.flexim-attachment-card--loading` | Модификатор: картинка `opacity: 0.2`, поверх — `.flexim-attachment-card__spinner` (CSS-анимация, 16px). |
+| `.flexim-attachment-card--error` | Модификатор: **фон `--error-20`** (розовая заливка), border `--error-main`, картинка приглушена (`opacity: 0.2`), поверх — `.flexim-attachment-card__error-x` (24px крестик, цвет `--error-main`). |
+| `.flexim-attachment--error` | Модификатор обёртки: `max-width: 120px` (перенос длинной ошибки) + красит подпись в `--error-dark` (#E2223B). |
+| `.flexim-attachment-card--interactive` | Добавляет `cursor: pointer` — карточка кликабельна (открывает Lightbox). |
+| `.flexim-attachment-caption` | Подпись под карточкой: текст 11/12 + крестик 16px удалить. |
+| `.flexim-attachment` | Обёртка карточка + подпись, `flex-direction: column`, `gap: 8`. |
+| `.flexim-attachment-progress-text` | Двухстрочная подпись под loading-карточкой: имя файла + «X% загружено». |
+| `.flexim-attachment-row` | Ряд миниатюр, `gap: 20`, `flex-wrap: wrap`. |
+| `.flexim-attachment-buttons` | Ряд кнопок upload, `gap: 16`, `flex-wrap: wrap`. |
+
+**Разметка одной ячейки (уже загруженный файл):**
+
+```html
+<div class="flexim-attachment">
+  <div class="flexim-attachment-card flexim-attachment-card--interactive">
+    <img class="flexim-attachment-card__img" src="/uploads/original.png" alt="С подписью заказчика">
+  </div>
+  <span class="flexim-attachment-caption">
+    С подписью
+    <button type="button" class="flexim-attachment-caption__dismiss" aria-label="Удалить файл">
+      <span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>
+    </button>
+  </span>
+</div>
+```
+
+**Loading (в момент загрузки):**
+
+```html
+<div class="flexim-attachment">
+  <div class="flexim-attachment-card flexim-attachment-card--loading">
+    <img class="flexim-attachment-card__img" src="[preview-data-url]" alt="">
+    <div class="flexim-attachment-card__spinner" role="progressbar" aria-label="Загрузка"></div>
+  </div>
+  <span class="flexim-attachment-progress-text">
+    <span class="flexim-attachment-progress-text__filename">image (33).png</span>
+    <span class="flexim-attachment-progress-text__status">61% загружено</span>
+  </span>
+</div>
+```
+
+**Error:** обёртка получает модификатор `--error` (перенос длинной подписи +
+красный цвет), карточка — `--error` (розовая заливка + красная рамка + крестик
+удалить в центре). В подписи **нет крестика удалить** — только текст, красным.
+
+```html
+<div class="flexim-attachment flexim-attachment--error">
+  <div class="flexim-attachment-card flexim-attachment-card--error">
+    <img class="flexim-attachment-card__img" src="[preview-data-url]" alt="">
+    <button type="button" class="flexim-attachment-card__error-x" aria-label="Ошибка, удалить">
+      <span data-flexim-icon="x" data-size="24" aria-hidden="true"></span>
+    </button>
+  </div>
+  <span class="flexim-attachment-caption">Ошибка.<br>Максимум 20 mb</span>
+</div>
+```
+
+**Полный флоу (форма «Ручей»):**
+
+```html
+<div class="card" style="padding: 20px;">
+  <h3>Ручей 1 (400 мм)</h3>
+
+  <div class="flexim-input-field">
+    <label class="flexim-input-field__label">Наименование</label>
+    <div class="flexim-input">…Input…</div>
+  </div>
+
+  <div class="flexim-input-field__label" style="font-weight:600">Загрузите файл оригинал-макета</div>
+
+  <div class="flexim-attachment-buttons">
+    <button type="button" class="flexim-attachment-upload">
+      <span data-flexim-icon="upload" data-size="24"></span>
+      С подписью заказчика
+    </button>
+    <button type="button" class="flexim-attachment-upload">
+      <span data-flexim-icon="upload" data-size="24"></span>
+      Без подписи заказчика
+    </button>
+  </div>
+
+  <div class="flexim-attachment-row">
+    <!-- Миниатюры уже загруженных файлов -->
+  </div>
+</div>
+```
+
+**Флоу и правила:**
+
+- **Одна роль = одна пара [кнопка, миниатюра].** После загрузки роль
+  «С подписью заказчика» — на её месте миниатюра; до загрузки —
+  кнопка. Не показывать оба одновременно.
+- **Роль в подписи** («С подписью» / «Без подписи») определяется формой,
+  а не именем файла. Пользователь не переименовывает роль.
+- **Клик по картинке** (карточка с `--interactive`) → открывает Lightbox
+  (используй существующий `.flexim-modal` с большим изображением
+  внутри, полноэкранный, тёмный backdrop).
+- **Клик по крестику подписи** → открывает модалку подтверждения
+  удаления (обычный `.flexim-modal` с двумя кнопками: «Удалить»
+  primary, «Отмена» ghost). После подтверждения роль возвращается в
+  состояние «кнопка upload».
+- **Валидация размера файла** — на клиенте до отправки на сервер.
+  Превышен максимум — сразу рисуем `--error`, XHR не начинаем.
+- **Тип файла** — валидировать через `accept` на `<input type="file">`
+  + бэкенд-проверку. Если не соответствует — `--error` с текстом
+  «Формат не поддерживается».
+- **Прогресс загрузки** — тянуть из события `xhr.upload.progress` или
+  `fetch` с `ReadableStream`, обновлять текст `.__status`.
+- **Клавиатурная доступность:** все кликабельные части — `<button
+  type="button">` (кнопка upload, крестик подписи, крестик ошибки,
+  сама карточка `--interactive`). НЕ `<div>` с `onClick`.
+- **Порядок в ряду:** `flex-wrap: wrap` — при узком экране переносятся,
+  ширина карточки не растягивается.
+
+**Модалка удаления и Lightbox** — не отдельные компоненты, а типовое
+применение `.flexim-modal`. См. секцию **Modal** в этом файле.
+
+**React** — компонент `flexim-app/src/components/ui/attachment.tsx`
+пока не реализован. Для новых экранов брать Bootstrap-разметку из
+каталога.
+
+---
+
 #### Filter
 
 Кнопка-пилюля в панели фильтров таблицы. Стили в
@@ -952,6 +1093,209 @@ Bootstrap: `.flexim-order-tracking`, `.flexim-timeline-status`, `.flexim-trackin
   </div>
 </div>
 ```
+
+---
+
+#### Filter panel (быстрая фильтрация)
+
+Bootstrap: рейка из атомов `.flexim-chip-tag` + `.flexim-filter-dd`.
+Каталог `#biz-filter-quick`, live-демо там же (клик по пункту меню превращает
+триггер в chip-tag, клик по крестику — возвращает).
+
+**Назначение:** быстрая фильтрация над таблицей на страницах-списках —
+Заказы (`01-orders.html`), Упаковка (`05-pack.html`), Трекинг заказа
+(`06-order-tracking.html`, `06b-order-tracking-lamination.html`). Отличается
+от **Filter side panel** (см. ниже) — тот сайдбар применяется только для
+складского контура; здесь же вся фильтрация «в строке».
+
+**Инвариант:** **выбранные значения** — chip-tag с крестиком (`.flexim-chip-dismiss`),
+**невыбранные** — кнопка-триггер `.flexim-filter` с шевроном + вложенный
+дропдаун `.flexim-filter-dd__menu`. Клик по пункту меню превращает триггер
+в chip-tag. Клик по крестику chip-tag возвращает триггер с полным списком
+опций. **Порядок фиксированный:** фильтр остаётся на своём месте — триггер
+заменяется на chip-tag НА МЕСТЕ (`replaceWith`), а не переносится в начало;
+соседи не сдвигаются. Выбранные вперёд НЕ выносить. Источник — Figma 4398-81740.
+
+**Разметка контейнера:**
+
+```html
+<div id="biz-filter-quick-panel" class="d-flex flex-wrap align-items-center"
+     style="gap: var(--size-m);">
+  <!-- выбранные значения (chip-tag) -->
+  <span class="flexim-chip-tag flexim-chip-tag--m"
+        data-filter-name="manager"
+        data-filter-value="О. Снесарева"
+        data-filter-label="Менеджер">
+    О. Снесарева
+    <button type="button" class="flexim-chip-dismiss" aria-label="Удалить фильтр">
+      <span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>
+    </button>
+  </span>
+
+  <!-- невыбранные фильтры (триггер + меню) -->
+  <div class="flexim-filter-dd" data-filter-name="customer" data-filter-label="Заказчик">
+    <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">
+      Заказчик
+      <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+    </button>
+    <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+      <div class="flexim-dropdown__items">
+        <button type="button" class="flexim-dropdown__item">ООО «Ромашка»</button>
+        <button type="button" class="flexim-dropdown__item">ООО «Славконд»</button>
+        <!-- … -->
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+**Атрибуты (обязательные):**
+
+| Атрибут | На чём | Назначение |
+|---|---|---|
+| `data-filter-name` | и на chip-tag, и на `.flexim-filter-dd` | ключ фильтра (`manager`, `customer`, `work`, …). Используется как ключ в опциях. |
+| `data-filter-label` | и на chip-tag, и на `.flexim-filter-dd` | человеческое название категории (что показывать на триггере после восстановления). |
+| `data-filter-value` | только на chip-tag | выбранное значение (то же что текст chip'а). Полезно для сериализации в форму / query-string. |
+
+**Опции меню** для каждого `data-filter-name` в live-демо хардкод в JS в
+`components.html` (переменная `BIZ_QUICK_OPTS`). В проде — приходят из БД
+или инжектятся PHP-шаблоном; JS-обработчик восстановления фильтра при
+клике по крестику должен уметь их подтягивать.
+
+**JS-логика (уже в footer-script каталога — на всех страницах где нужна
+быстрая фильтрация, надо подключить те же обработчики):**
+
+```js
+// 1. Клик по пункту меню → триггер → chip-tag с крестиком.
+$(document).on('click',
+  '#biz-filter-quick-panel .flexim-filter-dd__menu .flexim-dropdown__item',
+  function (e) {
+    e.stopPropagation();
+    var $dd = $(this).closest('.flexim-filter-dd');
+    var name  = $dd.attr('data-filter-name')  || '';
+    var label = $dd.attr('data-filter-label') || '';
+    var value = $(this).text().trim();
+    var $chip = $('<span class="flexim-chip-tag flexim-chip-tag--m" ' +
+                    'data-filter-name="' + name + '" ' +
+                    'data-filter-value="' + value + '" ' +
+                    'data-filter-label="' + label + '">' +
+                    value +
+                    ' <button type="button" class="flexim-chip-dismiss" ' +
+                        'aria-label="Удалить фильтр">' +
+                      '<span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>' +
+                    '</button>' +
+                  '</span>');
+    $dd.replaceWith($chip);
+    if (window.fleximIcons) window.fleximIcons.renderAll();
+  });
+
+// 2. Клик по крестику chip-tag → chip-tag → триггер с полным списком опций.
+var BIZ_QUICK_OPTS = {
+  'manager':  ['О. Снесарева', 'Ю. Корнилова', 'Н. Миловидова', 'С. Пономарёв'],
+  'customer': ['ООО «Ромашка»', 'ООО «Славконд»', 'ООО «Сласти»', 'Матяш'],
+  'work':     ['Плёнка с печатью', 'Плёнка без печати', 'Пакеты']
+};
+$(document).on('click',
+  '#biz-filter-quick-panel .flexim-chip-tag .flexim-chip-dismiss',
+  function (e) {
+    e.stopPropagation();
+    var $chip = $(this).closest('.flexim-chip-tag');
+    var name  = $chip.attr('data-filter-name')  || '';
+    var label = $chip.attr('data-filter-label') || name;
+    var opts  = BIZ_QUICK_OPTS[name] || [];
+    var itemsHtml = opts.map(function (v) {
+      return '<button type="button" class="flexim-dropdown__item">' + v + '</button>';
+    }).join('');
+    var $dd = $('<div class="flexim-filter-dd" ' +
+                  'data-filter-name="'  + name  + '" ' +
+                  'data-filter-label="' + label + '">' +
+                  '<button type="button" class="flexim-filter" ' +
+                    'aria-haspopup="true" aria-expanded="false">' +
+                    label +
+                    ' <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>' +
+                  '</button>' +
+                  '<div class="flexim-filter-dd__menu flexim-dropdown" role="menu">' +
+                    '<div class="flexim-dropdown__items">' + itemsHtml + '</div>' +
+                  '</div>' +
+                '</div>');
+    $chip.replaceWith($dd);
+    if (window.fleximIcons) window.fleximIcons.renderAll();
+  });
+```
+
+Открытие / закрытие дропдауна и обработка «клик вне закрывает всё» —
+глобальные, уже привязаны к `.flexim-filter-dd` в футере каталога.
+Отдельно писать не нужно.
+
+**Как добавить новый фильтр** (например, «Дата расчёта»):
+
+1. В контейнер `#biz-filter-quick-panel` добавь блок:
+
+   ```html
+   <div class="flexim-filter-dd" data-filter-name="calc-date" data-filter-label="Дата расчёта">
+     <button type="button" class="flexim-filter" aria-haspopup="true" aria-expanded="false">
+       Дата расчёта
+       <span class="flexim-filter__arrow" data-flexim-icon="arrow-down-small" data-size="24" aria-hidden="true"></span>
+     </button>
+     <div class="flexim-filter-dd__menu flexim-dropdown" role="menu">
+       <div class="flexim-dropdown__items">
+         <button type="button" class="flexim-dropdown__item">Сегодня</button>
+         <button type="button" class="flexim-dropdown__item">Вчера</button>
+         <!-- … -->
+       </div>
+     </div>
+   </div>
+   ```
+
+2. В `BIZ_QUICK_OPTS` добавь массив опций под тем же ключом:
+
+   ```js
+   'calc-date': ['Сегодня', 'Вчера', 'На этой неделе', 'В прошлом месяце'],
+   ```
+
+Больше ничего не нужно — обработчики универсальны через `data-filter-name`.
+
+**Реальное приложение (сервер, PHP) — как на «Заказах» (`calculation/index.php`):**
+
+В проде «выбран / не выбран» решает СЕРВЕР, а не клиентский toggle каталога.
+PHP в фиксированном порядке полей рендерит для каждого фильтра либо chip-tag
+(значение в GET задано), либо триггер (не задано) — на его месте. Отличия от
+демо:
+
+- Обёртка — `<form method="get" class="flexim-filters">`; на каждое поле —
+  скрытый `<input type="hidden" name="<field>">` с текущим значением.
+- Ключ — `data-filter="<field>"` (имя GET-параметра) на chip-tag и на
+  `.flexim-filter-dd` (вместо демошного `data-filter-name`).
+- Пункт меню несёт `data-value="<id>"`. Клик по пункту выставляет hidden и
+  сабмитит форму; крестик chip'а чистит hidden и сабмитит. Логика — общий
+  `flexim-ds/filters.js` (НЕ демо-JS каталога), в footer, guarded.
+- Триггеры без пункта «Все»: сброс — только крестиком chip'а.
+- Порядок полей фиксированный (пилюля↔chip на месте); серверная фильтрация по
+  GET не меняется — это оболочка поверх легаси.
+
+Тот же паттерн переиспользуем на Упаковке/Плане: меняется только состав полей.
+
+**Правила и ошибки:**
+
+- **Не путать `data-filter-label` и `data-filter-value`.** `label` — название
+  категории («Заказчик»), пишется на триггере. `value` — конкретное значение
+  выбора («ООО «Ромашка»»), пишется в chip.
+- **Не менять текст chip'а через `.text()` уже после превращения** — сериализация
+  для формы (или query-string) читает `data-filter-value`, а не текст.
+- **`data-filter-name` должен быть уникальным** внутри одной панели.
+  Если в форме несколько одноимённых фильтров — использовать суффикс
+  (`customer-a`, `customer-b`).
+- **Опции меню длиной больше 7** — добавлять поиск в меню (`.flexim-filter-dd__search`),
+  как в компоненте Filter (базовом). Пример — в каталоге, секция `#filter`.
+- **Не рендерить chip-tag без крестика** — если фильтр в принципе неудаляемый
+  (например, «Только мои заказы» с ролью пользователя), не использовать этот
+  паттерн; сделать читаемую подсказку иначе.
+
+**Множественный выбор** (сейчас не реализован, но паттерн допускает):
+один `data-filter-name` может дать несколько chip'ов (по одному на значение);
+при клике на крестик каждого — восстанавливается **тот же** триггер (не
+удаляется). Если добавляешь — учти дедупликацию при повторном открытии
+триггера (в `BIZ_QUICK_OPTS` фильтровать уже выбранные значения).
 
 ---
 

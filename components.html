@@ -285,17 +285,18 @@
 <nav class="toc">
   <div class="toc-title">Foundations</div>
   <ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="#palette">Palette</a></li>
-    <li class="nav-item"><a class="nav-link" href="#typography">Typography</a></li>
-    <li class="nav-item"><a class="nav-link" href="#spacing">Spacing</a></li>
-    <li class="nav-item"><a class="nav-link" href="#shadows">Shadows</a></li>
-    <li class="nav-item"><a class="nav-link" href="#radii">Radii</a></li>
     <li class="nav-item"><a class="nav-link" href="icons.html">Icon ↗</a></li>
+    <li class="nav-item"><a class="nav-link" href="#palette">Palette</a></li>
+    <li class="nav-item"><a class="nav-link" href="#radii">Radii</a></li>
+    <li class="nav-item"><a class="nav-link" href="#shadows">Shadows</a></li>
+    <li class="nav-item"><a class="nav-link" href="#spacing">Spacing</a></li>
+    <li class="nav-item"><a class="nav-link" href="#typography">Typography</a></li>
   </ul>
   <div class="toc-divider">Components</div>
   <ul class="nav">
     <li class="nav-item"><a class="nav-link" href="#accordion">Accordion</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-alerts">Alert</a></li>
+    <li class="nav-item"><a class="nav-link" href="#attachment">Attachment</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-avatar">Avatar</a></li>
     <li class="nav-item"><a class="nav-link" href="#buttons">Buttons</a></li>
     <li class="nav-item"><a class="nav-link" href="#cards">Cards</a></li>
@@ -331,10 +332,10 @@
   </ul>
   <div class="toc-divider">Business</div>
   <ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="#flexim-user-menu">User menu</a></li>
     <li class="nav-item"><a class="nav-link" href="#biz-filter-quick">Filter panel</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-filter-panel">Filter side panel</a></li>
     <li class="nav-item"><a class="nav-link" href="#flexim-order-tracking">Order tracking</a></li>
+    <li class="nav-item"><a class="nav-link" href="#flexim-user-menu">User menu</a></li>
   </ul>
 </nav>
 
@@ -1585,6 +1586,138 @@
         <button type="button" class="btn btn-secondary btn-block">Создать заказ</button>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ ATTACHMENT ============ -->
+<section id="attachment" class="ds-section">
+  <div class="container">
+    <h2>Attachment (вложения)</h2>
+    <p class="ds-desc">
+      Figma <code>7183:62796</code> — «Ручей». Флоу загрузки файла:
+      кнопка <code>.flexim-attachment-upload</code> → системный file picker →
+      миниатюра <code>.flexim-attachment-card</code> в одном из трёх состояний
+      (<code>loaded</code> / <code>--loading</code> / <code>--error</code>).
+      Подпись под карточкой — <code>.flexim-attachment-caption</code>: имя (роль) файла + крестик удалить.
+      Используется в форме «Ручей» карточки заказа, ТЗ и других экранах с прикреплениями.
+    </p>
+
+    <div class="group-label">Кнопка загрузки — <code>.flexim-attachment-upload</code></div>
+    <p class="ds-desc ds-desc-small">Pill h-40, тень M, иконка <code>upload</code> 24px слева, текст Bold 14/20 <code>--primary-main</code>.</p>
+    <div class="flexim-attachment-buttons mb-4">
+      <button type="button" class="flexim-attachment-upload">
+        <span data-flexim-icon="upload" data-size="24" aria-hidden="true"></span>
+        С подписью заказчика
+      </button>
+      <button type="button" class="flexim-attachment-upload">
+        <span data-flexim-icon="upload" data-size="24" aria-hidden="true"></span>
+        Без подписи заказчика
+      </button>
+      <button type="button" class="flexim-attachment-upload" disabled>
+        <span data-flexim-icon="upload" data-size="24" aria-hidden="true"></span>
+        Disabled
+      </button>
+    </div>
+
+    <div class="group-label">Миниатюра файла — <code>.flexim-attachment-card</code> (3 состояния)</div>
+    <p class="ds-desc ds-desc-small">80×84, radius 10, border 2px. По умолчанию — <code>--primary-main</code>; <code>--loading</code> добавляет спиннер поверх приглушённой картинки; <code>--error</code> заменяет рамку на <code>--error-main</code> и ставит крестик по центру.</p>
+    <div class="flexim-attachment-row mb-4">
+      <div class="flexim-attachment">
+        <div class="flexim-attachment-card flexim-attachment-card--interactive">
+          <img class="flexim-attachment-card__img" src="./assets/login-hero.png" alt="С подписью заказчика">
+        </div>
+        <span class="flexim-attachment-caption">
+          С подписью
+          <button type="button" class="flexim-attachment-caption__dismiss" aria-label="Удалить файл">
+            <span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>
+          </button>
+        </span>
+      </div>
+
+      <div class="flexim-attachment">
+        <div class="flexim-attachment-card flexim-attachment-card--loading">
+          <img class="flexim-attachment-card__img" src="./assets/login-hero.png" alt="">
+          <div class="flexim-attachment-card__spinner" role="progressbar" aria-label="Загрузка"></div>
+        </div>
+        <span class="flexim-attachment-progress-text">
+          <span class="flexim-attachment-progress-text__filename">image (33).png</span>
+          <span class="flexim-attachment-progress-text__status">61% загружено</span>
+        </span>
+      </div>
+
+      <div class="flexim-attachment flexim-attachment--error">
+        <div class="flexim-attachment-card flexim-attachment-card--error">
+          <img class="flexim-attachment-card__img" src="./assets/login-hero.png" alt="">
+          <button type="button" class="flexim-attachment-card__error-x" aria-label="Ошибка загрузки, удалить">
+            <span data-flexim-icon="x" data-size="24" aria-hidden="true"></span>
+          </button>
+        </div>
+        <span class="flexim-attachment-caption">
+          Ошибка.<br>Максимум 20 mb
+        </span>
+      </div>
+    </div>
+
+    <div class="group-label">Целый флоу — карточка «Ручей»</div>
+    <p class="ds-desc ds-desc-small">Готовая сборка для формы: заголовок + Input «Наименование» + группа кнопок upload + ряд миниатюр (opt.). Стек: <code>.flexim-input-field</code> → <code>.flexim-attachment-buttons</code> → <code>.flexim-attachment-row</code>. Обёртка страницы — обычный <code>&lt;form&gt;</code>.</p>
+    <div class="card mb-2" style="padding: 20px; max-width: 840px;">
+      <h3 style="font: 700 18px/24px var(--font-family); color: var(--text-primary); margin: 0 0 12px;">Ручей 1 (400 мм)</h3>
+      <div class="flexim-input-field mb-3">
+        <label class="flexim-input-field__label">Наименование</label>
+        <div class="flexim-input">
+          <div class="flexim-input__content">
+            <input class="flexim-input__field" type="text" placeholder="Placeholder">
+          </div>
+        </div>
+      </div>
+      <div class="flexim-input-field__label" style="font-weight: 600; font-size: 14px; line-height: 20px; margin-bottom: 8px;">Загрузите файл оригинал-макета</div>
+      <div class="flexim-attachment-buttons mb-3">
+        <button type="button" class="flexim-attachment-upload">
+          <span data-flexim-icon="upload" data-size="24" aria-hidden="true"></span>
+          С подписью заказчика
+        </button>
+        <button type="button" class="flexim-attachment-upload">
+          <span data-flexim-icon="upload" data-size="24" aria-hidden="true"></span>
+          Без подписи заказчика
+        </button>
+      </div>
+      <div class="flexim-attachment-row">
+        <div class="flexim-attachment">
+          <div class="flexim-attachment-card flexim-attachment-card--interactive">
+            <img class="flexim-attachment-card__img" src="./assets/login-hero.png" alt="С подписью">
+          </div>
+          <span class="flexim-attachment-caption">
+            С подписью
+            <button type="button" class="flexim-attachment-caption__dismiss" aria-label="Удалить файл">
+              <span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>
+            </button>
+          </span>
+        </div>
+        <div class="flexim-attachment">
+          <div class="flexim-attachment-card flexim-attachment-card--interactive">
+            <img class="flexim-attachment-card__img" src="./assets/login-hero.png" alt="Без подписи">
+          </div>
+          <span class="flexim-attachment-caption">
+            Без подписи
+            <button type="button" class="flexim-attachment-caption__dismiss" aria-label="Удалить файл">
+              <span data-flexim-icon="x-small" data-size="16" aria-hidden="true"></span>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-label">Правила</div>
+    <ul class="ds-desc">
+      <li><strong>Роль в подписи (например, «С подписью» / «Без подписи»)</strong> — часть бизнес-семантики поля, определяется формой, а не пользователем.</li>
+      <li><strong>Порядок:</strong> сначала кнопки загрузки, ниже уже добавленные миниатюры. Ряд миниатюр может расти вправо и переноситься (<code>flex-wrap: wrap</code>).</li>
+      <li><strong>Клик по картинке в состоянии <code>loaded</code></strong> → открывает Lightbox (используй существующий <code>.flexim-modal</code> с картинкой внутри, полноэкранный).</li>
+      <li><strong>Клик по крестику в подписи</strong> → показывает модалку подтверждения удаления (обычный <code>.flexim-modal</code> с двумя кнопками: «Удалить» primary, «Отмена» ghost).</li>
+      <li><strong>State <code>--loading</code></strong> — картинка получает <code>opacity: 0.2</code>, поверх — спиннер 16px. Под карточкой — <code>.flexim-attachment-progress-text</code>: имя файла + «X% загружено».</li>
+      <li><strong>State <code>--error</code></strong> — рамка становится <code>--error-main</code>, картинка приглушается, по центру крестик 24px. Подпись — короткая (напр. «Ошибка. Максимум 20 mb»); если длинная — переносится, ширина карточки не растягивается.</li>
+      <li><strong>Максимальный размер файла</strong> — валидировать на клиенте до отправки; при превышении рисуем сразу <code>--error</code>, серверный запрос не начинаем.</li>
+      <li><strong>Клавиатурная навигация:</strong> кнопки upload и крестики — <code>&lt;button type="button"&gt;</code>. Карточка миниатюры-интерактив — тоже <code>&lt;button&gt;</code> (не <code>&lt;div&gt;</code>) для Tab-фокуса.</li>
+    </ul>
   </div>
 </section>
 
@@ -3251,7 +3384,7 @@
 
     <div class="group-label">Правила</div>
     <ul class="ds-desc">
-      <li><strong>Порядок:</strong> сначала выбранные значения (chip-tag), затем нераскрытые фильтры (кнопка-триггер). Так пользователь видит слева применённые условия.</li>
+      <li><strong>Порядок фиксированный:</strong> каждый фильтр на своём месте — при выборе триггер заменяется на chip-tag НА МЕСТЕ (`replaceWith`, соседи не сдвигаются), при снятии крестиком — обратно. Выбранные вперёд НЕ выносить (Figma 4398-81740).</li>
       <li><strong>Расстояние между элементами</strong> — <code>gap: var(--size-m)</code> (16px).</li>
       <li><strong>Крестик снятия фильтра</strong> — 16px внутри <code>.flexim-chip-dismiss</code>, чтобы визуально «сидел» на пилюле chip-tag.</li>
       <li><strong>Шеврон триггера</strong> — 24px <code>arrow-down-small</code> в <code>.flexim-filter__arrow</code>. Открытое состояние переворачивает шеврон и подсвечивает фон <code>.flexim-filter</code> в <code>--primary-50</code>.</li>

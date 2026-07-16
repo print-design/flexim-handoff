@@ -772,6 +772,7 @@ label, .col-form-label {
 .flexim-chip-tag .flexim-chip-dismiss:hover {
   color: var(--primary-light);
 }
+.flexim-chip-tag .flexim-chip-dismiss:focus { outline: none; }
 .flexim-chip-tag .flexim-chip-dismiss > svg { width: 16px; height: 16px; }
 .flexim-pagination__btn > svg { width: 20px; height: 20px; }
 
@@ -1309,6 +1310,188 @@ label, .col-form-label {
   color: var(--primary-main);
 }
 
+/* ============ Attachment (вложения) — Figma 7183:62796 ============
+   Флоу: кнопка загрузки → выбор файла → миниатюра (loaded / loading / error).
+   Используется в форме «Ручей» карточки заказа и других формах с прикреплениями. */
+
+/* Кнопка «Загрузить файл» — pill c иконкой upload и текстом primary. */
+.flexim-attachment-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-xs);
+  height: 40px;
+  padding: var(--size-xs) var(--size-m);
+  border: 0;
+  border-radius: var(--size-xs);
+  background: var(--surface-white);
+  color: var(--primary-main);
+  font: 700 14px/20px var(--font-family);
+  box-shadow: var(--shadow-m);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.flexim-attachment-upload:hover { color: var(--primary-light); }
+.flexim-attachment-upload:disabled,
+.flexim-attachment-upload.is-disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.flexim-attachment-upload > [data-flexim-icon] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  line-height: 0;
+  color: currentColor;
+}
+
+/* Карточка-миниатюра загруженного файла: 80×84, radius 10, border 2px primary.
+   Фон — --primary-50 (нежный розовый), общий для всех трёх состояний
+   (loaded / loading / error). У error переопределяется на --error-20. */
+.flexim-attachment-card {
+  position: relative;
+  width: 80px;
+  height: 84px;
+  border: 2px solid var(--primary-main);
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--primary-50);
+}
+.flexim-attachment-card__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Клик по картинке — открытие Lightbox (обёртка cursor:pointer). */
+.flexim-attachment-card--interactive { cursor: pointer; }
+
+/* Loading — картинка приглушена, по центру спиннер. */
+.flexim-attachment-card--loading .flexim-attachment-card__img { opacity: 0.2; }
+.flexim-attachment-card__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid var(--primary-50);
+  border-top-color: var(--primary-main);
+  border-radius: 50%;
+  animation: flexim-attachment-spin 0.9s linear infinite;
+}
+@keyframes flexim-attachment-spin { to { transform: rotate(360deg); } }
+
+/* Error — розовая заливка --error-20, красная рамка --error-main,
+   картинка приглушена, крестик по центру. Подпись — --error-dark, без ×. */
+.flexim-attachment-card--error {
+  background: var(--error-20);
+  border-color: var(--error-main);
+}
+.flexim-attachment-card--error .flexim-attachment-card__img { opacity: 0.2; }
+.flexim-attachment-card__error-x {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  color: var(--error-main);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  line-height: 0;
+}
+.flexim-attachment-card__error-x > [data-flexim-icon] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: currentColor;
+}
+
+/* Модификатор обёртки для error-состояния: ограничивает ширину, чтобы
+   длинная подпись «Ошибка. Максимум 20 mb» переносилась, и красит подпись. */
+.flexim-attachment--error { max-width: 120px; }
+.flexim-attachment--error .flexim-attachment-caption {
+  color: var(--error-dark);
+  white-space: normal;
+  align-items: flex-start;
+}
+
+/* Подпись под карточкой: «С подписью × », gap 4, text 11/12 + icon 16. */
+.flexim-attachment-caption {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-xxs);
+  font: 400 11px/12px var(--font-family);
+  color: var(--text-primary);
+}
+.flexim-attachment-caption__dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  line-height: 0;
+}
+.flexim-attachment-caption__dismiss:hover { color: var(--primary-main); }
+.flexim-attachment-caption__dismiss > [data-flexim-icon] {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+}
+
+/* Обёртка «карточка + подпись» — колонкой с gap 8. */
+.flexim-attachment {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--size-xs);
+}
+
+/* Подпись под loading-карточкой: «image (33).png / 61% загружено».
+   Figma 7183:89052 — ширина 107, gap 4, два стиля текста. */
+.flexim-attachment-progress-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xxs);        /* 4 */
+  width: 107px;                /* точная ширина из Figma */
+  color: var(--text-primary);
+}
+.flexim-attachment-progress-text__filename {
+  font: 600 14px/20px var(--font-family);   /* Semibold 14/20 */
+  color: var(--text-primary);
+}
+.flexim-attachment-progress-text__status {
+  font: 400 11px/12px var(--font-family);   /* Regular 11/12 */
+  color: var(--text-primary);
+}
+
+/* Ряд карточек: gap 20 между вложениями. */
+.flexim-attachment-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-l);
+}
+
+/* Ряд кнопок upload: gap 16. */
+.flexim-attachment-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-m);
+}
+
 .flexim-list-item {
   display: flex;
   align-items: center;
@@ -1417,9 +1600,12 @@ label, .col-form-label {
   display: flex;
   align-items: center;
   gap: var(--size-s);
-  /* Figma 4317:91189: высота пункта ФИКСИРОВАННАЯ 40px (не min-height!) —
-     иначе пункт с иконкой 24px раздувается до 48px паддингами. */
-  height: 40px;
+  /* Figma 4317:91189: пункт 40px (иконка 24px помещается). min-height, а НЕ
+     фиксированный height: с длинным многострочным текстом (наименования заказов)
+     фикс-высота зажимала пункт и строки наезжали друг на друга. flex-shrink:0 —
+     чтобы во flex-column со скроллом (max-height) пункт не сжимался ниже контента. */
+  min-height: 40px;
+  flex-shrink: 0;
   width: 100%;
   padding: 0 var(--size-s);
   border: 0;
@@ -3166,6 +3352,7 @@ a.flexim-user-chip__title:hover {
   transition: background-color .15s ease;
 }
 .flexim-filter:hover { background: var(--primary-50); }
+.flexim-filter:focus { outline: none; }
 .flexim-filter__arrow {
   display: inline-flex;
   align-items: center;
