@@ -685,8 +685,8 @@ Bootstrap: атомы в `_bootstrap-flexim-overrides.css`, каталог
 |---|---|
 | `.flexim-attachment-upload` | Кнопка «Загрузить» — pill h-40, тень M, иконка `upload` 24px + текст Bold 14/20 `--primary-main`. Триггер `<input type="file">` (скрытый). |
 | `.flexim-attachment-card` | Миниатюра 80×84, radius 10, border 2px `--primary-main`, `overflow: hidden`. Внутри `.flexim-attachment-card__img`. |
-| `.flexim-attachment-card--loading` | Модификатор: картинка `opacity: 0.2`, поверх — `.flexim-attachment-card__spinner` (CSS-анимация, 16px). |
-| `.flexim-attachment-card--error` | Модификатор: **фон `--error-20`** (розовая заливка), border `--error-main`, картинка приглушена (`opacity: 0.2`), поверх — `.flexim-attachment-card__error-x` (24px крестик, цвет `--error-main`). |
+| `.flexim-attachment-card--loading` | Модификатор: картинка `opacity: 0.5`, поверх — `.flexim-attachment-card__spinner` (CSS-анимация, 16px). |
+| `.flexim-attachment-card--error` | Модификатор: **фон `--error-20`** (розовая заливка), border `--error-main`, картинка приглушена (`opacity: 0.5`), поверх — `.flexim-attachment-card__error-x` (24px крестик, цвет `--error-main`). |
 | `.flexim-attachment--error` | Модификатор обёртки: `max-width: 120px` (перенос длинной ошибки) + красит подпись в `--error-dark` (#E2223B). |
 | `.flexim-attachment-card--interactive` | Добавляет `cursor: pointer` — карточка кликабельна (открывает Lightbox). |
 | `.flexim-attachment-caption` | Подпись под карточкой: текст 11/12 + крестик 16px удалить. |

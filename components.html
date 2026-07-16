@@ -1713,7 +1713,7 @@
       <li><strong>Порядок:</strong> сначала кнопки загрузки, ниже уже добавленные миниатюры. Ряд миниатюр может расти вправо и переноситься (<code>flex-wrap: wrap</code>).</li>
       <li><strong>Клик по картинке в состоянии <code>loaded</code></strong> → открывает Lightbox (используй существующий <code>.flexim-modal</code> с картинкой внутри, полноэкранный).</li>
       <li><strong>Клик по крестику в подписи</strong> → показывает модалку подтверждения удаления (обычный <code>.flexim-modal</code> с двумя кнопками: «Удалить» primary, «Отмена» ghost).</li>
-      <li><strong>State <code>--loading</code></strong> — картинка получает <code>opacity: 0.2</code>, поверх — спиннер 16px. Под карточкой — <code>.flexim-attachment-progress-text</code>: имя файла + «X% загружено».</li>
+      <li><strong>State <code>--loading</code></strong> — картинка получает <code>opacity: 0.5</code>, поверх — спиннер 16px. Под карточкой — <code>.flexim-attachment-progress-text</code>: имя файла + «X% загружено».</li>
       <li><strong>State <code>--error</code></strong> — рамка становится <code>--error-main</code>, картинка приглушается, по центру крестик 24px. Подпись — короткая (напр. «Ошибка. Максимум 20 mb»); если длинная — переносится, ширина карточки не растягивается.</li>
       <li><strong>Максимальный размер файла</strong> — валидировать на клиенте до отправки; при превышении рисуем сразу <code>--error</code>, серверный запрос не начинаем.</li>
       <li><strong>Клавиатурная навигация:</strong> кнопки upload и крестики — <code>&lt;button type="button"&gt;</code>. Карточка миниатюры-интерактив — тоже <code>&lt;button&gt;</code> (не <code>&lt;div&gt;</code>) для Tab-фокуса.</li>
