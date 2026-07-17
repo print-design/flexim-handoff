@@ -1365,14 +1365,12 @@ label, .col-form-label {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Общая приглушённость картинки во всех трёх состояниях — розовый фон
-     карточки виден сквозь картинку. По Figma 7183:89032. */
-  opacity: 0.2;
 }
 /* Клик по картинке — открытие Lightbox (обёртка cursor:pointer). */
 .flexim-attachment-card--interactive { cursor: pointer; }
 
-/* Loading — по центру спиннер (картинка приглушена базовым правилом). */
+/* Loading — картинка приглушена до 20%, поверх — спиннер. */
+.flexim-attachment-card--loading .flexim-attachment-card__img { opacity: 0.2; }
 .flexim-attachment-card__spinner {
   position: absolute;
   top: 50%;
@@ -1387,12 +1385,13 @@ label, .col-form-label {
 }
 @keyframes flexim-attachment-spin { to { transform: rotate(360deg); } }
 
-/* Error — розовая заливка --error-20, красная рамка --error-main,
-   картинка приглушена, крестик по центру. Подпись — --error-dark, без ×. */
+/* Error — розовый фон --error-20 под приглушённой картинкой (Figma 7314:19802),
+   красная рамка --error-main, крестик по центру. Подпись — --error-dark, без ×. */
 .flexim-attachment-card--error {
   background: var(--error-20);
   border-color: var(--error-main);
 }
+.flexim-attachment-card--error .flexim-attachment-card__img { opacity: 0.2; }
 .flexim-attachment-card__error-x {
   position: absolute;
   top: 50%;
